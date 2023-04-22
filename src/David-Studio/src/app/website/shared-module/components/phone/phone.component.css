@@ -1,0 +1,64 @@
+#phoneBtn {
+  display: block;
+  position: fixed;
+
+  bottom: 2vh;
+  right: 3vw;
+  z-index: 100;
+  
+  border-radius: 100px;
+  border: none;
+  outline: none;
+
+  font-size: 30px;
+  background-color: var(--accent-color);
+  color: var(--color-light);
+
+  cursor: pointer;
+
+  width: 80px;
+  height: 80px;
+
+  transition-property: transform;
+  animation: tiltAnimation 10s infinite ease-in-out;
+
+  will-change: transform;
+}
+
+@keyframes tiltAnimation {
+  1% {
+    transform: translateY(-15px);
+  }
+
+  2%, 4%, 6% {
+    transform: rotate(30deg);
+  }
+  3%, 5%, 7% {
+    transform: rotate(0deg);
+  }
+}
+
+#phoneBtn:hover {
+  background-color: var(--color-dark);
+}
+
+#callModal .modal-dialog .modal-content {
+  background-color: var(--color-background);
+  color: var(--color-light);
+
+  text-align: center;
+}
+
+#callModal .modal-dialog .modal-content .fa {
+  color: var(--accent-color);
+}
+
+#callModal a, #callModal a:focus {
+  color: var(--color-light);
+  font-size: 20px;
+  line-height: 40px;
+}
+
+#callModal a:hover {
+  color: var(--color-dark);
+}

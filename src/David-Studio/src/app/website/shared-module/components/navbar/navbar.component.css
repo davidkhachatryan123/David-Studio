@@ -1,0 +1,117 @@
+.navbar-custom {
+  margin-bottom: 0;
+  background-color: var(--color-black);
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  font-family: var(--main-font);
+  padding: 4px 6px;
+  
+  z-index: 100;
+
+  will-change: transform;
+}
+
+.navbar-custom .navbar-brand {
+  color: var(--color-light);
+
+  padding: 0;
+}
+
+.navbar-custom .nav li a {
+  font-size: 18px;
+  color: var(--color-light);
+}
+
+.navbar-custom .nav li a:hover {
+  color: var(--accent-color);
+  background-color: transparent;
+}
+
+.navbar-custom .nav li a:focus, .navbar-custom .nav li a:active {
+  background-color: transparent;
+}
+
+.navbar-custom .nav li.active a {
+  color: var(--accent-color);
+}
+
+.navbar-custom .nav li.active a:hover {
+  color: var(--accent-color);
+}
+
+@media(min-width:768px) {
+  .navbar-custom {
+      padding: 20px 0;
+      border-bottom: 0;
+      background: 0 0;
+      margin-bottom: 0;
+
+      -webkit-transition: background .5s ease-in-out, padding .5s ease-in-out;
+         -moz-transition: background .5s ease-in-out, padding .5s ease-in-out;
+           -o-transition: background .5s ease-in-out, padding .5s ease-in-out;
+          -ms-transition: background .5s ease-in-out, padding .5s ease-in-out;
+              transition: background .5s ease-in-out, padding .5s ease-in-out;
+  }
+
+  .navbar-custom .navbar-brand {
+      font-size: 20px;
+      margin-top: 0px;
+  }
+
+  .navbar-custom.top-nav-collapse {
+      color: var(--color-dark);
+      background: var(--color-light);
+      
+      border-bottom: 1px solid rgba(0,0,0,.3);
+
+      padding: 0;
+  }
+
+  .navbar-custom.top-nav-collapse a {
+      color: var(--color-dark) !important;
+
+      display: inline-block;
+  }
+}
+
+.lang-logo {
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  background-size: 30px;
+  width: 30px;
+  margin: 0 0 0 10px;
+}
+
+
+.navbar-custom .dropdown-menu {
+  background-color: var(--color-dark);
+}
+
+.navbar-custom.top-nav-collapse .dropdown-menu {
+  background-color: var(--color-light);
+}
+
+.navbar-custom .dropdown-services ul li img, lang-logo {
+  flex-basis: 30px;
+  width: 30px;
+}
+
+.service-text, .lang-text {
+  padding: 0 0 0 15px;
+}
+
+
+@media(min-width:768px) {
+  .navbar-custom.top-nav-collapse .btn {
+      color: var(--color-dark);
+  }
+
+  .navbar-custom.top-nav-collapse .dropdown-menu a {
+      color: var(--color-light);
+  }
+
+  .navbar-custom.top-nav-collapse .dropdown-menu a:hover {
+      color: var(--accent-color);
+  }
+}

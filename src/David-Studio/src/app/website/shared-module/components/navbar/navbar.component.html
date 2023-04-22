@@ -1,0 +1,119 @@
+<nav class="navbar navbar-custom navbar-expand-md fixed-top navbar-dark" role="navigation">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="[this.appRoutes.HOME]">
+        <img src="assets/img/logo-no-background.png" height="50">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collape-target" aria-controls="navbar-collape-target" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar-collape-target">
+        <ul class="nav navbar-nav ms-auto navbar-nav-scroll">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="[this.appRoutes.HOME]">Գլխավոր</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="[this.appRoutes.PORTFOLIO]">Պորտֆոլիո</a>
+            </li>
+            <li class="nav-item dropdown dropdown-services">
+                <a type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Ծառայություններ
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item">
+                        <a [routerLink]="[this.appRoutes.SERVICES, 'web']" class="nav-link d-flex">
+                            <div class="d-flex">
+                                <img src="assets/img/Service/web.png" class="img-fluid">
+                            </div>
+                            <span class="service-text">
+                                Web
+                            </span>
+                        </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a [routerLink]="[this.appRoutes.SERVICES, 'desktop']" class="nav-link d-flex">
+                            <div class="image">
+                                <img src="assets/img/Service/desktop.png" class="img-fluid">
+                            </div>
+                            <span class="service-text">
+                                Desktop
+                            </span>
+                        </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a [routerLink]="[this.appRoutes.SERVICES, 'arduino']" class="nav-link d-flex">
+                            <div class="image">
+                                <img src="assets/img/Service/arduino.png" class="img-fluid">
+                            </div>
+                            <span class="service-text">
+                                Arduino
+                            </span>
+                        </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a [routerLink]="[this.appRoutes.SERVICES, 'hosting']" class="nav-link d-flex">
+                            <div class="image">
+                                <img src="assets/img/Service/server.png" class="img-fluid">
+                            </div>
+                            <span class="service-text">
+                                Hosting
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="[this.appRoutes.CONTACT]">Կապ</a>
+            </li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button class="btn lang-logo"
+                            [ngStyle]="{'background-image': language === 'hy-AM'
+                                                            ? 'url(\'assets/img/Flags/armenia-flag-square-small.png\')'
+                                                            : language === 'ru-RU'
+                                                                ? 'url(\'assets/img/Flags/russia-flag-square-small.png\')' :
+                                                                'url(\'assets/img/Flags/usa-flag-square-small.png\')' }"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            data-bs-auto-close="true">&nbsp;</button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="dropdown-item">
+                            <a class="nav-link d-flex" (click)="changeSiteLanguage('hy-AM')">
+                                <div class="lang-logo">
+                                    <img src="assets/img/Flags/armenia-flag-square-small.png" class="img-fluid">
+                                </div>
+                                <span class="lang-text">
+                                    Հայերեն
+                                </span>
+                            </a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a class="nav-link d-flex" (click)="changeSiteLanguage('ru-RU')">
+                                <div class="lang-logo">
+                                    <img src="assets/img/Flags/russia-flag-square-small.png" class="img-fluid">
+                                </div>
+                                <span class="lang-text">
+                                    Русский
+                                </span>
+                            </a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a class="nav-link d-flex" (click)="changeSiteLanguage('en-US')">
+                                <div class="lang-logo">
+                                    <img src="assets/img/Flags/usa-flag-square-small.png" class="img-fluid">
+                                </div>
+                                <span class="lang-text">
+                                    English
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+  </div>
+</nav>
