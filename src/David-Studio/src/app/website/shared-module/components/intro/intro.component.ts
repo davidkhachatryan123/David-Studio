@@ -14,7 +14,7 @@ export class IntroComponent implements AfterContentInit {
   private hexagon: Hexagon;
 
   constructor(
-    private scroller: ViewportScroller
+    private scroller: ViewportScroller,
   ) {
     this.hexagon = new Hexagon();
   }

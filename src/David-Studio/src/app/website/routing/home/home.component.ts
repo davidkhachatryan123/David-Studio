@@ -5,6 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  title: string = "David Studio";
-  subtitle: string = "Մենք նախագծում և զարգացնում ենք թվային ապրանքներ և առցանց փորձառություններ, որոնք օգնում են մեր հաճախորդներին աճել, նորարարություններ կատարել և փոխակերպվել: Մենք լսում, սովորում և հասկանում ենք նախքան կառուցելը: Մենք միասին բացահայտում ենք ձեր նպատակները, այնուհետև օգտագործում ենք մեր փորձը՝ գտնելու իրատեսական և ազդեցիկ այդ քաղցր կետը:";
+  translateSectionName: string = 'home';
 }

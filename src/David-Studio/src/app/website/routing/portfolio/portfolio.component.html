@@ -1,3 +1,9 @@
-<content-intro [title]="title" [subtitle]="subtitle"></content-intro>
+<app-intro title="{{ 'template.portfolio.title' | translate }}"
+           subtitle="{{ 'template.portfolio.subtitle' | translate }}">
+</app-intro>
+
+<content-intro title="{{ 'template.' + translateSectionName + '.jumbotron.title' | translate }}"
+               subtitle="{{ 'template.' + translateSectionName + '.jumbotron.subtitle' | translate }}"
+               id="page"></content-intro>
 
 <portfolio-projects></portfolio-projects>

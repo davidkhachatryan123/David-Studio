@@ -3,7 +3,7 @@
 :root {
   --main-font: "Helvetica Neue", Montserrat, sans-serif;
 
-  --main-transform: all .2s ease-in-out;
+  --main-transform: all .1s ease-in-out;
   
   --accent-color: #1ba39c;
   --color-background: #0f1922;

@@ -4,6 +4,7 @@
 
 .portfolio {
   background-color: var(--color-background);
+  padding: 30px;
 }
 
 .portfolio .search {
@@ -14,6 +15,7 @@
   padding: 10px;
   font-size: 17px;
   
+  color: var(--color-light);
   background-color: var(--color-dark);
 
   border: 2px solid var(--color-light);
@@ -32,6 +34,7 @@
   font-size: 17px;
 
   background: var(--color-dark);
+  color: var(--color-light);
 
   border: 2px solid var(--color-light);
   border-radius: 10px;

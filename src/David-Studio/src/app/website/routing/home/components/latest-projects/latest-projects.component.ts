@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'home-latest-projects',
@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [ 'latest-projects.component.css' ]
 })
 
-export class LatestProjectsComponent implements OnInit {
-  constructor() { }
+export class LatestProjectsComponent {
 
-  ngOnInit() { }
 }

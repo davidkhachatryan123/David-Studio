@@ -13,11 +13,44 @@
   "template": {
     "home": {
       "title": "David Studio",
-      "subtitle": "Կպատրաստենք ծրագրեր ցանկացած տեսակի"
+      "subtitle": "Կպատրաստենք ծրագրեր ցանկացած տեսակի",
+      "jumbotron": {
+        "title": "David Studio",
+        "subtitle": "Մենք նախագծում և զարգացնում ենք թվային ապրանքներ և առցանց փորձառություններ, որոնք օգնում են մեր հաճախորդներին աճել, նորարարություններ կատարել և փոխակերպվել: Մենք լսում, սովորում և հասկանում ենք նախքան կառուցելը: Մենք միասին բացահայտում ենք ձեր նպատակները, այնուհետև օգտագործում ենք մեր փորձը՝ գտնելու իրատեսական և ազդեցիկ այդ քաղցր կետը:"
+      },
+      "services": {
+        "web": {
+          "title_end": " կայքերի պատրաստում",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "desktop": {
+          "title_end": " ծրագրերի պատրաստում",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "arduino": {
+          "title_end": " սալիկների ծրագրավորում",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "hosting": {
+          "title_tr": " ԵՎ ",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "button_text": "Ավելին"
+      },
+      "top_projects": {
+        "title": "Լավագույն աշխատանքները"
+      }
     },
     "portfolio": {
       "title": "Պորտֆոլիո",
-      "subtitle": "Այստեղ կարող եք ծանոթանալ մեր աշխատանքներին"
+      "subtitle": "Այստեղ կարող եք ծանոթանալ մեր աշխատանքներին",
+      "jumbotron": {
+        "title": "Պորտֆոլիո",
+        "subtitle": "Մենք նախագծում և զարգացնում ենք թվային ապրանքներ և առցանց փորձառություններ, որոնք օգնում են մեր հաճախորդներին աճել, նորարարություններ կատարել և փոխակերպվել: Մենք լսում, սովորում և հասկանում ենք նախքան կառուցելը: Մենք միասին բացահայտում ենք ձեր նպատակները, այնուհետև օգտագործում ենք մեր փորձը՝ գտնելու իրատեսական և ազդեցիկ այդ քաղցր կետը:"
+      },
+      "search": {
+        "placeholder": "Որոնում․․․"
+      }
     },
     "services": {
       "web": {

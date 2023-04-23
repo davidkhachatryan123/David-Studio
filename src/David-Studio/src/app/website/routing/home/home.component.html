@@ -1,4 +1,10 @@
-<content-intro [title]="title" [subtitle]="subtitle"></content-intro>
+<app-intro title="{{ 'template.' + translateSectionName + '.title' | translate }}"
+           subtitle="{{ 'template.' + translateSectionName + '.subtitle' | translate }}">
+</app-intro>
+
+<content-intro title="{{ 'template.' + translateSectionName + '.jumbotron.title' | translate }}"
+               subtitle="{{ 'template.' + translateSectionName + '.jumbotron.subtitle' | translate }}"
+               id="page"></content-intro>
 
 <home-services></home-services>
 

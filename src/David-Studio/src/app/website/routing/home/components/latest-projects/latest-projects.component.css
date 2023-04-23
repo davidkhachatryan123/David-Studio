@@ -2,12 +2,7 @@
   background-color: var(--color-second-background);
 
   text-align: center;
-
-  padding-bottom: 50px;
-}
-
-.latest-proj .main-title h1 {
-  margin: 50px 0;
+  padding-top: 30px;
 }
 
 .latest-proj img, .latest-proj .title {
