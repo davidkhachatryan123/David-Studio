@@ -1,0 +1,22 @@
+<section class="content-form">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  {{ 'template.contact.form.done_message' | translate }}
+                </div>
+
+                <form id="contactform">
+                    <div class="form">
+                        <input type="text" name="name" placeholder="{{ 'template.contact.form.placeholder.name' | translate }}">
+                        <input type="text" name="email" placeholder="{{ 'template.contact.form.placeholder.email' | translate }}">
+                        <input type="text" name="phone" placeholder="{{ 'template.contact.form.placeholder.phone' | translate }}">
+                        <textarea name="comment" rows="7" placeholder="{{ 'template.contact.form.placeholder.message' | translate }}"></textarea>
+                        <input type="submit" id="submit" class="clearfix btn" value="{{ 'template.contact.form.submit_btn' | translate }}">
+                    </div>
+                </form>
+          </div>
+      </div>
+  </div>
+</section>

@@ -1,7 +1,7 @@
 <div class="content">
   <img class="img-responsive" src="assets/img/not-found.png">
 
-  <h1>Page not found</h1>
+  <h1>{{ 'not_found.title' | translate }}</h1>
 
   <div class="description">
       We looked everywhere for this page.
@@ -12,5 +12,5 @@
       <br>
   </div>
 
-  <a class="home-btn btn btn-success" [routerLink]="['']">Go back to home</a>
+  <a class="home-btn btn btn-success" [routerLink]="['']">{{ 'not_found.btn_text' | translate }}</a>
 </div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { NotFoundComponent } from './not-found.component';
 
@@ -10,7 +11,8 @@ import { NotFoundComponent } from './not-found.component';
       pathMatch: 'full',
       component: NotFoundComponent
     }
-  ])],
+  ]),
+            TranslateModule ],
   declarations: [ NotFoundComponent ],
 })
 export class NotFoundModule { }

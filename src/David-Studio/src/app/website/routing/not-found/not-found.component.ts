@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'not-found',
@@ -8,9 +9,13 @@ import { Title } from '@angular/platform-browser';
 })
 
 export class NotFoundComponent implements OnInit {
-  constructor(private titleService: Title) { }
+  constructor(
+    private titleService: Title,
+    private translate: TranslateService) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Not Found');
+    this.translate.get('not_found.title').subscribe(title => {
+      this.titleService.setTitle(title);
+    });
   }
 }
