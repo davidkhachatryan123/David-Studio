@@ -110,10 +110,10 @@
   padding-left: 2em;
 }
 
-/* @font-face {
+@font-face {
   font-family: "MyFontAwesome";
-  src: url('../../../../../../../packages/fontawesome-free-6.2.0-web/webfonts/fa-solid-900.ttf') format('truetype');
-} */
+  src: url('node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf') format('truetype');
+}
 
 .tile .list ul li:before {
   font-family: "MyFontAwesome";

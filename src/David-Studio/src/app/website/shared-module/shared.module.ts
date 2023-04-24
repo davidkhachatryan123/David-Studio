@@ -10,6 +10,7 @@ import {
   FooterComponent,
   PhoneComponent
 } from './components';
+import { TilesComponent } from './components/services/tiles/tiles.component';
 
 @NgModule({
   imports: [ RouterModule, CommonModule, TranslateModule ],
@@ -17,12 +18,14 @@ import {
                   ContentIntroComponent,
                   NavbarComponent,
                   FooterComponent,
-                  PhoneComponent ],
+                  PhoneComponent,
+                  TilesComponent ],
   exports: [ IntroComponent,
              ContentIntroComponent,
              NavbarComponent,
              FooterComponent,
              PhoneComponent,
-             TranslateModule ],
+             TranslateModule,
+             TilesComponent ],
 })
 export class SharedModule { }
