@@ -6,5 +6,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [ 'message.component.css' ]
 })
 export class MessageComponent {
-  
+  isShow: boolean = false;
 }
