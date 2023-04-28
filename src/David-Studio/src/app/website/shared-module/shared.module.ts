@@ -11,6 +11,7 @@ import {
   PhoneComponent
 } from './components';
 import { TilesComponent } from './components/services/tiles/tiles.component';
+import { CirclesComponent } from './components/services/circles/circles.component';
 
 @NgModule({
   imports: [ RouterModule, CommonModule, TranslateModule ],
@@ -19,13 +20,15 @@ import { TilesComponent } from './components/services/tiles/tiles.component';
                   NavbarComponent,
                   FooterComponent,
                   PhoneComponent,
-                  TilesComponent ],
+                  TilesComponent,
+                  CirclesComponent ],
   exports: [ IntroComponent,
              ContentIntroComponent,
              NavbarComponent,
              FooterComponent,
              PhoneComponent,
              TranslateModule,
-             TilesComponent ],
+             TilesComponent,
+             CirclesComponent ],
 })
 export class SharedModule { }

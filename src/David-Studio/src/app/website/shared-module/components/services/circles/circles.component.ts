@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Tag } from 'src/app/website/routing/portfolio/models';
 
 @Component({
   selector: 'services-circles',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
 })
 
 export class CirclesComponent {
-
+  @Input() title: string = "";
+  @Input() circles: Array<Tag> = [];
 }

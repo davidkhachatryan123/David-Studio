@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { AppColors } from 'src/app/website/consts';
+import { Tag } from 'src/app/website/routing/portfolio/models';
 import { Tile } from 'src/app/website/shared-module/components/services/tiles/models';
 
 @Component({
   selector: 'services-web',
-  templateUrl: 'web.component.html'
+  templateUrl: 'web.component.html',
+  styleUrls: [ 'web.component.css' ]
 })
 export class WebComponent {
   translateSectionName: string = 'web';
@@ -43,4 +46,22 @@ export class WebComponent {
       'Lorem ipsum 15'
     ]
   );
+
+
+  front_circles: Array<Tag> = [
+    new Tag('HTML', AppColors.html),
+    new Tag('CSS', AppColors.css),
+    new Tag('JS', AppColors.js),
+    new Tag('TS', AppColors.ts),
+    new Tag('Bootstrap', AppColors.bootstrap),
+    new Tag('Angular', AppColors.angular)
+  ];
+
+  back_circles: Array<Tag> = [
+    new Tag('ASP.NET Core', AppColors.aspnet),
+    new Tag('C#', AppColors.cs),
+    new Tag('EF', AppColors.ef),
+    new Tag('MySQL', AppColors.mysql),
+    new Tag('MSSQL', AppColors.mssql)
+  ];
 }

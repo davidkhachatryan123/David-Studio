@@ -1,7 +1,7 @@
 .service-cirlces {
-  background-color: var(--color-second-background);
   color: var(--color-light);
-
+  
+  margin-top: 10px;
   text-align: center;
 }
 
@@ -13,20 +13,13 @@
   }
 }
 
-
-
-.circle-block .row {
-  margin-top: 20px;
-  margin-bottom: 50px;
-}
-
 .circle-block .circle {
   display: inline-block;
 
   width: 150px;
   height: 150px;
   
-  margin-bottom: 15px;
+  margin: 15px;
 
   border: 15px solid;
   border-radius: 50%;
@@ -42,9 +35,9 @@
 }
 
 .circle-block .circle .effect {
-  width:100%;
-  height:100%;
-  
+  width: 100%;
+  height: 100%;
+
   box-shadow: 0 0 5px #aaa inset;
   border-radius: 50%;
 
