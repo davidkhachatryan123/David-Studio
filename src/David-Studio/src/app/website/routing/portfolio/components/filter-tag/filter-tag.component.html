@@ -1,0 +1,8 @@
+<div class="filter flex flex-justify-content-center">
+  <div *ngFor="let tag of filter_tags"
+        [style.background-color]="tag.color"
+        class="prog_language">
+      <div class="text">{{tag.text}}</div>
+      <div class="x">x</div>
+  </div>
+</div>

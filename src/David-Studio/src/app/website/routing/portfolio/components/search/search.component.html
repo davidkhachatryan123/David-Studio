@@ -12,22 +12,20 @@
       </button>
     </div>
   
-    <div class="search-results">
+    <div class="search-results" [class.d-none]="!isShow">
 
       <div class="text-container">
         <ul>
-          <li>David Studio</li>
-          <li>Study Control Software</li>
-          <li>Text Analyzer</li>
+          <li *ngFor="let text of text_result">{{text}}</li>
         </ul>
       </div>
 
       <div class="tag-container">
-        <div class="text aspnet">ASP.NET Core</div>
-        <div class="text angular">Angular</div>
-        <div class="text cs">C#</div>
-        <div class="text wpf">WPF</div>
-        <div class="text arduino">Arduino</div>
+        <div *ngFor="let tag of tag_result"
+              [style.background-color]="tag.color"
+              class="text">
+          {{tag.text}}
+        </div>
       </div>
 
     </div>

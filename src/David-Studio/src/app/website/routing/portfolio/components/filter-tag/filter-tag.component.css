@@ -1,0 +1,44 @@
+.filter {
+  margin: 10px 0;
+}
+
+.filter .prog_language {
+  width: 150px;
+  height: 50px;
+
+  border-radius: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 15px;
+  margin: 5px 5px;
+}
+
+.filter .prog_language .text {
+  flex-basis: 100px;
+  text-align: center;
+  color: white;
+}
+
+.filter .prog_language .x {
+  cursor: pointer;
+
+  font-size: 18px;
+  color: #8a8a8a;
+
+  -webkit-transition: var(--main-transform);
+     -moz-transition: var(--main-transform);
+       -o-transition: var(--main-transform);
+      -ms-transition: var(--main-transform);
+          transition: var(--main-transform);
+
+  will-change: transform;
+}
+
+.filter .prog_language .x:hover {
+  cursor: pointer;
+
+  color: var(--color-dark);
+}

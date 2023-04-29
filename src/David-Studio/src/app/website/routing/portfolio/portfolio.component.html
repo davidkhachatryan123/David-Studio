@@ -11,5 +11,17 @@
 
     <app-search></app-search>
 
+    <portfolio-filter-tag></portfolio-filter-tag>
+
+    <div class="projects">
+      <portfolio-project *ngFor="let project of projects"
+                         [projectModel]="project">
+      </portfolio-project>
+    </div>
+  
+    <portfolio-paginator>
+
+    </portfolio-paginator>
+
   </div>
 </section>
