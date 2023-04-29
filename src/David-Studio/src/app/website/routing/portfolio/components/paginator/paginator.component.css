@@ -7,45 +7,26 @@
   background-color: var(--color-dark);
   border-color: var(--color-light);
   color: var(--color-light);
-
-  will-change: transform;
-
-  z-index: 50;
 }
 
 .paginator a:hover {
   background-color: var(--color-dark);
   color: var(--color-light);
-  border-radius: 3px;
-
-  z-index: 100;
-
-  -webkit-transform: scale(1.1);
-     -moz-transform: scale(1.1);
-       -o-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1);
 }
 
 .paginator .active a {
   background-color: var(--accent-color);
   border-color: var(--accent-color);
-
-  z-index: 10;
-
-  -webkit-transform: none;
-     -moz-transform: none;
-       -o-transform: none;
-      -ms-transform: none;
-          transform: none;
 }
 
 .paginator .disabled a {
   background-color: #8a8a8a;
+}
 
-  -webkit-transform: none;
-     -moz-transform: none;
-       -o-transform: none;
-      -ms-transform: none;
-          transform: none;
+.paginator a {
+  -webkit-user-select: none;
+    -moz--user-select: none;
+       -o-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }

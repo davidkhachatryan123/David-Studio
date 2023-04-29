@@ -19,7 +19,8 @@
       </portfolio-project>
     </div>
   
-    <portfolio-paginator>
+    <portfolio-paginator [pagination]="pagination"
+                         (pageChanged)="changePage($event)">
 
     </portfolio-paginator>
 

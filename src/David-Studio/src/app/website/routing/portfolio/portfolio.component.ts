@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Project, Tag } from './models';
+import { Pagintaion, Project, Tag } from './models';
 import { AppColors } from '../../consts';
 
 @Component({
@@ -34,4 +34,11 @@ export class PortfolioComponent {
       new Tag('Bash', AppColors.bash),
     ], 'assets/img/Projects/proj3.jpg', ''),
   ];
+
+
+  pagination: Pagintaion = new Pagintaion(1, 22);
+
+  changePage($event: number) {
+    console.log(`Page are chnaged: ${$event}`);
+  }
 }
