@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, Subscription, debounce, debounceTime, interval, map } from 'rxjs';
 import { AppColors } from 'src/app/website/consts';
 import { Tag } from 'src/app/website/routing/portfolio/models';
 
@@ -7,20 +8,33 @@ import { Tag } from 'src/app/website/routing/portfolio/models';
   templateUrl: 'search.component.html',
   styleUrls: [ 'search.component.css' ]
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit, OnDestroy {
   isShow: boolean = false;
 
-  text_result: Array<string> = [
-    'David Studio',
-    'Study Control Software',
-    'Text Analyzer'
-  ];
+  private searchSubject = new Subject<string>();
+  private searchSubscription: Subscription;
 
-  tag_result: Array<Tag> = [
-    new Tag('C#', AppColors.cs),
-    new Tag('ASP.NET Core', AppColors.aspnet),
-    new Tag('Angular', AppColors.angular),
-    new Tag('Arduino', AppColors.arduino),
-    new Tag('WPF', AppColors.wpf),
-  ];
+  text_result: Array<string> = [];
+  tag_result: Array<Tag> = [];
+
+  ngOnInit() {
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(500))
+      .subscribe((searchText: string) => {
+        this.search(searchText);
+      });
+  }
+
+  ngOnDestroy() {
+    this.searchSubscription.unsubscribe();
+  }
+
+  onSearchChange($event: any) {
+    this.searchSubject.next($event.target.value);
+  }
+
+  search(text: string) {
+    if (text)
+      console.log(text);
+  }
 }

@@ -5,7 +5,11 @@
       <input type="text"
              placeholder="{{ 'template.portfolio.search.placeholder' | translate }}"
              name="search"
-             autocomplete="off">
+             autocomplete="off"
+             #search
+             (focus)="this.isShow = true"
+             (blur)="this.isShow = false"
+             (input)="onSearchChange($event)">
   
       <button type="submit">
         <i class="fas fa-search">&nbsp;</i>
@@ -14,13 +18,13 @@
   
     <div class="search-results" [class.d-none]="!isShow">
 
-      <div class="text-container">
+      <div class="text-container" *ngIf="text_result.length">
         <ul>
           <li *ngFor="let text of text_result">{{text}}</li>
         </ul>
       </div>
 
-      <div class="tag-container">
+      <div class="tag-container" *ngIf="tag_result.length">
         <div *ngFor="let tag of tag_result"
               [style.background-color]="tag.color"
               class="text">
