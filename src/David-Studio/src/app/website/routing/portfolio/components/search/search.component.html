@@ -7,26 +7,30 @@
              name="search"
              autocomplete="off"
              #search
-             (focus)="this.isShow = true"
+             (focus)="this.isShow = true; onSearchFocus()"
              (blur)="this.isShow = false"
-             (input)="onSearchChange($event)">
-  
-      <button type="submit">
+             (input)="onSearchChange($event)"
+             (keydown)="onSearchKeyDown($event)">
+
+      <button type="submit" (click)="submitSearch(search.value)">
         <i class="fas fa-search">&nbsp;</i>
       </button>
     </div>
-  
+
     <div class="search-results" [class.d-none]="!isShow">
 
       <div class="text-container" *ngIf="text_result.length">
-        <ul>
-          <li *ngFor="let text of text_result">{{text}}</li>
+        <ul (mousedown)="submitSearchByClickingListItem($event)">
+          <li *ngFor="let text of text_result; let i = index"
+              [class.focused]="i === focusedIndex">
+            {{text}}
+          </li>
         </ul>
       </div>
 
       <div class="tag-container" *ngIf="tag_result.length">
         <div *ngFor="let tag of tag_result"
-              [style.background-color]="tag.color"
+             [style.background-color]="tag.color"
               class="text">
           {{tag.text}}
         </div>
