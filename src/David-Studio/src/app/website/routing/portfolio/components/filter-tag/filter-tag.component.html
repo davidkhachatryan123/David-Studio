@@ -1,8 +1,12 @@
 <div class="filter flex flex-justify-content-center">
-  <div *ngFor="let tag of filter_tags"
-        [style.background-color]="tag.color"
-        class="prog_language">
+  <div class="prog_language"
+      *ngFor="let tag of tags; let i = index"
+      [style.background-color]="tag.color">
+      
       <div class="text">{{tag.text}}</div>
-      <div class="x">x</div>
+      
+      <button class="x" (click)="xOnClick(i)">
+        x
+      </button>
   </div>
 </div>

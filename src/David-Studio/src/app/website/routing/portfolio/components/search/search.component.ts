@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { Subject, Subscription, debounceTime } from 'rxjs';
+import { Component, ElementRef, OnDestroy, ViewChild, Renderer2, Input, Output, EventEmitter } from '@angular/core';
+import { Subject, Subscription, debounceTime, pipe, map } from 'rxjs';
 import { AppColors, AppTags } from 'src/app/website/consts';
 import { Tag } from 'src/app/website/routing/portfolio/models';
 
@@ -9,19 +9,36 @@ import { Tag } from 'src/app/website/routing/portfolio/models';
   styleUrls: [ 'search.component.css' ]
 })
 export class SearchComponent implements OnDestroy {
+  @Input() set addedTags(val: Array<Tag>) {
+    this._addedTags = val;
+    this.resetAddedTagsArray();
+  }
+  public get addedTags() {
+    return this._addedTags;
+  }
+
+  @Output() addedTagsUpdate = new EventEmitter<Array<Tag>>;
+  @Output() searchSubmit = new EventEmitter<string>;
+
+
+  _addedTags: Array<Tag> = [];
+
+  // If it's true then showing search box
   isShow: boolean = false;
 
+  // This was created for automatically send search query by timeout
   private searchSubject = new Subject<string>();
   private searchSubscription: Subscription;
 
+  // The following values are associated with the html search box results
   text_result: Array<string> = [
     'David Studio',
     'Study-Control-Software'
   ];
-  tag_result: Array<Tag> = [
-    new Tag(AppTags.aspnet, AppColors.aspnet),
-    new Tag(AppTags.cs, AppColors.cs),
-    new Tag(AppTags.angular, AppColors.angular)
+  tag_result: {tag: Tag, selected: boolean}[] = [
+    { tag: new Tag(AppTags.aspnet, AppColors.aspnet), selected: false },
+    { tag: new Tag(AppTags.cs, AppColors.cs), selected: false },
+    { tag: new Tag(AppTags.angular, AppColors.angular), selected: false }
   ];
 
   focusedIndex: number = -1;
@@ -29,19 +46,39 @@ export class SearchComponent implements OnDestroy {
 
   @ViewChild("search", {static: false})
   searchElement: ElementRef | undefined;
+  @ViewChild("searchResults", {static: false})
+  searchResults: ElementRef | undefined;
 
+  constructor(private renderer: Renderer2) {
+    this.renderer.listen('window', 'click', (e: Event) => {
+      if (e.target !== this.searchElement.nativeElement && !this.searchResults.nativeElement.contains(e.target))
+        this.isShow = false;
+    });
+
+    this.addedTags = [];
+  }
 
   ngOnDestroy() {
-    this.searchSubscription.unsubscribe();
+    this.searchSubscription?.unsubscribe();
   }
 
 
+  //####################################################
+  // Searchbox input field events
+  //####################################################
+
   onSearchFocus() {
+    this.isShow = true;
+
     this.searchSubscription = this.searchSubject
     .pipe(debounceTime(500))
     .subscribe((searchText: string) => {
-      this.search(searchText);
+      this.sendSearchQuery(searchText);
     });
+  }
+
+  onSearchBlur() {
+    this.searchSubscription?.unsubscribe();
   }
 
   onSearchChange($event: any) {
@@ -69,25 +106,48 @@ export class SearchComponent implements OnDestroy {
   }
 
 
+  //####################################################
+  // Searchbox block of tags
+  //####################################################
+
+  tagOnClick(indexOfTag: number) {
+    this.tag_result[indexOfTag].selected = !this.tag_result[indexOfTag].selected;
+
+    if (this.tag_result[indexOfTag].selected)
+      this.addedTags.push(this.tag_result[indexOfTag].tag);
+    else
+      this.addedTags.splice(this.addedTags.indexOf(this.tag_result[indexOfTag].tag), 1);
+
+    this.addedTagsUpdate.emit(this.addedTags);
+  }
+
+  resetAddedTagsArray() {
+    this.tag_result.map(result => {
+      result.selected = this.addedTags.indexOf(result.tag) != -1 ? true : false;
+    });
+  }
+
+
+  //####################################################
+  // Submit search
+  //####################################################
+
   submitSearchByClickingListItem($event) {
     if ($event.target.closest('li'))
       this.submitSearch($event.target.innerHTML);
   }
 
-  search(text: string) {
-    if (text)
-      console.log(text);
+  sendSearchQuery(text: string) {
+    if (text.trim())
+      console.log(text.trim());
   }
 
   submitSearch(searchText: string) {
-    if (searchText) {
-      if (this.searchSubscription)
-        this.searchSubscription.unsubscribe();
-      this.searchElement.nativeElement.blur();
+    this.searchSubscription?.unsubscribe();
+    this.searchElement.nativeElement.value = searchText.trim();
+    this.searchElement.nativeElement.blur();
+    this.isShow = false;
 
-      console.log('Search submitted with value: ', searchText.trim());
-    } else {
-      this.searchElement.nativeElement.focus();
-    }
+    this.searchSubmit.emit(searchText.trim());
   }
 }

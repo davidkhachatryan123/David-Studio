@@ -7,8 +7,8 @@
              name="search"
              autocomplete="off"
              #search
-             (focus)="this.isShow = true; onSearchFocus()"
-             (blur)="this.isShow = false"
+             (focus)="onSearchFocus()"
+             (blur)="onSearchBlur()"
              (input)="onSearchChange($event)"
              (keydown)="onSearchKeyDown($event)">
 
@@ -17,7 +17,7 @@
       </button>
     </div>
 
-    <div class="search-results" [class.d-none]="!isShow">
+    <div #searchResults class="search-results" [class.d-none]="!isShow">
 
       <div class="text-container" *ngIf="text_result.length">
         <ul (mousedown)="submitSearchByClickingListItem($event)">
@@ -28,11 +28,16 @@
         </ul>
       </div>
 
-      <div class="tag-container" *ngIf="tag_result.length">
-        <div *ngFor="let tag of tag_result"
-             [style.background-color]="tag.color"
-              class="text">
-          {{tag.text}}
+      <div class="tag-container container" *ngIf="tag_result.length">
+        <div class="text"
+            *ngFor="let tag of tag_result; let i = index"
+            [ngClass]="tag.selected ? 'order-1' : 'order-2'"
+            [style.background-color]="tag.tag.color">
+          <button (click)="tagOnClick(i)"
+                  [class.selected]="tag.selected"
+                  >
+            {{tag.tag.text}}
+          </button>
         </div>
       </div>
 

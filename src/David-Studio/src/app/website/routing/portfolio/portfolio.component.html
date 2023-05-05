@@ -4,14 +4,21 @@
 
 <content-intro title="{{ 'template.' + translateSectionName + '.jumbotron.title' | translate }}"
                subtitle="{{ 'template.' + translateSectionName + '.jumbotron.subtitle' | translate }}"
-               id="page"></content-intro>
+               id="page">
+</content-intro>
 
 <section class="portfolio">
   <div class="container">
 
-    <app-search></app-search>
+    <app-search #search
+                [addedTags]="filterTags.tags"
+                (addedTagsUpdate)="filterTags.tags = $event"
+                (searchSubmit)="submitSearch($event)">
+    </app-search>
 
-    <portfolio-filter-tag></portfolio-filter-tag>
+    <portfolio-filter-tag #filterTags
+                          (update)="search.addedTags = $event; submitSearchOnlyTags(filterTags.tags)">
+    </portfolio-filter-tag>
 
     <div class="projects">
       <portfolio-project *ngFor="let project of projects"
@@ -21,7 +28,6 @@
   
     <portfolio-paginator [pagination]="pagination"
                          (pageChanged)="changePage($event)">
-
     </portfolio-paginator>
 
   </div>

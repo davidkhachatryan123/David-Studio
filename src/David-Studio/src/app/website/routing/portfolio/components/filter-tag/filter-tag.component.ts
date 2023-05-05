@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Tag } from '../../models';
 import { AppColors } from 'src/app/website/consts';
 
@@ -8,11 +8,12 @@ import { AppColors } from 'src/app/website/consts';
   styleUrls: [ 'filter-tag.component.css' ]
 })
 export class FilterTagComponent {
-  @Input() filter_tags: Array<Tag> = [
-    new Tag('C#', AppColors.cs),
-    new Tag('ASP.NET Core', AppColors.aspnet),
-    new Tag('Angular', AppColors.angular),
-    new Tag('Arduino', AppColors.arduino),
-    new Tag('WPF', AppColors.wpf)
-  ];
+  @Output() update = new EventEmitter<Array<Tag>>;
+
+  tags: Array<Tag> = [];
+
+  xOnClick(indexOfTag: number) {
+    this.tags.splice(indexOfTag, 1);
+    this.update.emit(this.tags);
+  }
 }

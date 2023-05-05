@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { Pagintaion, Project, Tag } from './models';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Pagintaion, Project, Search, Tag } from './models';
 import { AppColors } from '../../consts';
+import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
 
 @Component({
   selector: 'portfolio',
   templateUrl: 'portfolio.component.html',
   styleUrls: [ 'portfolio.component.css' ]
 })
-export class PortfolioComponent {
+export class PortfolioComponent implements AfterViewInit {
   translateSectionName: string = 'portfolio';
 
   projects: Array<Project> = [
@@ -34,11 +35,42 @@ export class PortfolioComponent {
       new Tag('Bash', AppColors.bash),
     ], 'assets/img/Projects/proj3.jpg', ''),
   ];
-
-
   pagination: Pagintaion = new Pagintaion(1, 22);
+  latestSearchTextValue: string = "";
+
+  @ViewChild(FilterTagComponent, {static: false})
+  private filterTagsElement: FilterTagComponent | undefined;
+
+  ngAfterViewInit() {
+    this.submitSearch(this.latestSearchTextValue);
+  }
+
+
+  //####################################################
+  // Page functions
+  //####################################################
 
   changePage($event: number) {
     console.log(`Page are chnaged: ${$event}`);
+
+    if (this.filterTagsElement)
+      this.submitSearch(this.latestSearchTextValue);
+  }
+
+
+  //####################################################
+  // Submit search
+  //####################################################
+
+  submitSearch(searchText: string) {
+    console.log(new Search(searchText, this.filterTagsElement.tags, this.pagination.activePage));
+
+    this.latestSearchTextValue = searchText;
+  }
+
+  submitSearchOnlyTags(tags: Array<Tag>) {
+    let searchModel = new Search(this.latestSearchTextValue, tags, this.pagination.activePage);
+
+    console.log(searchModel);
   }
 }
