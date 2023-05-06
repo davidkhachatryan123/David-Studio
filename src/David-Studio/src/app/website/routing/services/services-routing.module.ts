@@ -4,6 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'prefix',
+    redirectTo: "web"
+  },
+  {
     path: 'web',
     loadChildren: () => import('./routing/web/web.module').then(module => module.WebModule),
   },
