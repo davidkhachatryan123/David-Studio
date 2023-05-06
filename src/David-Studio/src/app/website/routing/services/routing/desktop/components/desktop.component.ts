@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { AppColors } from 'src/app/website/consts';
 import { Tag } from 'src/app/website/routing/portfolio/models';
 import { Tile } from 'src/app/website/shared-module/components/services/tiles/models';
@@ -10,6 +12,13 @@ import { Tile } from 'src/app/website/shared-module/components/services/tiles/mo
 })
 export class DesktopComponent {
   translateSectionName: string = 'desktop';
+
+  constructor(
+    private title: Title,
+    private translate: TranslateService) {
+
+    translate.get(`title.services.${this.translateSectionName}`).subscribe(text => title.setTitle(text));
+  }
 
   starter: Tile = new Tile(
     'Lorem ipsum starter',

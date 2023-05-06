@@ -4,21 +4,28 @@
         <img src="assets/img/logo-no-background.png" height="50">
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collape-target" aria-controls="navbar-collape-target" aria-expanded="false" aria-label="Toggle navigation">
+    <button #navbarToggler
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar-collape-target"
+            aria-controls="navbar-collape-target"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbar-collape-target">
+    <div #navbarCollapse class="collapse navbar-collapse" id="navbar-collape-target">
         <ul class="nav navbar-nav ms-auto navbar-nav-scroll">
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="[this.appRoutes.HOME]">Գլխավոր</a>
+                <a class="nav-link" [routerLink]="[this.appRoutes.HOME]">{{ "navbar.home" | translate}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="[this.appRoutes.PORTFOLIO]">Պորտֆոլիո</a>
+                <a class="nav-link" [routerLink]="[this.appRoutes.PORTFOLIO]">{{ "navbar.portfolio" | translate}}</a>
             </li>
             <li class="nav-item dropdown dropdown-services">
                 <a type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Ծառայություններ
+                    {{ "navbar.services.main" | translate}}
                 </a>
 
                 <ul class="dropdown-menu">
@@ -28,7 +35,7 @@
                                 <img src="assets/img/Service/web.png" class="img-fluid">
                             </div>
                             <span class="service-text">
-                                Web
+                                {{ "navbar.services.web" | translate}}
                             </span>
                         </a>
                     </li>
@@ -38,7 +45,7 @@
                                 <img src="assets/img/Service/desktop.png" class="img-fluid">
                             </div>
                             <span class="service-text">
-                                Desktop
+                                {{ "navbar.services.desktop" | translate}}
                             </span>
                         </a>
                     </li>
@@ -48,7 +55,7 @@
                                 <img src="assets/img/Service/arduino.png" class="img-fluid">
                             </div>
                             <span class="service-text">
-                                Arduino
+                                {{ "navbar.services.arduino" | translate}}
                             </span>
                         </a>
                     </li>
@@ -58,14 +65,14 @@
                                 <img src="assets/img/Service/server.png" class="img-fluid">
                             </div>
                             <span class="service-text">
-                                Hosting
+                                {{ "navbar.services.hosting" | translate}}
                             </span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="[this.appRoutes.CONTACT]">Կապ</a>
+                <a class="nav-link" [routerLink]="[this.appRoutes.CONTACT]">{{ "navbar.contact" | translate}}</a>
             </li>
             <li class="nav-item">
                 <div class="dropdown">

@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {
   IntroComponent,
-  ContentIntroComponent,
   NavbarComponent,
   FooterComponent,
   PhoneComponent
@@ -16,14 +15,12 @@ import { CirclesComponent } from './components/services/circles/circles.componen
 @NgModule({
   imports: [ RouterModule, CommonModule, TranslateModule ],
   declarations: [ IntroComponent,
-                  ContentIntroComponent,
                   NavbarComponent,
                   FooterComponent,
                   PhoneComponent,
                   TilesComponent,
                   CirclesComponent ],
   exports: [ IntroComponent,
-             ContentIntroComponent,
              NavbarComponent,
              FooterComponent,
              PhoneComponent,

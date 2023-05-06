@@ -2,6 +2,8 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Pagintaion, Project, Search, Tag } from './models';
 import { AppColors } from '../../consts';
 import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
+import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'portfolio',
@@ -40,6 +42,13 @@ export class PortfolioComponent implements AfterViewInit {
 
   @ViewChild(FilterTagComponent, {static: false})
   private filterTagsElement: FilterTagComponent | undefined;
+
+  constructor(
+    private title: Title,
+    private translate: TranslateService) {
+
+    translate.get(`title.${this.translateSectionName}`).subscribe(text => title.setTitle(text));
+  }
 
   ngAfterViewInit() {
     this.submitSearch(this.latestSearchTextValue);

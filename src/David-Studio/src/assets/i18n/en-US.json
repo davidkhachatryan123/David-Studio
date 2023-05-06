@@ -1,9 +1,109 @@
 {
   "title": {
-    "home": "Home"
+    "home": "Գլխավոր",
+    "portfolio": "Պորտֆոլիո",
+    "services": {
+      "web": "Ծառայություններ | Վեբ",
+      "desktop": "Ծառայություններ | Desktop",
+      "arduino": "Ծառայություններ | Arduino",
+      "hosting": "Ծառայություններ | Հոսթինգ"
+    },
+    "contact": "Կապ"
+  },
+  "navbar": {
+    "home": "Գլխավոր",
+    "portfolio": "Պորտֆոլիո",
+    "services": {
+      "main": "Ծառայություններ",
+      "web": "Վեբ",
+      "desktop": "Desktop",
+      "arduino": "Արդուինո",
+      "hosting": "Հոսթինգ"
+    },
+    "contact": "Կապ"
   },
   "template": {
-    "title": "David Studio",
-    "subtitle": "We will prepare a program of any complexity"
+    "home": {
+      "title": "David Studio",
+      "subtitle": "Կպատրաստենք ծրագրեր ցանկացած տեսակի",
+      "services": {
+        "web": {
+          "title_end": " կայքերի պատրաստում",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "desktop": {
+          "title_end": " ծրագրերի պատրաստում",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "arduino": {
+          "title_end": " սալիկների ծրագրավորում",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "hosting": {
+          "title_tr": " ԵՎ ",
+          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        },
+        "button_text": "Ավելին"
+      },
+      "top_projects": {
+        "title": "Լավագույն աշխատանքները"
+      }
+    },
+    "portfolio": {
+      "title": "Պորտֆոլիո",
+      "subtitle": "Այստեղ կարող եք ծանոթանալ մեր աշխատանքներին",
+      "search": {
+        "placeholder": "Որոնում․․․"
+      }
+    },
+    "services": {
+      "web": {
+        "title": "ՎԵԲ կայքեր",
+        "subtitle": "Պատրաստում ենք ցանկացած տեսակի վեբ կայքեր"
+      },
+      "desktop": {
+        "title": "Desktop",
+        "subtitle": "Պատրաստում ենք ծրագրային ապահովում desktop-ի համար"
+      },
+      "arduino": {
+        "title": "Arduino",
+        "subtitle": "Arduino սալիկների ծրագրավորում"
+      },
+      "hosting": {
+        "title": "Հոսթինգ",
+        "subtitle": "Տրամադրում և կառավարում ենք ցանկացած տեսակի սերվեր"
+      },
+      "shared": {
+        "tiles": {
+          "lifetime": "ամսեկան",
+          "popular": "Թոփ"
+        }
+      }
+    },
+    "contact": {
+      "title": "Կապ",
+      "subtitle": "Մեր մասնագետները պատրաստ են արձագանքելու Ձեր հարցերին",
+      "form": {
+        "done_message": "Ձեր նամակը ուղարկված է։ Շնորհակալություն :)",
+        "placeholder": {
+          "name": "Ձեր Անունը *",
+          "email": "Ձեր էլեկտրոնային հասցեն *",
+          "phone": "Ձեր հեռախոսահամարը (ոչ պարտադիր)",
+          "message": "Ձեր նամակը *"
+        },
+        "submit_btn": "Ուղարկել"
+      }
+    }
+  },
+  "not_found": {
+    "title": "Ոչինչ չի գտնվել",
+    "btn_text": "Վերադառնալ գլխավոր էջ"
+  },
+  "footer": {
+    "all_rights_reserved_message": "2023 David Studio. Բոլոր իրավունքները պաշտպանված են:"
+  },
+  "call_dialog": {
+    "title": "Զանգահարել",
+    "dismiss": "Փակել"
   }
 }

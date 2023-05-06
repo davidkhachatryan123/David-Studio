@@ -21,21 +21,13 @@
   color: var(--color-light);
 }
 
-.navbar-custom .nav li a:hover {
+.navbar-custom .nav > li > a:hover {
   color: var(--accent-color);
   background-color: transparent;
 }
 
 .navbar-custom .nav li a:focus, .navbar-custom .nav li a:active {
   background-color: transparent;
-}
-
-.navbar-custom .nav li.active a {
-  color: var(--accent-color);
-}
-
-.navbar-custom .nav li.active a:hover {
-  color: var(--accent-color);
 }
 
 @media(min-width:768px) {
@@ -88,8 +80,8 @@
   background-color: var(--color-dark);
 }
 
-.navbar-custom.top-nav-collapse .dropdown-menu {
-  background-color: var(--color-light);
+.navbar-custom .dropdown-menu .dropdown-item:hover {
+  background-color: var(--accent-color);
 }
 
 .navbar-custom .dropdown-services ul li img, lang-logo {
@@ -107,11 +99,7 @@
       color: var(--color-dark);
   }
 
-  .navbar-custom.top-nav-collapse .dropdown-menu a {
-      color: var(--color-light);
-  }
-
-  .navbar-custom.top-nav-collapse .dropdown-menu a:hover {
-      color: var(--accent-color);
+  .navbar-custom.top-nav-collapse .dropdown-menu {
+    background-color: var(--color-light);
   }
 }
