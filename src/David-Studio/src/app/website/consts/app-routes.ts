@@ -4,7 +4,7 @@ export enum AppRoutes {
   SERVICES = 'services',
   SERVICES_WEB = 'web',
   SERVICES_DESKTOP = 'desktop',
-  SERVICES_ARDUIO = 'arduino',
+  SERVICES_ARDUINO = 'arduino',
   SERVICES_HOSTING = 'hosting',
   CONTACT = 'contact'
 }

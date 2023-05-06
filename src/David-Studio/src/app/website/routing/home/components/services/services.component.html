@@ -26,7 +26,7 @@
                     {{ 'template.home.services.desktop.description' | translate }}
                 </p>
 
-                <a href="Service-Desktop.html" type="button" class="btn btn-warning btn-lg">
+                <a [routerLink]="['/', appRoutes.SERVICES, appRoutes.SERVICES_DESKTOP]" type="button" class="btn btn-warning btn-lg">
                     {{ 'template.home.services.button_text' | translate }}
                     <i class="fa fa-angle-right"></i>
                 </a>
@@ -44,7 +44,7 @@
                     {{ 'template.home.services.arduino.description' | translate }}
                 </p>
 
-                <a href="Service-Arduino.html" type="button" class="btn btn-info btn-lg">
+                <a [routerLink]="['/', appRoutes.SERVICES, appRoutes.SERVICES_ARDUINO]" type="button" class="btn btn-info btn-lg">
                     {{ 'template.home.services.button_text' | translate }}
                     <i class="fa fa-angle-right"></i>
                 </a>
@@ -62,7 +62,7 @@
                     {{ 'template.home.services.hosting.description' | translate }}
                 </p>
 
-                <a href="Service-Hosting.html" type="button" class="btn btn-danger btn-lg">
+                <a [routerLink]="['/', appRoutes.SERVICES, appRoutes.SERVICES_HOSTING]" type="button" class="btn btn-danger btn-lg">
                     {{ 'template.home.services.button_text' | translate }}
                     <i class="fa fa-angle-right"></i>
                 </a>

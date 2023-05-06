@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppRoutes } from 'src/app/website/consts';
 
 @Component({
   selector: 'home-latest-projects',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
 })
 
 export class LatestProjectsComponent {
-
+  appRoutes: typeof AppRoutes = AppRoutes;
 }
