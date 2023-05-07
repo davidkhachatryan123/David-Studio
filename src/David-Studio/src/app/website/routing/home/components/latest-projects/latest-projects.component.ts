@@ -6,7 +6,6 @@ import { AppRoutes } from 'src/app/website/consts';
   templateUrl: 'latest-projects.component.html',
   styleUrls: [ 'latest-projects.component.css' ]
 })
-
 export class LatestProjectsComponent {
   appRoutes: typeof AppRoutes = AppRoutes;
 }

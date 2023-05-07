@@ -2,7 +2,7 @@
            subtitle="{{ 'template.portfolio.subtitle' | translate }}">
 </app-intro>
 
-<section class="portfolio">
+<section class="portfolio" id="page">
   <div class="container">
 
     <app-search #search
@@ -19,6 +19,8 @@
       <portfolio-project *ngFor="let project of projects"
                          [projectModel]="project">
       </portfolio-project>
+
+      <portfolio-not-found [class.d-none]="projects.length"></portfolio-not-found>
     </div>
   
     <portfolio-paginator [pagination]="pagination"
