@@ -11,7 +11,7 @@ import { Tile } from 'src/app/website/shared-module/components/services/tiles/mo
   styleUrls: [ 'desktop.component.css' ]
 })
 export class DesktopComponent {
-  translateSectionName: string = 'desktop';
+  translateSectionName = 'desktop';
 
   constructor(
     private title: Title,

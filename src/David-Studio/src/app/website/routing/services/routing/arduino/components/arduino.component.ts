@@ -11,7 +11,7 @@ import { Tile } from 'src/app/website/shared-module/components/services/tiles/mo
   styleUrls: [ 'arduino.component.css' ]
 })
 export class ArduinoComponent {
-  translateSectionName: string = 'arduino';
+  translateSectionName = 'arduino';
 
   constructor(
     private title: Title,

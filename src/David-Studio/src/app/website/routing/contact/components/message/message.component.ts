@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'contact-message',
@@ -6,5 +6,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [ 'message.component.css' ]
 })
 export class MessageComponent {
-  isShow: boolean = false;
+  isShow = false;
 }

@@ -22,10 +22,14 @@
 
 .backLayer {
   background: linear-gradient(#000202, #002828);
+
+  z-index: -20;
 }
 
 .frontLayer {
   background: transparent;
+
+  z-index: -10;
 }
 
 .intro .effect {

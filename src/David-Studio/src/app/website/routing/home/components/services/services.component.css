@@ -17,6 +17,7 @@
 .services .service h2 {
   font-weight: normal;
   line-height: 1.5em;
+  margin-top: 15px;
 }
 
 .services .service h2 strong {
@@ -55,5 +56,9 @@
 
   .services .service img {
     margin: 0 -10px;
+  }
+  
+  .services .service h2 {
+    margin-top: 0;
   }
 }

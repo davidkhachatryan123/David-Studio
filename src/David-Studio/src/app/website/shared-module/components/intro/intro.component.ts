@@ -8,8 +8,8 @@ import { Hexagon } from './hexagon/hexagon';
   styleUrls: [ 'intro.component.css' ]
 })
 export class IntroComponent implements AfterContentInit {
-  @Input() title: string = "";
-  @Input() subtitle: string = "";
+  @Input() title = '';
+  @Input() subtitle = '';
 
   private hexagon: Hexagon;
 
@@ -22,10 +22,10 @@ export class IntroComponent implements AfterContentInit {
   ngAfterContentInit() {
     this.hexagon.init();
 
-    addEventListener("resize", (event) => this.onResized(event));
+    addEventListener("resize", () => this.onResized());
   }
 
-  onResized(event: any): void {
+  onResized() {
     this.hexagon.resize(document.documentElement.clientWidth, document.documentElement.clientHeight);
   }
 

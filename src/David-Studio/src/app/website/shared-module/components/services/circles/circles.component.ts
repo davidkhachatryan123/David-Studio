@@ -8,6 +8,6 @@ import { Tag } from 'src/app/website/routing/portfolio/models';
 })
 
 export class CirclesComponent {
-  @Input() title: string = "";
+  @Input() title = '';
   @Input() circles: Array<Tag> = [];
 }

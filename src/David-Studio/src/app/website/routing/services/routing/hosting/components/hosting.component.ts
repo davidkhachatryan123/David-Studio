@@ -11,7 +11,7 @@ import { Tile } from 'src/app/website/shared-module/components/services/tiles/mo
   styleUrls: [ 'hosting.component.css' ]
 })
 export class HostingComponent {
-  translateSectionName: string = 'hosting';
+  translateSectionName = 'hosting';
 
   constructor(
     private title: Title,

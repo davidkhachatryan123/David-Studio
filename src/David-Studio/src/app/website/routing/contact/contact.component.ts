@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'contact.component.html'
 })
 export class ContactComponent {
-  translateSectionName: string = 'contact';
+  translateSectionName = 'contact';
 
   constructor(
     private title: Title,

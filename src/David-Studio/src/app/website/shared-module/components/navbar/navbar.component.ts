@@ -12,7 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
   providers: [ CookieService ]
 })
 export class NavbarComponent implements OnInit, AfterContentInit {
-  language: string = "";
+  language = '';
   appRoutes: typeof AppRoutes = AppRoutes;
 
   @ViewChild("navbarToggler", {static: false})

@@ -1,4 +1,3 @@
-import { Pagintaion } from "./pagination";
 import { Tag } from "./tag";
 
 export class Search {

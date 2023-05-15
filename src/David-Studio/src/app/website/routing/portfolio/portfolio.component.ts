@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: [ 'portfolio.component.css' ]
 })
 export class PortfolioComponent implements AfterViewInit {
-  translateSectionName: string = 'portfolio';
+  translateSectionName = 'portfolio';
 
   projects: Array<Project> = [
     new Project('Smart Home', [
@@ -38,7 +38,7 @@ export class PortfolioComponent implements AfterViewInit {
     ], 'assets/img/Projects/proj3.jpg', ''),
   ];
   pagination: Pagintaion = new Pagintaion(1, 22);
-  latestSearchTextValue: string = "";
+  latestSearchTextValue = '';
 
   @ViewChild(FilterTagComponent, {static: false})
   private filterTagsElement: FilterTagComponent | undefined;
@@ -78,7 +78,7 @@ export class PortfolioComponent implements AfterViewInit {
   }
 
   submitSearchOnlyTags(tags: Array<Tag>) {
-    let searchModel = new Search(this.latestSearchTextValue, tags, this.pagination.activePage);
+    const searchModel = new Search(this.latestSearchTextValue, tags, this.pagination.activePage);
 
     console.log(searchModel);
   }

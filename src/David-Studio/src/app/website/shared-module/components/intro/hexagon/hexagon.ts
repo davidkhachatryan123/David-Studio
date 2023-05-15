@@ -31,30 +31,35 @@ export class Hexagon {
   }
 
   resize(width: number, height: number) {
-    this.resizeCanvases([ this.backCanvas, this.frontCanvas ], width, height);
+    this.resizeCanvases([this.backCanvas, this.frontCanvas], width, height);
   }
 
   private setupCanvas(canvasName: string): [HTMLCanvasElement, CanvasRenderingContext2D] {
-    let canvas = <HTMLCanvasElement>document.getElementById(canvasName);
-    let ctx = canvas.getContext('2d');
+    const canvas = <HTMLCanvasElement>document.getElementById(canvasName);
+    const ctx = canvas.getContext('2d');
   
     return [canvas, ctx];
   }
 
   private resizeCanvases(canvases: Array<HTMLCanvasElement>, width: number, height: number) {
     for (const canvas of canvases) {
-      canvas.width = width;
-      canvas.height = height;
+      if (canvas.width - 10 > width || canvas.width + 10 < width) {
+        canvas.width = width;
+        this.redraw();
+      }
+
+      if (canvas.height - 10 > height || canvas.height + 10 < height) {
+        canvas.height = height;
+        this.redraw();
+      }
     }
-  
-    this.redraw();
   }
 
   private redraw() {
     this.backCanvasCtx.clearRect(0, 0, this.backCanvas.width, this.backCanvas.height);
     this.frontCanvasCtx.clearRect(0, 0, this.frontCanvas.width, this.frontCanvas.height);
   
-    var gradient = this.backCanvasCtx.createLinearGradient(this.backCanvas.width / 2, 0, this.backCanvas.width / 2, this.backCanvas.height);
+    const gradient = this.backCanvasCtx.createLinearGradient(this.backCanvas.width / 2, 0, this.backCanvas.width / 2, this.backCanvas.height);
     gradient.addColorStop(0, "#156d76");
     gradient.addColorStop(1, "#199491");
     this.backCanvasCtx.strokeStyle = gradient;
@@ -74,7 +79,7 @@ export class Hexagon {
   private drawHexagon(ctx: CanvasRenderingContext2D,
     x: number, y: number, radius: number, rotation: number, dotted: boolean) {
     
-    let dots = [];
+    const dots = [];
   
     ctx.beginPath();
    
@@ -117,7 +122,7 @@ export class Hexagon {
       for(let x = startX, j = 0; x + (-lastCount * radius) * Math.cos(this.alfa - this.rotation) < width;
           x += radius * Math.cos(this.alfa - this.rotation), y += (-1) ** j++ * radius * (1 + Math.sin(this.alfa - this.rotation))) {
         
-        let random = this.getRandomInt(0.99);
+        const random = this.getRandomInt(0.99);
         if(random < chance) {
           this.drawHexagon(ctx, x, y, radius, this.rotation, dotted);
         }

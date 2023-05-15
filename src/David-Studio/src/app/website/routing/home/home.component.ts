@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  translateSectionName: string = 'home';
+  translateSectionName = 'home';
 
   constructor(
     private title: Title,

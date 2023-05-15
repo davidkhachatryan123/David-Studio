@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, ViewChild, Renderer2, Input, Output, EventEmitter } from '@angular/core';
-import { Subject, Subscription, debounceTime, pipe, map } from 'rxjs';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 import { AppColors, AppTags } from 'src/app/website/consts';
 import { Tag } from 'src/app/website/routing/portfolio/models';
 
@@ -24,7 +24,7 @@ export class SearchComponent implements OnDestroy {
   _addedTags: Array<Tag> = [];
 
   // If it's true then showing search box
-  isShow: boolean = false;
+  isShow = false;
 
   // This was created for automatically send search query by timeout
   private searchSubject = new Subject<string>();
@@ -41,7 +41,7 @@ export class SearchComponent implements OnDestroy {
     { tag: new Tag(AppTags.angular, AppColors.angular), selected: false }
   ];
 
-  focusedIndex: number = -1;
+  focusedIndex = -1;
   mySearchValue: string | undefined;
 
   @ViewChild("search", {static: false})
@@ -81,7 +81,7 @@ export class SearchComponent implements OnDestroy {
     this.searchSubscription?.unsubscribe();
   }
 
-  onSearchChange($event: any) {
+  onSearchChange($event) {
     this.searchSubject.next($event.target.value);
   }
 
@@ -99,7 +99,7 @@ export class SearchComponent implements OnDestroy {
         : this.focusedIndex = 0;
     } else this.focusedIndex = -1;
 
-    let searchValue = this.text_result[this.focusedIndex];
+    const searchValue = this.text_result[this.focusedIndex];
     
     if (searchValue)
       this.searchElement.nativeElement.value = searchValue;

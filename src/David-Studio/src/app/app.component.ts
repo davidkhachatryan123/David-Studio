@@ -7,8 +7,6 @@ import * as AOS from "aos";
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
-  constructor() { }
-
   ngOnInit() {
     AOS.init({
       // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:

@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Tag } from '../../models';
-import { AppColors } from 'src/app/website/consts';
 
 @Component({
   selector: 'portfolio-filter-tag',
