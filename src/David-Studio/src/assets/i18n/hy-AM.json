@@ -13,13 +13,7 @@
   "navbar": {
     "home": "Գլխավոր",
     "portfolio": "Պորտֆոլիո",
-    "services": {
-      "main": "Ծառայություններ",
-      "web": "Վեբ",
-      "desktop": "Desktop",
-      "arduino": "Արդուինո",
-      "hosting": "Հոսթինգ"
-    },
+    "services": "Ծառայություններ",
     "contact": "Կապ"
   },
   "template": {

@@ -13,13 +13,7 @@
   "navbar": {
     "home": "Գլխավոր",
     "portfolio": "Պորտֆոլիո",
-    "services": {
-      "main": "Ծառայություններ",
-      "web": "Վեբ",
-      "desktop": "Desktop",
-      "arduino": "Արդուինո",
-      "hosting": "Հոսթինգ"
-    },
+    "services": "Ծառայություններ",
     "contact": "Կապ"
   },
   "template": {
@@ -61,22 +55,8 @@
       }
     },
     "services": {
-      "web": {
-        "title": "ՎԵԲ կայքեր",
-        "subtitle": "Պատրաստում ենք ցանկացած տեսակի վեբ կայքեր"
-      },
-      "desktop": {
-        "title": "Desktop",
-        "subtitle": "Պատրաստում ենք ծրագրային ապահովում desktop-ի համար"
-      },
-      "arduino": {
-        "title": "Arduino",
-        "subtitle": "Arduino սալիկների ծրագրավորում"
-      },
-      "hosting": {
-        "title": "Հոսթինգ",
-        "subtitle": "Տրամադրում և կառավարում ենք ցանկացած տեսակի սերվեր"
-      },
+      "title": "Ծառայություններ",
+      "subtitle": "Հետևյալ բաժնում կարող եք ծանոթանալ մեր ծառայությունների հետ",
       "shared": {
         "tiles": {
           "lifetime": "ամսական",

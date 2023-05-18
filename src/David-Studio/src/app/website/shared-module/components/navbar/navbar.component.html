@@ -23,53 +23,8 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="[this.appRoutes.PORTFOLIO]">{{ "navbar.portfolio" | translate}}</a>
             </li>
-            <li class="nav-item dropdown dropdown-services">
-                <a type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ "navbar.services.main" | translate}}
-                </a>
-
-                <ul class="dropdown-menu">
-                    <li class="dropdown-item">
-                        <a [routerLink]="[this.appRoutes.SERVICES, 'web']" class="nav-link d-flex">
-                            <div class="d-flex">
-                                <img src="assets/img/Service/web.png" class="img-fluid">
-                            </div>
-                            <span class="service-text">
-                                {{ "navbar.services.web" | translate}}
-                            </span>
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a [routerLink]="[this.appRoutes.SERVICES, 'desktop']" class="nav-link d-flex">
-                            <div class="image">
-                                <img src="assets/img/Service/desktop.png" class="img-fluid">
-                            </div>
-                            <span class="service-text">
-                                {{ "navbar.services.desktop" | translate}}
-                            </span>
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a [routerLink]="[this.appRoutes.SERVICES, 'arduino']" class="nav-link d-flex">
-                            <div class="image">
-                                <img src="assets/img/Service/arduino.png" class="img-fluid">
-                            </div>
-                            <span class="service-text">
-                                {{ "navbar.services.arduino" | translate}}
-                            </span>
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a [routerLink]="[this.appRoutes.SERVICES, 'hosting']" class="nav-link d-flex">
-                            <div class="image">
-                                <img src="assets/img/Service/server.png" class="img-fluid">
-                            </div>
-                            <span class="service-text">
-                                {{ "navbar.services.hosting" | translate}}
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="[this.appRoutes.SERVICES]">{{ "navbar.services" | translate}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="[this.appRoutes.CONTACT]">{{ "navbar.contact" | translate}}</a>
