@@ -2,6 +2,14 @@
            subtitle="{{ 'template.' + translateSectionName + '.subtitle' | translate }}">
 </app-intro>
 
-<home-services id="page"></home-services>
+<section class="services" id="page">
+  <div class="container">
 
-<home-latest-projects></home-latest-projects>
+    <home-service *ngFor="let service of services"
+                  [service]="service">
+    </home-service>
+
+  </div>
+</section>
+
+<home-top-projects></home-top-projects>

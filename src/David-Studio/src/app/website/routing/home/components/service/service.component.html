@@ -1,0 +1,19 @@
+<div class="service row flex-md" data-aos="fade-up">
+    <div class="col-md-6 col-sm-12 col-12 flex-md flex-justify-content-center-md"
+        [class.order-sm-last]="service.image_pos == 'right'">
+        <img class="img-fluid justify-content-center"
+             [src]="service.image_uri">
+    </div>
+    <div class="col-md-6 col-sm-12 col-12 service__content">
+        <h2>| {{ service.title_translation_key | translate }}</h2>
+
+        <p>
+            {{ service.body_translation_key | translate }}
+        </p>
+
+        <a [routerLink]="['/', service.route]" type="button" class="btn btn-success btn-lg">
+            {{ 'template.home.services.button_text' | translate }}
+            <i class="fa fa-angle-right"></i>
+        </a>
+    </div>
+</div>

@@ -27,21 +27,25 @@
       "title": "David Studio",
       "subtitle": "Կպատրաստենք ծրագրեր ցանկացած տեսակի",
       "services": {
-        "web": {
-          "title_end": " կայքերի պատրաստում",
-          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        "web_development": {
+          "title": "ՎԵԲ կայքերի պատրաստում",
+          "body": "Մենք օգնում ենք բիզնեսներին հասնել մեծ հաջողությունների՝ մեր կողմից պատրաստված ծրագրային ապահովման շնորհիվ։ Մեր հաջողության գաղտնիքն է լսել և հասկանալ հաճախորդին ու հնարավորինս կարճ ժամկետներում տրամադրել ցանկալի արդյունքներ"
         },
-        "desktop": {
-          "title_end": " ծրագրերի պատրաստում",
-          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        "auth_and_db": {
+          "title": "Մուտք ԵՎ տվյալների շտեմարան",
+          "body": "Տալիս ենք մուտք գործելու և գրանցվելու հնարավորություն պատրաստված կայքում օգտագործելով տարատեսակ ժամանակակից և անվտանք տեխնոլոգիաներ։ Օգտագործում ենք տարտեսակ տվյալների շտեմարաններ (Databases) օգտագործողի կողմից տրամադրված ինֆորմացիայի պահպանման համար"
         },
-        "arduino": {
-          "title_end": " սալիկների ծրագրավորում",
-          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        "admin_panel": {
+          "title": "Կառավարման վահանակ",
+          "body": "Տրամադրում ենք կառավարման վահանակ, որը թույլ է տալիս կայքի պատվիրատուին կամ կառավարչին կատարել Վեբ կայքի պարունակությության փոփոխություններ։ Այս գործիքը նույնպես լինում է օգտագործողին հարմարավետ և հասկանալի բիզնեսի կառավարումն ավելի դյուրին դարձնելու նպատակով"
         },
-        "hosting": {
-          "title_tr": " ԵՎ ",
-          "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus maiores adipisci ipsam, quaerat minus aliquam sequi obcaecati itaque enim, sit voluptatum possimus. Adipisci ipsam exercitationem tenetur incidunt perspiciatis molestiae."
+        "payment": {
+          "title": "Վճարման համակարգ",
+          "body": "Կայքում վճարումներ կամ ցանկացած գնումներ կատարելու նպատակով ներդնում ենք վճարման համակարգեր ինչպիսիք են՝ վճարում Visa կամ MasterCard-ով, հանրահայտ PayPal համակարգը կամ հայկական Idram վճարային համակարգը"
+        },
+        "support": {
+          "title": "Աջակցում",
+          "body": "Մենք պատրաստում ենք անխափան և հուսալի ծրագրային ապահովում, բայց հնարավոր է կարիք լինի մեր կողմից ծրագրավորողների աջակցությունը և այդ պատճառով տրամադրում ենք երկարատև և կարճաժամկետ աջակցության (support) փաթեթներ"
         },
         "button_text": "Ավելին"
       },

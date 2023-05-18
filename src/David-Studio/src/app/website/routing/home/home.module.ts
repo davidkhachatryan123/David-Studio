@@ -4,15 +4,21 @@ import { HomeComponent } from './home.component';
 
 import { SharedModule } from '../../shared-module/shared.module';
 
-import { ServicesComponent } from './components/services/services.component';
-import { LatestProjectsComponent } from './components/latest-projects/latest-projects.component';
+import { ServicesComponent } from './components/service/service.component';
+import { TopProjectsComponent } from './components/top-projects/top-projects.component';
 import { HomeRoutingModule } from './home-routing.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [ HomeRoutingModule,
-             SharedModule ],
-  declarations: [ HomeComponent,
-                  ServicesComponent,
-                  LatestProjectsComponent ],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    SharedModule
+  ],
+  declarations: [
+    HomeComponent,
+    ServicesComponent,
+    TopProjectsComponent
+  ],
 })
 export class HomeModule { }

@@ -71,11 +71,11 @@ a:hover, a:focus {
 }
 
 a, i, button {
-  -webkit-transition: var(--main-transform);
-     -moz-transition: var(--main-transform);
-       -o-transition: var(--main-transform);
-      -ms-transition: var(--main-transform);
-          transition: var(--main-transform);
+  -webkit-transition: var(--main-transform) !important;
+     -moz-transition: var(--main-transform) !important;
+       -o-transition: var(--main-transform) !important;
+      -ms-transition: var(--main-transform) !important;
+          transition: var(--main-transform) !important;
 }
 
 hr {
