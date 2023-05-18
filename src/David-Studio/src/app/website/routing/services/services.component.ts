@@ -6,12 +6,12 @@ import { Tag } from 'src/app/website/routing/portfolio/models';
 import { Tile } from 'src/app/website/shared-module/components/services/tiles/models';
 
 @Component({
-  selector: 'services-arduino',
-  templateUrl: 'arduino.component.html',
-  styleUrls: [ 'arduino.component.css' ]
+  selector: 'services-web',
+  templateUrl: 'services.component.html',
+  styleUrls: [ 'services.component.css' ]
 })
-export class ArduinoComponent {
-  translateSectionName = 'arduino';
+export class ServicesComponent {
+  translateSectionName = 'services';
 
   constructor(
     private title: Title,
@@ -57,9 +57,20 @@ export class ArduinoComponent {
   );
 
 
-  arduino_circles: Array<Tag> = [
-    new Tag('Arduino', AppColors.arduino),
-    new Tag('IoT', AppColors.iot),
-    new Tag('PCB', AppColors.pcb)
+  front_circles: Array<Tag> = [
+    new Tag('HTML', AppColors.html),
+    new Tag('CSS', AppColors.css),
+    new Tag('JS', AppColors.js),
+    new Tag('TS', AppColors.ts),
+    new Tag('Bootstrap', AppColors.bootstrap),
+    new Tag('Angular', AppColors.angular)
+  ];
+
+  back_circles: Array<Tag> = [
+    new Tag('ASP.NET Core', AppColors.aspnet),
+    new Tag('C#', AppColors.cs),
+    new Tag('EF', AppColors.ef),
+    new Tag('MySQL', AppColors.mysql),
+    new Tag('MSSQL', AppColors.mssql)
   ];
 }
