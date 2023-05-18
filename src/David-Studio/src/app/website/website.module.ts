@@ -6,10 +6,12 @@ import { SharedModule } from './shared-module/shared.module';
 import { WebSiteComponent } from './website.component';
 
 @NgModule({
-  imports: [ WebsiteRoutingModule,
-             SharedModule,
-             RouterModule ],
-  declarations: [ WebSiteComponent ],
+  imports: [
+    WebsiteRoutingModule,
+    SharedModule,
+    RouterModule
+  ],
+  declarations: [WebSiteComponent],
   providers: [],
 })
 export class WebSiteModule { }

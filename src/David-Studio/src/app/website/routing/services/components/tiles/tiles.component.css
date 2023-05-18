@@ -1,3 +1,7 @@
+:host {
+  --popular-height: 60px;
+}
+
 .tiles {
   padding: 50px 0;
 
@@ -12,7 +16,6 @@
   box-shadow: 0 20px 50px 0 #000;
 
   width: 100%;
-  height: calc(auto + var(--popular-height));
 
   transform: scale(1);
   order: -1;
@@ -49,7 +52,7 @@
 }
 
 .tile .tile-content {
-  padding: 20px 20px 100px 20px;
+  padding: 20px;
 
   display: flex;
   flex-direction: column;
@@ -67,7 +70,6 @@
 .tile .subtitle p {
   font-size: 25px;
   color: var(--colot-not-focused);
-  text-transform: lowercase;
 }
 
 .tile .hr {
@@ -97,17 +99,20 @@
 
 .tile .list {
   margin-top: 30px;
+
+  max-width: 85%;
 }
 
 .tile .list ul {
   list-style: none;
-  padding: 0;
 }
 .tile .list ul li {
   font-size: 18px;
+  text-align: left;
   color: var(--colot-not-focused);
 
-  padding-left: 2em;
+  position: relative;
+  padding-bottom: 10px;
 }
 
 @font-face {
@@ -119,10 +124,12 @@
   font-family: "MyFontAwesome";
   content: "\f00c";
   font-size: 25px;
-  
+
   display: inline-block;
-  margin-left: -2em;
-  width: 2em;
+
+  position: absolute;
+  width: 35px;
+  left: -35px;
 
   color: white;
 }

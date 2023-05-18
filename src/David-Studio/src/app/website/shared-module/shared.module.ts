@@ -9,23 +9,21 @@ import {
   FooterComponent,
   PhoneComponent
 } from './components';
-import { TilesComponent } from './components/services/tiles/tiles.component';
-import { CirclesComponent } from './components/services/circles/circles.component';
 
 @NgModule({
   imports: [ RouterModule, CommonModule, TranslateModule ],
-  declarations: [ IntroComponent,
-                  NavbarComponent,
-                  FooterComponent,
-                  PhoneComponent,
-                  TilesComponent,
-                  CirclesComponent ],
-  exports: [ IntroComponent,
-             NavbarComponent,
-             FooterComponent,
-             PhoneComponent,
-             TranslateModule,
-             TilesComponent,
-             CirclesComponent ],
+  declarations: [
+    IntroComponent,
+    NavbarComponent,
+    FooterComponent,
+    PhoneComponent
+  ],
+  exports: [
+    IntroComponent,
+    NavbarComponent,
+    FooterComponent,
+    PhoneComponent,
+    TranslateModule
+  ],
 })
 export class SharedModule { }

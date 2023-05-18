@@ -1,0 +1,79 @@
+<div class="tiles">
+    <div class="container flex flex-justify-content-center">
+
+        <div class="tile other" data-aos="fade-up" [style.height.px]="popularTile.offsetHeight - 60">
+            <div class="tile-content">
+                <div class="title">
+                    <h1>Econom</h1>
+                </div>
+                <div class="subtitle">
+                    <p>{{econom.subtitle | translate }}</p>
+                </div>
+
+                <div class="hr">&nbsp;</div>
+
+                <div class="price">
+                    <p class="amount">{{econom.price | currency }}</p>
+                    <p class="description">{{ 'template.' + translateSectionName + '.shared.tiles.lifetime' | translate }}</p>
+                </div>
+
+                <div class="list">
+                    <ul>
+                        <li *ngFor="let decription of econom.decription_list_translation_keys">{{ decription | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile" #popularTile data-aos="fade-up">
+            <div class="popular flex flex-justify-content-center">{{ 'template.' + translateSectionName + '.shared.tiles.popular' | translate }}</div>
+
+            <div class="tile-content">
+                <div class="title">
+                    <h1>Standart</h1>
+                </div>
+                <div class="subtitle">
+                    <p>{{ standart.subtitle | translate }}</p>
+                </div>
+
+                <div class="hr">&nbsp;</div>
+
+                <div class="price">
+                    <p class="amount">{{ standart.price | currency }}</p>
+                    <p class="description">{{ 'template.' + translateSectionName + '.shared.tiles.lifetime' | translate }}</p>
+                </div>
+
+                <div class="list">
+                    <ul>
+                        <li *ngFor="let decription of standart.decription_list_translation_keys">{{ decription | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile other" data-aos="fade-up" [style.height.px]="popularTile.offsetHeight - 60">
+            <div class="tile-content">
+                <div class="title">
+                    <h1>Premium+</h1>
+                </div>
+                <div class="subtitle">
+                    <p>{{ premiumPlus.subtitle | translate }}</p>
+                </div>
+
+                <div class="hr">&nbsp;</div>
+
+                <div class="price">
+                    <p class="amount">{{ premiumPlus.price | currency }}</p>
+                    <p class="description">{{ 'template.' + translateSectionName + '.shared.tiles.lifetime' | translate }}</p>
+                </div>
+
+                <div class="list">
+                    <ul>
+                        <li *ngFor="let decription of premiumPlus.decription_list_translation_keys">{{ decription | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -2,20 +2,14 @@
            subtitle="{{ 'template.' + translateSectionName + '.subtitle' | translate }}">
 </app-intro>
 
-<services-tiles id="page"
-                [starter]="starter"
-                [standart]="standart"
-                [pro]="pro">
-</services-tiles>
+<services-tiles id="page"></services-tiles>
 
 <div class="circles">
   <services-circles title="Front-End"
                     [circles]="front_circles">
-
   </services-circles>
   
   <services-circles title="Back-End"
                     [circles]="back_circles">
-
   </services-circles>
 </div>
