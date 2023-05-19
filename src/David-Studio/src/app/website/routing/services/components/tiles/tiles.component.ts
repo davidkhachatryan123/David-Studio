@@ -15,6 +15,7 @@ export class TilesComponent {
     'Static website',
     500,
     [
+      `${this.tilesdescriptionListTranslationPath}.budget`,
       `${this.tilesdescriptionListTranslationPath}.static_website`,
       `${this.tilesdescriptionListTranslationPath}.one_month_support`
     ]
@@ -24,6 +25,7 @@ export class TilesComponent {
     'Full-stack',
     1000,
     [
+      `${this.tilesdescriptionListTranslationPath}.with_econom`,
       `${this.tilesdescriptionListTranslationPath}.admin_panel`,
       `${this.tilesdescriptionListTranslationPath}.auth`,
       `${this.tilesdescriptionListTranslationPath}.db`,
@@ -35,6 +37,7 @@ export class TilesComponent {
     'Full-stack and LTS',
     2000,
     [
+      `${this.tilesdescriptionListTranslationPath}.with_standart`,
       `${this.tilesdescriptionListTranslationPath}.payments`,
       `${this.tilesdescriptionListTranslationPath}.lts_month_support`
     ]

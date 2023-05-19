@@ -57,6 +57,9 @@
           "lifetime": "ամսական սկսած",
           "popular": "Թոփ",
           "description_list": {
+            "budget": "Ամենահասանելի",
+            "with_econom": "Ներառում է Econom փաթեթը",
+            "with_standart": "Ներառում է Standart փաթեթը",
             "one_month_support": "1 ամիս սպասարկում",
             "three_month_support": "3 ամիս սպասարկում",
             "lts_month_support": "Երկարաժամկետ սպասարկում",
