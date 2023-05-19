@@ -16,6 +16,7 @@
   box-shadow: 0 20px 50px 0 #000;
 
   width: 100%;
+  max-width: 300px;
 
   transform: scale(1);
   order: -1;
@@ -139,6 +140,7 @@
   position: absolute;
   width: 35px;
   left: -35px;
+  top: -5px;
 
   color: white;
 }
@@ -151,4 +153,5 @@
 
 .tile .list ul li:first-child:before {
   color: var(--accent-color);
+  content: "\2b";
 }

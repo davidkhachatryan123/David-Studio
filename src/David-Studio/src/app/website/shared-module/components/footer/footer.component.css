@@ -18,7 +18,7 @@ footer a, a:focus {
 }
 
 footer a:hover {
-  color: var(--color-dark);
+  color: #bdbdbd;
 }
 
 footer hr {
