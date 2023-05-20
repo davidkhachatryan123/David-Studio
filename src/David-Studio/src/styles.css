@@ -148,3 +148,11 @@ img::-moz-selection {
       align-items: center;
   }
 }
+
+.on-hover-darker:hover {
+  -webkit-filter: brightness(80%);
+     -moz-filter: brightness(80%);
+      -ms-filter: brightness(80%);
+       -o-filter: brightness(80%);
+          filter: brightness(80%);
+}

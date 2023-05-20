@@ -11,7 +11,8 @@
             {{ service.body_translation_key | translate }}
         </p>
 
-        <a [routerLink]="['/', service.route]" type="button" class="btn btn-success btn-lg">
+        <a type="button" class="btn btn-success btn-lg on-hover-darker"
+          [routerLink]="['/', service.route]">
             {{ 'template.home.services.button_text' | translate }}
             <i class="fa fa-angle-right"></i>
         </a>

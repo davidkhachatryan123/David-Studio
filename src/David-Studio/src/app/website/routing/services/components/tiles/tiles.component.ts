@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Tile } from './models';
+import { AppRoutes } from 'src/app/website/consts';
 
 @Component({
   selector: 'services-tiles',
@@ -10,6 +11,8 @@ import { Tile } from './models';
 export class TilesComponent {
   translateSectionName = 'services';
   tilesdescriptionListTranslationPath = 'template.services.shared.tiles.description_list';
+
+  appRoutes: typeof AppRoutes = AppRoutes;
 
   econom =  new Tile(
     'Static website',

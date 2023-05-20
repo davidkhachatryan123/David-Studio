@@ -3,10 +3,10 @@
 }
 
 .tiles {
-  padding: 50px 0;
-
   background-color: var(--color-background);
   color: var(--color-light);
+
+  padding-top: 100px;
 }
 
 .tile {
@@ -28,24 +28,20 @@
 }
 
 @media (min-width: 992px) {
-  .tiles {
-    padding: 150px 0;
-  }
-
   .tiles .container {
     flex-wrap: nowrap;
   }
 
   .tile {
     width: 300px;
-    height: 85vh;
+    height: 90vh;
 
     order: 0;
     transform: scale(1.1);
   }
 
   .tile.other {
-    height: calc(85vh - var(--popular-height));
+    height: calc(90vh - var(--popular-height));
   }
 }
 
@@ -154,4 +150,16 @@
 .tile .list ul li:first-child:before {
   color: var(--accent-color);
   content: "\2b";
+}
+
+.send-message-container {
+  padding: 50px 0px;
+}
+
+.send-message {
+  font-size: 20px;
+
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  outline: var(--accent-color);
 }

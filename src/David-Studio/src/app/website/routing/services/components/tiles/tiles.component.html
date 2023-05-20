@@ -76,4 +76,11 @@
         </div>
 
     </div>
+
+    <div class="flex flex-justify-content-center send-message-container">
+        <a class="btn btn-success send-message on-hover-darker"
+          [routerLink]="['/', appRoutes.CONTACT]">
+            {{ 'template.' + translateSectionName + '.shared.tiles.send_message' | translate }}
+        </a>
+    </div>
 </div>
