@@ -5,12 +5,6 @@
     "services": "Ծառայություններ",
     "contact": "Կապ"
   },
-  "navbar": {
-    "home": "Գլխավոր",
-    "portfolio": "Պորտֆոլիո",
-    "services": "Ծառայություններ",
-    "contact": "Կապ"
-  },
   "template": {
     "home": {
       "title": "David Studio",
