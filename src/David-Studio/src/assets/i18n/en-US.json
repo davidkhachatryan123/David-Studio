@@ -1,96 +1,96 @@
 {
   "title": {
-    "home": "Գլխավոր",
-    "portfolio": "Պորտֆոլիո",
-    "services": "Ծառայություններ",
-    "contact": "Կապ"
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "contact": "Contact"
   },
   "template": {
     "home": {
       "title": "David Studio",
-      "subtitle": "Վեբ կայքերի պատրաստման ստուդիա",
+      "subtitle": "Web development studio",
       "services": {
         "web_development": {
-          "title": "ՎԵԲ կայքերի պատրաստում",
-          "body": "Մենք օգնում ենք բիզնեսներին հասնել մեծ հաջողությունների՝ մեր կողմից պատրաստված ծրագրային ապահովման շնորհիվ։ Մեր հաջողության գաղտնիքն է լսել և հասկանալ հաճախորդին ու հնարավորինս կարճ ժամկետներում տրամադրել ցանկալի արդյունքներ"
+          "title": "Making web sites",
+          "body": "We help businesses achieve great success with our software. The secret of our success is listening and understanding the client and providing the desired results in the shortest possible time"
         },
         "auth_and_db": {
-          "title": "Մուտք ԵՎ տվյալների շտեմարան",
-          "body": "Տալիս ենք մուտք գործելու և գրանցվելու հնարավորություն պատրաստված կայքում օգտագործելով տարատեսակ ժամանակակից և անվտանք տեխնոլոգիաներ։ Օգտագործում ենք տարտեսակ տվյալների շտեմարաններ (Databases) օգտագործողի կողմից տրամադրված ինֆորմացիայի պահպանման համար"
+          "title": "Authentication and Database",
+          "body": "We provide the opportunity to log in and register on the prepared website using various modern and safe technologies. We use various databases to store information provided by the user"
         },
         "admin_panel": {
-          "title": "Կառավարման վահանակ",
-          "body": "Տրամադրում ենք կառավարման վահանակ, որը թույլ է տալիս կայքի պատվիրատուին կամ կառավարչին կատարել Վեբ կայքի պարունակությության փոփոխություններ։ Այս գործիքը նույնպես լինում է օգտագործողին հարմարավետ և հասկանալի բիզնեսի կառավարումն ավելի դյուրին դարձնելու նպատակով"
+          "title": "Admin panel",
+          "body": "We provide a Admin panel that allows the administrator of the website to make changes to the content of the website. This tool also exists to make business management easier for the user in a comfortable and understandable way"
         },
         "payment": {
-          "title": "Վճարման համակարգ",
-          "body": "Կայքում վճարումներ կամ ցանկացած գնումներ կատարելու նպատակով ներդնում ենք վճարման համակարգեր ինչպիսիք են՝ վճարում Visa կամ MasterCard-ով, հանրահայտ PayPal համակարգը կամ հայկական Idram վճարային համակարգը"
+          "title": "Payment systems",
+          "body": "To make payments or purchases on the website, we present payment systems such as Visa or MasterCard, the well-known PayPal or the Armenian Idram payment system"
         },
         "support": {
-          "title": "Սպասարկում",
-          "body": "Մենք պատրաստում ենք անխափան և հուսալի ծրագրային ապահովում, բայց հնարավոր է կարիք լինի մեր կողմից մասնագետի աջակցությունը և այդ պատճառով տրամադրում ենք երկարատև և կարճաժամկետ սպասարկման փաթեթներ"
+          "title": "Support",
+          "body": "We create good and reliable software, but you may need specialist help to troubleshoot, so we provide a long-term and short-term maintenance service"
         },
-        "button_text": "Ավելին"
+        "button_text": "More"
       },
       "top_projects": {
-        "title": "Լավագույն աշխատանքները"
+        "title": "Top projects"
       }
     },
     "portfolio": {
-      "title": "Պորտֆոլիո",
-      "subtitle": "Այստեղ կարող եք ծանոթանալ մեր աշխատանքներին",
+      "title": "Portfolio",
+      "subtitle": "Here you can get acquainted with our works",
       "search": {
-        "placeholder": "Որոնում․․․"
+        "placeholder": "Search․․․"
       }
     },
     "services": {
-      "title": "Ծառայություններ",
-      "subtitle": "Հետևյալ բաժնում կարող եք ծանոթանալ մեր ծառայություններին",
+      "title": "Services",
+      "subtitle": "In the following section you can familiarize yourself with our services",
       "shared": {
         "tiles": {
-          "lifetime": "ամսական սկսած",
-          "popular": "Թոփ",
+          "lifetime": "monthly from",
+          "popular": "Top",
           "description_list": {
-            "budget": "Ամենահասանելի",
-            "with_econom": "Ներառում է Econom փաթեթը",
-            "with_standart": "Ներառում է Standart և Econom փաթեթները",
-            "one_month_support": "1 ամիս սպասարկում",
-            "three_month_support": "3 ամիս սպասարկում",
-            "lts_month_support": "Երկարաժամկետ սպասարկում",
+            "budget": "Most affordable",
+            "with_econom": "Includes the Econom package",
+            "with_standart": "Includes Standard and Econom packages",
+            "one_month_support": "1 month support",
+            "three_month_support": "3 month support",
+            "lts_month_support": "Long term support",
             "static_website": "Static website",
-            "admin_panel": "Կառավարման վահանակ",
-            "auth": "Մուտք և գրանցում",
-            "db": "Տվյալների շտեմարան (DB)",
-            "payments": "Վճարման համակարգեր"
+            "admin_panel": "Admin panel",
+            "auth": "Authentication",
+            "db": "Database",
+            "payments": "Payment systems"
           },
-          "send_message": "Ուղարկել հայտ"
+          "send_message": "Submit a request"
         }
       }
     },
     "contact": {
-      "title": "Կապ",
-      "subtitle": "Մեր մասնագետները պատրաստ են արձագանքելու Ձեր հարցերին",
+      "title": "Contact",
+      "subtitle": "Our specialists are ready to respond to your questions",
       "form": {
-        "done_message": "Ձեր նամակը ուղարկված է։ Շնորհակալություն :)",
+        "done_message": "Your email has been sent։ Thank you :)",
         "placeholder": {
-          "name": "Ձեր Անունը *",
-          "email": "Ձեր էլեկտրոնային հասցեն *",
-          "phone": "Ձեր հեռախոսահամարը (ոչ պարտադիր)",
-          "message": "Ձեր նամակը *"
+          "name": "Your Name *",
+          "email": "Your email *",
+          "phone": "Your phone (optional)",
+          "message": "Message *"
         },
-        "submit_btn": "Ուղարկել"
+        "submit_btn": "Submit"
       }
     }
   },
   "not_found": {
-    "title": "Ոչինչ չի գտնվել",
-    "btn_text": "Վերադառնալ գլխավոր էջ"
+    "title": "Not found",
+    "btn_text": "Return to Home page"
   },
   "footer": {
-    "all_rights_reserved_message": "2023 David Studio. Բոլոր իրավունքները պաշտպանված են:"
+    "all_rights_reserved_message": "2023 David Studio. All rights reserved."
   },
   "call_dialog": {
-    "title": "Զանգահարել",
-    "dismiss": "Փակել"
+    "title": "Call",
+    "dismiss": "Close"
   }
 }
