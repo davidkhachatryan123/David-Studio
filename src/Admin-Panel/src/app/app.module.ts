@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoadingInterceptor } from './loading/loading.interceptor';
 import { LoadingComponent } from './loading/component/loading.component';
+import { WebSiteModule } from './website/website.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LoadingComponent } from './loading/component/loading.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    WebSiteModule
   ],
   bootstrap: [AppComponent],
   providers: [

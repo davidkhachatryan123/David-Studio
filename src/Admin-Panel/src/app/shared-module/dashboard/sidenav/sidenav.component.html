@@ -1,0 +1,27 @@
+<mat-list>
+
+  <div *ngFor="let menuItem of sidenavMenuItems">
+    <mat-expansion-panel [expanded]="isExpanded(menuItem)">
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon color="primary">{{ menuItem.material_icon }}</mat-icon>
+          &nbsp;&nbsp;&nbsp;
+          {{ menuItem.title }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list-item *ngFor="let listItem of menuItem.listItems" [routerLink]="[listItem.route]" routerLinkActive="active">
+        <span matListItemIcon>
+          <mat-icon color="primary">{{ listItem.material_icon }}</mat-icon>
+        </span>
+        <span matListItemTitle>{{ listItem.title }}</span>
+        <span matListItemLine>{{ listItem.description }}</span>
+      </mat-list-item>
+
+    </mat-expansion-panel>
+
+    <mat-divider></mat-divider>
+  </div>
+
+</mat-list>

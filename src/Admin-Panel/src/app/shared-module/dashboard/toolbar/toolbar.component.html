@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="openMenu()">
+    <mat-icon *ngIf="!isMenuOpened">menu</mat-icon>
+    <mat-icon *ngIf="isMenuOpened">arrow_back</mat-icon>
+  </button>
+
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+
+  <app-dashboard-toolbar-user-account></app-dashboard-toolbar-user-account>
+
+</mat-toolbar>

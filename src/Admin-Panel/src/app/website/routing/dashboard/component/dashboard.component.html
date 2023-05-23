@@ -1,0 +1,20 @@
+<app-dashboard-toolbar title="David Studio - Admin Panel"
+                      (isShowSidebar)="sidenav.toggle($event)">
+
+</app-dashboard-toolbar>
+
+<mat-sidenav-container class="layout">
+
+  <mat-sidenav #sidenav mode="side" opened>
+    <app-dashboard-sidenav [sidenavMenuItems]="sidenavMenuItems">
+
+    </app-dashboard-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet>
+
+     </router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
