@@ -10,7 +10,8 @@ import {
   UserAccountComponent,
   SidenavComponent,
   DeleteDialogComponent,
-  ActionsNewComponent
+  ActionsNewComponent,
+  TableComponent
 } from './dashboard';
 
 @NgModule({
@@ -19,7 +20,8 @@ import {
     UserAccountComponent,
     SidenavComponent,
     DeleteDialogComponent,
-    ActionsNewComponent
+    ActionsNewComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
@@ -29,11 +31,12 @@ import {
     AngularMaterialModule
   ],
   exports: [
+    AngularMaterialModule,
     ToolBarComponent,
     SidenavComponent,
     DeleteDialogComponent,
     ActionsNewComponent,
-    AngularMaterialModule
+    TableComponent
   ],
 })
 export class SharedModule { }

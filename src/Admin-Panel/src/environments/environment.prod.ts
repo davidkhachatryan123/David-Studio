@@ -1,8 +1,9 @@
 export const environment = {
   production: true,
-  config: {
-    api: 'http://${hostname}/api',
-    domain: '${hostname}'
+  server: {
+    protocol: 'http',
+    domain: 'localhost',
+    api_uri: '/api',
   },
   sessionStorageConfig: {
     USER_KEY: 'auth-user',

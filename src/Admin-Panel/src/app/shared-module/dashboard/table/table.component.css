@@ -1,0 +1,11 @@
+.resource-img-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  margin: 5px 0;
+}
+
+.resource-img {
+  height: 50px;
+}

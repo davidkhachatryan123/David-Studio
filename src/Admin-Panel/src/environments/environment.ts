@@ -1,8 +1,9 @@
 export const environment = {
   production: false,
-  config: {
-    api: 'http://localhost:5000/api',
-    domain: 'localhost:5000'
+  server: {
+    protocol: 'http',
+    domain: 'localhost:5000',
+    api_uri: '/api',
   },
   authConfig: {
     USER_KEY: 'auth-user',
