@@ -3,7 +3,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { TableConfiguration, TableOptions } from './models';
+import { TableButton, TableConfiguration, TableImage, TableOptions, TableText } from './models';
 import { ServerConfigService } from 'src/app/website/services';
 
 @Component({
@@ -15,7 +15,7 @@ export class TableComponent implements AfterViewInit {
   @Input() tableConfiguration: Array<TableConfiguration> = [];
 
   @Input() data: Array<any> = [];
-  @Input() pagesCount: number = 0;
+  @Input() pagesCount = 0;
 
   @Input() tableOptions = new TableOptions('id', 'asc', 1, 1);
   @Output() tableOptionsChange = new EventEmitter<TableOptions>();
@@ -49,7 +49,14 @@ export class TableComponent implements AfterViewInit {
     .map(conf => conf.name);
   }
 
-  endsWith(source: any, value: string): boolean {
-    return typeof source == 'string' ? source?.endsWith(value) : false;
+  isTypeOf(obj: TableText | TableButton | TableImage, type: string): boolean {
+    return type === 'TableText' ? obj instanceof TableText :
+           type === 'TableButton' ? obj instanceof TableButton :
+           type === 'TableImage' ? obj instanceof TableImage :
+           false;
+  }
+
+  getTableButton(obj: TableText | TableButton | TableImage) {
+    return obj as TableButton;
   }
 }

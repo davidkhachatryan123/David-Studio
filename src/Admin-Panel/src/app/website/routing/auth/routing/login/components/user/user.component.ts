@@ -1,8 +1,5 @@
 import { Component, Output, EventEmitter, } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'login-user',

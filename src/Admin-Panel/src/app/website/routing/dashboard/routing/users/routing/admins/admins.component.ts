@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TableConfiguration, TableOptions } from 'src/app/shared-module/dashboard/table/models';
+import { TableButton, TableConfiguration, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
 import { Admin } from '../../models';
 
 @Component({
@@ -8,37 +8,46 @@ import { Admin } from '../../models';
 })
 export class AdminsComponent {
   tableConfiguration: Array<TableConfiguration> = [
-    {
-      name: 'id',
-      title: 'Id',
-      displayed: false
-    },
-    {
-      name: 'username',
-      title: 'Username',
-      displayed: true
-    },
-    {
-      name: 'email',
-      title: 'Email',
-      displayed: true
-    },
-    {
-      name: 'emailConfirmed',
-      title: 'Email Confirmed',
-      displayed: true
-    },
-    {
-      name: 'phoneNumber',
-      title: 'Phone Number',
-      displayed: true
-    }
+    new TableConfiguration(
+      new TableText(),
+      'id',
+      'Id',
+      false
+    ),
+    new TableConfiguration(
+      new TableText(),
+      'username',
+      'Username',
+      true
+    ),
+    new TableConfiguration(
+      new TableText(),
+      'email',
+      'Email',
+      true
+    ),
+    new TableConfiguration(
+      new TableButton('Send Confirmation Email', value => !value, id => this.onSendConfirmationEmailClick(id)),
+      'emailConfirmed',
+      'Email Confirmed',
+      true
+    ),
+    new TableConfiguration(
+      new TableText(),
+      'phoneNumber',
+      'Phone Number',
+      true
+    )
   ];
 
   data: Array<Admin> = [
     new Admin('1', 'david', 'xdavit7@gmail.com', true, '+374 41 21-48-03'),
-    new Admin('2', 'hayk', 'xhayk7@gmail.com', true, null)
+    new Admin('2', 'hayk', 'xhayk7@gmail.com', false, null)
   ];
 
   tableOptions = new TableOptions('username', 'asc', 1, 1);
+
+  onSendConfirmationEmailClick(id: number | string) {
+    console.log(`SendConfirmationEmail: ${id}`);
+  }
 }
