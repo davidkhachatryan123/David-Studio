@@ -1,0 +1,8 @@
+<button mat-stroked-button [matMenuTriggerFor]="actions" color="primary">
+  <mat-icon>arrow_drop_down</mat-icon>
+  <span>Actions</span>
+</button>
+
+<mat-menu #actions="matMenu">
+  <ng-content></ng-content>
+</mat-menu>

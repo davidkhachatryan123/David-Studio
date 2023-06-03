@@ -10,9 +10,12 @@ import {
   UserAccountComponent,
   SidenavComponent,
   DeleteDialogComponent,
-  TableComponent
+  ActionsBarComponent,
+  ActionBarButtonDirective,
+  ActionBarDropDownComponent,
+  TableComponent,
+  CardComponent
 } from './dashboard';
-import { CardComponent } from './dashboard/card/card.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { CardComponent } from './dashboard/card/card.component';
     UserAccountComponent,
     SidenavComponent,
     DeleteDialogComponent,
+    ActionsBarComponent,
+    ActionBarButtonDirective,
+    ActionBarDropDownComponent,
     TableComponent,
     CardComponent
   ],
@@ -35,6 +41,9 @@ import { CardComponent } from './dashboard/card/card.component';
     ToolBarComponent,
     SidenavComponent,
     DeleteDialogComponent,
+    ActionsBarComponent,
+    ActionBarButtonDirective,
+    ActionBarDropDownComponent,
     TableComponent,
     CardComponent
   ],

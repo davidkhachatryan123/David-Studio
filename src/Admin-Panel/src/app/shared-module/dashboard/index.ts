@@ -5,4 +5,7 @@ export * from './sidenav/sidenav.component';
 
 export * from './dialogs';
 
+export * from './actions-bar'
 export * from './table/table.component';
+
+export * from './card/card.component';

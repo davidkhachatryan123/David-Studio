@@ -1,5 +1,14 @@
 <app-dashboard-card>
-  
+  <app-dashboard-actions-bar style="display: flex">
+    <button action-bar-item mat-raised-button color="primary">New</button>
+
+    <span class="spacer"></span>
+
+    <app-dashboard-action-bar-dropdown action-bar-item>
+      <button mat-menu-item>Edit</button>
+      <button mat-menu-item>Delete</button>
+    </app-dashboard-action-bar-dropdown>
+  </app-dashboard-actions-bar>
 </app-dashboard-card>
 
 <app-dashboard-card title="Admins">

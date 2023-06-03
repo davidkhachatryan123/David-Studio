@@ -27,7 +27,7 @@
         </span>
 
         <button *ngIf="getTableButton(tableConfiguration[i].type).expression(element[property])"
-                mat-flat-button color="primary"
+                mat-raised-button color="primary"
                 (click)="getTableButton(tableConfiguration[i].type).click(element['id'], property)">
                 {{ getTableButton(tableConfiguration[i].type).btn_text }}
         </button>
