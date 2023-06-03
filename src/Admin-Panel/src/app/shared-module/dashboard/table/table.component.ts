@@ -46,7 +46,12 @@ export class TableComponent implements AfterViewInit {
   getDisplayedColumns(): Array<string> {
     return this.tableConfiguration
     .filter(conf => conf.displayed == true)
-    .map(conf => conf.name);
+    .map(conf =>
+      this.getTableDataElementProperties()[this.tableConfiguration.indexOf(conf)]);
+  }
+
+  getTableDataElementProperties(): string[] {
+    return Object.getOwnPropertyNames(this.data[0]);
   }
 
   isTypeOf(obj: TableText | TableButton | TableImage, type: string): boolean {

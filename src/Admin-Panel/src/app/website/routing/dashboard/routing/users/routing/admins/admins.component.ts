@@ -10,31 +10,26 @@ export class AdminsComponent {
   tableConfiguration: Array<TableConfiguration> = [
     new TableConfiguration(
       new TableText(),
-      'id',
       'Id',
       false
     ),
     new TableConfiguration(
       new TableText(),
-      'username',
       'Username',
       true
     ),
     new TableConfiguration(
       new TableText(),
-      'email',
       'Email',
       true
     ),
     new TableConfiguration(
       new TableButton('Send Confirmation Email', value => !value, id => this.onSendConfirmationEmailClick(id)),
-      'emailConfirmed',
       'Email Confirmed',
       true
     ),
     new TableConfiguration(
       new TableText(),
-      'phoneNumber',
       'Phone Number',
       true
     )

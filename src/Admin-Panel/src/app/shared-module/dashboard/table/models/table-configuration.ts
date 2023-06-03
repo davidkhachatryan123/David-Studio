@@ -11,7 +11,6 @@ export class TableConfiguration {
 
   constructor(
     public type: TableText | TableButton | TableImage,
-    public name: string,
     public title: string,
     public displayed: boolean
   ) {

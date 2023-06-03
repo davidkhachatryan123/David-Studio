@@ -4,32 +4,32 @@
       matSortDirection="asc" matSort matSortDisableClear>
 
   <!-- Column -->
-  <ng-container [matColumnDef]="option.name" *ngFor="let option of tableConfiguration">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ option.title }}</th>
+  <ng-container [matColumnDef]="property" *ngFor="let property of getTableDataElementProperties(); let i = index">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ tableConfiguration[i].title }}</th>
 
     <td mat-cell *matCellDef="let element">
       <ng-template #text
-                   [ngIf]="isTypeOf(option.type, 'TableText')">
-        {{ element[option.name] }}
+                   [ngIf]="isTypeOf(tableConfiguration[i].type, 'TableText')">
+        {{ element[property] }}
       </ng-template>
 
       <ng-template #image
-                   [ngIf]="isTypeOf(option.type, 'TableImage')">
+                   [ngIf]="isTypeOf(tableConfiguration[i].type, 'TableImage')">
         <div class="resource-img-container">
-          <img class="resource-img" [src]="serverConfig.getResourcesUrl() + element[option.name]">
+          <img class="resource-img" [src]="serverConfig.getResourcesUrl() + element[property]">
         </div>
       </ng-template>
 
       <ng-template #button
-                   [ngIf]="isTypeOf(option.type, 'TableButton')">
-        <span *ngIf="!getTableButton(option.type).expression(element[option.name])">
-          {{ element[option.name] }}
+                   [ngIf]="isTypeOf(tableConfiguration[i].type, 'TableButton')">
+        <span *ngIf="!getTableButton(tableConfiguration[i].type).expression(element[property])">
+          {{ element[property] }}
         </span>
 
-        <button *ngIf="getTableButton(option.type).expression(element[option.name])"
-                mat-flat-button color="warn"
-                (click)="getTableButton(option.type).click(element['id'], option.name)">
-                {{ getTableButton(option.type).btn_text }}
+        <button *ngIf="getTableButton(tableConfiguration[i].type).expression(element[property])"
+                mat-flat-button color="primary"
+                (click)="getTableButton(tableConfiguration[i].type).click(element['id'], property)">
+                {{ getTableButton(tableConfiguration[i].type).btn_text }}
         </button>
       </ng-template>
     </td>
