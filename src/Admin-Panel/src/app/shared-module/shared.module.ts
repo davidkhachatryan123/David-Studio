@@ -10,9 +10,9 @@ import {
   UserAccountComponent,
   SidenavComponent,
   DeleteDialogComponent,
-  ActionsNewComponent,
   TableComponent
 } from './dashboard';
+import { CardComponent } from './dashboard/card/card.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +20,8 @@ import {
     UserAccountComponent,
     SidenavComponent,
     DeleteDialogComponent,
-    ActionsNewComponent,
-    TableComponent
+    TableComponent,
+    CardComponent
   ],
   imports: [
     CommonModule,
@@ -35,8 +35,8 @@ import {
     ToolBarComponent,
     SidenavComponent,
     DeleteDialogComponent,
-    ActionsNewComponent,
-    TableComponent
+    TableComponent,
+    CardComponent
   ],
 })
 export class SharedModule { }
