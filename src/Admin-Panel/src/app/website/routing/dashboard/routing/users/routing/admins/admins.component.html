@@ -14,8 +14,10 @@
 <app-dashboard-card title="Admins">
   <app-dashboard-table [tableConfiguration]="tableConfiguration"
                        [data]="data"
-                       [(tableOptions)]="tableOptions"
-                       [pagesCount]="1">
+                       [tableOptions]="tableOptions"
+                       (tableOptionsChange)="tableOptionsChange($event)"
+                       [pagesCount]="1"
+                       (selectedRowsChange)="selectedRowsChange($event)">
 
   </app-dashboard-table>
 </app-dashboard-card>

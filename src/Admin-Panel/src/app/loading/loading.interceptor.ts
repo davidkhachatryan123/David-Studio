@@ -8,9 +8,7 @@ import { LoadingService } from './loading.service';
 export class LoadingInterceptor implements HttpInterceptor {
   private totalRequests = 0;
 
-  constructor(
-    private loadingService: LoadingService
-  ) { }
+  constructor(private loadingService: LoadingService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.totalRequests++;

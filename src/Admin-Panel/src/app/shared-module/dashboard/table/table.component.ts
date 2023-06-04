@@ -22,9 +22,11 @@ export class TableComponent implements AfterViewInit {
   @Input() tableOptions = new TableOptions('id', 'asc', 1, 1);
   @Output() tableOptionsChange = new EventEmitter<TableOptions>();
 
+  @Output() selectedRowsChange = new EventEmitter();
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+
   selection = new SelectionModel(true, []);
 
   constructor(public serverConfig: ServerConfigService) {}
@@ -34,6 +36,9 @@ export class TableComponent implements AfterViewInit {
 
     this.sort.sortChange.subscribe(() => this.onTableOptionsChange());
     this.paginator.page.subscribe(() => this.onTableOptionsChange());
+
+    this.selection.changed.subscribe(() =>
+      this.selectedRowsChange.emit(this.selection.selected));
   }
 
   private onTableOptionsChange() {
@@ -43,8 +48,6 @@ export class TableComponent implements AfterViewInit {
     this.tableOptions.pageSize = this.paginator.pageSize;
 
     this.tableOptionsChange.emit(this.tableOptions);
-
-    console.log(this.tableOptions);
   }
 
   getDisplayedColumns(): string[] {
@@ -72,7 +75,7 @@ export class TableComponent implements AfterViewInit {
     this.selection.select(...this.data);
   }
 
-  checkboxLabel(row?: any): string {
+  checkboxLabel(row?): string {
     if (!row)
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
 

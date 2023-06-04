@@ -42,6 +42,14 @@ export class AdminsComponent {
 
   tableOptions = new TableOptions('username', 'asc', 1, 1);
 
+  tableOptionsChange($event: TableOptions) {
+    console.log($event);
+  }
+
+  selectedRowsChange($event: Array<number | string>) {
+    console.log($event);
+  }
+
   onSendConfirmationEmailClick(id: number | string) {
     console.log(`SendConfirmationEmail: ${id}`);
   }

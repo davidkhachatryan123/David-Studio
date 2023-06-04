@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppUser } from 'src/app/website/models';
 
@@ -10,7 +10,6 @@ import { AuthStorageService } from 'src/app/website/services';
   templateUrl: 'user-account.component.html',
   styleUrls: [ 'user-account.component.css' ]
 })
-
 export class UserAccountComponent implements OnInit {
   @Input() isDarkTheme = false;
   @Output() isDarkThemeChange = new EventEmitter<boolean>();
