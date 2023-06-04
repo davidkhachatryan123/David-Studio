@@ -3,10 +3,14 @@
   background-color: #f2f2f2;
 }
 
-.sign-out-button-wrapper {
+.user-wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
+}
+
+.user-wrapper p {
+  margin: 0;
+  margin-right: 15px;
 }
 
 .user-menu-title {
@@ -21,12 +25,12 @@
   color: gray;
 }
 
-.user-wrapper {
-  display: flex;
-  align-items: center;
+.dark-theme-slider {
+  margin: 15px;
 }
 
-.user-wrapper p {
-  margin: 0;
-  margin-right: 15px;
+.sign-out-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

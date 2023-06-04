@@ -5,7 +5,7 @@ import { SidenavMenuItem } from './models';
 @Component({
   selector: 'app-dashboard-sidenav',
   templateUrl: 'sidenav.component.html',
-  styleUrls: [ 'sidenav.component.css' ]
+  styleUrls: ['sidenav.component.css']
 })
 export class SidenavComponent {
   @Input() sidenavMenuItems: Array<SidenavMenuItem> = [];

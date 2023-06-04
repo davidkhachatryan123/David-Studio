@@ -1,13 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { SidenavMenuItem } from 'src/app/shared-module/dashboard/sidenav/models';
 import { AppRoutes } from 'src/app/website/consts';
+import { ThemeService } from 'src/app/website/services';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'dashboard.component.html',
   styleUrls: [ 'dashboard.component.css' ]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  isDarkTheme = false;
+
+  @HostBinding('class')
+  get themeMode() {
+    return this.themeService.setTheme(this.isDarkTheme);
+  }
+
+  constructor(private themeService: ThemeService) { }
+
+  ngOnInit() {
+    this.isDarkTheme = this.themeService.isDark();
+  }
+
   sidenavMenuItems: Array<SidenavMenuItem> = [
     {
       title: 'Main',

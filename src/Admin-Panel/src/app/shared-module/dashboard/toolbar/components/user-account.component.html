@@ -7,11 +7,23 @@
 </div>
 
 <mat-menu #userMenu="matMenu" xPosition="before">
-  <div class="user-menu-title">
-    <h4 class="user-menu-title__name">{{user?.userName}}</h4>
-  </div>
-
-  <div mat-menu-item class="sign-out-button-wrapper">
-    <button mat-raised-button color="warn" (click)="signOut()">Sign Out</button>
+  <div (click)="$event.stopPropagation()">
+    <div class="user-menu-title">
+      <h4 class="user-menu-title__name">Username: {{user?.userName}}</h4>
+    </div>
+  
+    <div mat-menu-item>
+      <mat-slide-toggle class="dark-theme-slider"
+                        color="primary"
+                       [checked]="isDarkTheme"
+                       (change)="toggleTheme()">
+        Dark Theme
+      </mat-slide-toggle>
+    </div>
+  
+  
+    <div mat-menu-item class="sign-out-button-wrapper">
+      <button mat-raised-button color="warn" (click)="signOut()">Sign Out</button>
+    </div>
   </div>
 </mat-menu>

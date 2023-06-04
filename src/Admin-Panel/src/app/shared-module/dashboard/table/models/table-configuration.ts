@@ -2,7 +2,7 @@ import { TableButton } from "./table-button";
 import { TableImage } from "./table-image";
 import { TableText } from "./table-text";
 
-export class TableConfiguration {
+export class TableCellConfiguration {
   private _type: TableText | TableButton | TableImage;
 
   get cell_type(): TableText | TableButton | TableImage {

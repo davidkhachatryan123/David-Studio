@@ -5,7 +5,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 
 import { WebsiteRoutingModule } from './website-routing.module';
 
-import { AuthStorageService, ServerConfigService } from './services';
+import { AuthStorageService, ServerConfigService, ThemeService } from './services';
 
 import { environment } from 'src/environments/environment';
 
@@ -24,6 +24,7 @@ import { environment } from 'src/environments/environment';
   ],
   providers: [
     AuthStorageService,
+    ThemeService,
     ServerConfigService
   ],
 })

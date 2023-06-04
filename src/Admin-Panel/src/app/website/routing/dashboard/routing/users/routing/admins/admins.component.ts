@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TableButton, TableConfiguration, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
+import { TableButton, TableCellConfiguration, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
 import { Admin } from '../../models';
 
 @Component({
@@ -7,28 +7,28 @@ import { Admin } from '../../models';
   templateUrl: 'admins.component.html'
 })
 export class AdminsComponent {
-  tableConfiguration: Array<TableConfiguration> = [
-    new TableConfiguration(
+  tableConfiguration: Array<TableCellConfiguration> = [
+    new TableCellConfiguration(
       new TableText(),
       'Id',
       false
     ),
-    new TableConfiguration(
+    new TableCellConfiguration(
       new TableText(),
       'Username',
       true
     ),
-    new TableConfiguration(
+    new TableCellConfiguration(
       new TableText(),
       'Email',
       true
     ),
-    new TableConfiguration(
+    new TableCellConfiguration(
       new TableButton('Send Confirmation Email', value => !value, id => this.onSendConfirmationEmailClick(id)),
       'Email Confirmed',
       true
     ),
-    new TableConfiguration(
+    new TableCellConfiguration(
       new TableText(),
       'Phone Number',
       true

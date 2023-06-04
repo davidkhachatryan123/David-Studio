@@ -43,26 +43,26 @@ $custom-palette-primary: (
 );
 
 $custom-palette-accent: (
-  50 : #e7eaed,
-  100 : #c2cad2,
-  200 : #9aa7b4,
-  300 : #728395,
-  400 : #53697f,
-  500 : #354e68,
-  600 : #304760,
-  700 : #283d55,
-  800 : #22354b,
-  900 : #16253a,
-  A100 : #7aadff,
-  A200 : #478eff,
-  A400 : #146fff,
-  A700 : #0060f9,
+  50 : #ededfc,
+  100 : #d3d1f7,
+  200 : #b6b3f2,
+  300 : #9995ec,
+  400 : #837ee8,
+  500 : #6d67e4,
+  600 : #655fe1,
+  700 : #5a54dd,
+  800 : #504ad9,
+  900 : #3e39d1,
+  A100 : #ffffff,
+  A200 : #eae9ff,
+  A400 : #b8b6ff,
+  A700 : #9f9cff,
   contrast: (
       50 : #000000,
       100 : #000000,
       200 : #000000,
-      300 : #ffffff,
-      400 : #ffffff,
+      300 : #000000,
+      400 : #000000,
       500 : #ffffff,
       600 : #ffffff,
       700 : #ffffff,
@@ -70,8 +70,8 @@ $custom-palette-accent: (
       900 : #ffffff,
       A100 : #000000,
       A200 : #000000,
-      A400 : #ffffff,
-      A700 : #ffffff,
+      A400 : #000000,
+      A700 : #000000,
   )
 );
 
@@ -79,14 +79,22 @@ $custom-palette-accent: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $Admin-Panel-primary: mat.define-palette($custom-palette-primary, 500);
-$Admin-Panel-accent: mat.define-palette($custom-palette-accent, A200, A100, A400);
+$Admin-Panel-accent: mat.define-palette($custom-palette-accent);
 
 // The warn palette is optional (defaults to red).
 $Admin-Panel-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$Admin-Panel-theme: mat.define-dark-theme((
+$Admin-Panel-theme-light: mat.define-light-theme((
+  color: (
+    primary: $Admin-Panel-primary,
+    accent: $Admin-Panel-accent,
+    warn: $Admin-Panel-warn,
+  )
+));
+
+$Admin-Panel-theme-dark: mat.define-dark-theme((
   color: (
     primary: $Admin-Panel-primary,
     accent: $Admin-Panel-accent,
@@ -97,5 +105,8 @@ $Admin-Panel-theme: mat.define-dark-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($Admin-Panel-theme);
+@include mat.all-component-themes($Admin-Panel-theme-light);
 
+.theme-dark {
+  @include mat.all-component-colors($Admin-Panel-theme-dark);
+}

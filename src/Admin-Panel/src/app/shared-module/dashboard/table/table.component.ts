@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { TableButton, TableConfiguration, TableImage, TableOptions, TableText } from './models';
+import { TableButton, TableCellConfiguration, TableImage, TableOptions, TableText } from './models';
 import { ServerConfigService } from 'src/app/website/services';
 
 @Component({
@@ -12,7 +13,8 @@ import { ServerConfigService } from 'src/app/website/services';
   styleUrls: ['table.component.css']
 })
 export class TableComponent implements AfterViewInit {
-  @Input() tableConfiguration: Array<TableConfiguration> = [];
+  @Input() tableConfiguration: Array<TableCellConfiguration>;
+  @Input() showSelect = true;
 
   @Input() data: Array<any> = [];
   @Input() pagesCount = 0;
@@ -22,6 +24,8 @@ export class TableComponent implements AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  
+  selection = new SelectionModel(true, []);
 
   constructor(public serverConfig: ServerConfigService) {}
 
@@ -43,11 +47,36 @@ export class TableComponent implements AfterViewInit {
     console.log(this.tableOptions);
   }
 
-  getDisplayedColumns(): Array<string> {
-    return this.tableConfiguration
-    .filter(conf => conf.displayed == true)
+  getDisplayedColumns(): string[] {
+    const displayedColumns = this.tableConfiguration
+    .filter(conf => conf.displayed)
     .map(conf =>
-      this.getTableDataElementProperties()[this.tableConfiguration.indexOf(conf)]);
+      this.getTableDataElementProperties()[this.tableConfiguration.indexOf(conf)]
+    )
+
+    return this.showSelect ? ['select', ...displayedColumns] : displayedColumns;
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.data);
+  }
+
+  checkboxLabel(row?: any): string {
+    if (!row)
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   getTableDataElementProperties(): string[] {

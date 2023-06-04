@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppUser } from 'src/app/website/models';
 
@@ -12,8 +12,11 @@ import { AuthStorageService } from 'src/app/website/services';
 })
 
 export class UserAccountComponent implements OnInit {
-  public routers: typeof AppRoutes = AppRoutes;
-  public user: AppUser = new AppUser('', '');
+  @Input() isDarkTheme = false;
+  @Output() isDarkThemeChange = new EventEmitter<boolean>();
+
+  routers: typeof AppRoutes = AppRoutes;
+  user = new AppUser('', '');
 
   constructor(
     private storageService: AuthStorageService,
@@ -22,6 +25,11 @@ export class UserAccountComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.storageService.getUser();
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    this.isDarkThemeChange.emit(this.isDarkTheme);
   }
 
   signOut() {

@@ -1,8 +1,8 @@
 :host /deep/ mat-list-item:hover {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .active {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.1);
 }
