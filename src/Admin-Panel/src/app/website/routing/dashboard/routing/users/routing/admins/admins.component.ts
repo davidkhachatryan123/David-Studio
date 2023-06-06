@@ -63,7 +63,7 @@ export class AdminsComponent {
   onSendConfirmationEmailClick(id: number | string) {
     console.log(`SendConfirmationEmail: ${id}`);
 
-    this.showSnackBar('Email confirm requested!');
+    this.showSnackBar('Email confirmation requested!');
   }
 
   newAdmin() {
