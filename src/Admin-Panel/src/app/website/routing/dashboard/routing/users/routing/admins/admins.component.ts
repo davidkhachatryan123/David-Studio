@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { TableButton, TableCellConfiguration, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
 import { Admin } from '../../models';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from 'src/app/shared-module/dashboard';
 
 @Component({
   selector: 'app-dashboard-main-admins',
@@ -42,15 +47,28 @@ export class AdminsComponent {
 
   tableOptions = new TableOptions('username', 'asc', 1, 1);
 
-  tableOptionsChange($event: TableOptions) {
-    console.log($event);
-  }
+  selectedRows: Array<Admin> = [];
 
-  selectedRowsChange($event: Array<number | string>) {
-    console.log($event);
-  }
+  constructor(
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+  ) { }
 
   onSendConfirmationEmailClick(id: number | string) {
     console.log(`SendConfirmationEmail: ${id}`);
+  }
+
+  deleteItems() {
+    if(this.selectedRows.length > 0) {
+      const dialogRef = this.dialog.open(DeleteDialogComponent, {
+        width: `${this.selectedRows.length > 1 ? 500 : 250}px`,
+        data: { values: this.selectedRows.map(row => row.username) }
+      });
+  
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        if(result)
+          console.log(result);
+      });
+    }
   }
 }
