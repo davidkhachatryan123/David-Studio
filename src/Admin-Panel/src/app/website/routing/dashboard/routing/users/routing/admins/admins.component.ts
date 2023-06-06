@@ -6,6 +6,8 @@ import { TableButton, TableCellConfiguration, TableOptions, TableText } from 'sr
 import { Admin } from '../../models';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'src/app/shared-module/dashboard';
+import { EntityDialogComponent } from './components/entity-dialog.component';
+import { AdminDto } from 'src/app/website/dto/admin-dto';
 
 @Component({
   selector: 'app-dashboard-main-admins',
@@ -54,8 +56,55 @@ export class AdminsComponent {
     private _snackBar: MatSnackBar,
   ) { }
 
+  tableOptionsChanged($event: TableOptions) {
+    this.tableOptions = $event;
+  }
+
   onSendConfirmationEmailClick(id: number | string) {
     console.log(`SendConfirmationEmail: ${id}`);
+
+    this.showSnackBar('Email confirm requested!');
+  }
+
+  newAdmin() {
+    const dialogRef = this.dialog.open(EntityDialogComponent, {
+      width: '500px',
+      disableClose: true,
+      data: { user: new AdminDto() }
+    });
+
+    dialogRef.componentInstance.title = "Create new Admin";
+    dialogRef.componentInstance.submitBtnText = "Create";
+
+    dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
+      console.log('Create admin: ', admin);
+
+      dialogRef.close();
+
+      this.showSnackBar('User created successfully!');
+    });
+  }
+
+  editAdmin() {
+    if(this.selectedRows.length == 1) {
+      const dialogRef = this.dialog.open(EntityDialogComponent, {
+        width: '500px',
+        disableClose: true,
+        data: { user: this.selectedRows[0] }
+      });
+  
+      dialogRef.componentInstance.title = "Edit Admin";
+      dialogRef.componentInstance.submitBtnText = "Edit";
+  
+      dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
+        console.log('Edit admin: ', admin);
+
+        dialogRef.close();
+
+        this.showSnackBar('User edited successfully!');
+      });
+    } else
+      this.showSnackBar('Please select one row in table!');
   }
 
   deleteItems() {
@@ -66,9 +115,19 @@ export class AdminsComponent {
       });
   
       dialogRef.afterClosed().subscribe((result: boolean) => {
-        if(result)
-          console.log(result);
+        if(result) {
+          console.log(this.selectedRows);
+
+          this.showSnackBar('User(s) deleted!');
+        }
       });
-    }
+    } else
+    this.showSnackBar('Please select one row in table!');
+  }
+
+  private showSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', {
+      duration: 5000,
+    });
   }
 }
