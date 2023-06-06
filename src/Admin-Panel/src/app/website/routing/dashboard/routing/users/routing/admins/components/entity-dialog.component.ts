@@ -14,7 +14,7 @@ export class EntityDialogComponent {
   @Input() title: string = "";
   @Input() submitBtnText: string = "";
 
-  @Output() onSubmit = new EventEmitter<AdminDto | boolean>();
+  @Output() onSubmit = new EventEmitter<AdminDto>();
 
   constructor(
     public dialogRef: MatDialogRef<EntityDialogComponent>,
