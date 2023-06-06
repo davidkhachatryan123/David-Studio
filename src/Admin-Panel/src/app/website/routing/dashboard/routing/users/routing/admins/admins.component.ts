@@ -122,7 +122,7 @@ export class AdminsComponent {
         }
       });
     } else
-    this.showSnackBar('Please select one row in table!');
+    this.showSnackBar('Please select minimum one row in table!');
   }
 
   private showSnackBar(message: string) {

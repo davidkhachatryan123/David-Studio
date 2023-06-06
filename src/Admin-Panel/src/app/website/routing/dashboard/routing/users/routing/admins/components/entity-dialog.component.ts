@@ -14,7 +14,7 @@ export class EntityDialogComponent {
   @Input() title: string = "";
   @Input() submitBtnText: string = "";
 
-  @Output() onSubmit = new EventEmitter<any>();
+  @Output() onSubmit = new EventEmitter<AdminDto | boolean>();
 
   constructor(
     public dialogRef: MatDialogRef<EntityDialogComponent>,
@@ -42,17 +42,14 @@ export class EntityDialogComponent {
 
   onSubmitEvent() {
     if(this.ngForm.valid) {
-      this.onSubmit.emit({
-        id: this.data.user.id,
-        user: new AdminDto(
-          this.data.user.id,
-          this.ngForm.controls['username'].value,
-          this.ngForm.controls['password'].value,
-          this.ngForm.controls['confirmPassword'].value,
-          this.ngForm.controls['email'].value,
-          this.ngForm.controls['phoneNumber'].value
-        )
-      });
+      this.onSubmit.emit(new AdminDto(
+        this.data.user.id,
+        this.ngForm.controls['username'].value,
+        this.ngForm.controls['password'].value,
+        this.ngForm.controls['confirmPassword'].value,
+        this.ngForm.controls['email'].value,
+        this.ngForm.controls['phoneNumber'].value
+      ));
     }
   }
 }
