@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared-module/shared.module';
 import { EntityDialogComponent } from './components/entity-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EntityDialogService } from './services/entity-dialog.service';
 
 const routes: Routes = [
   {
@@ -24,5 +25,8 @@ const routes: Routes = [
     AdminsComponent,
     EntityDialogComponent
   ],
+  providers: [
+    EntityDialogService
+  ]
 })
 export class AdminsModule { }

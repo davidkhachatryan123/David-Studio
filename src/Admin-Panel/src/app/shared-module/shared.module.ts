@@ -16,6 +16,7 @@ import {
   TableComponent,
   CardComponent
 } from './dashboard';
+import { DeleteDialogService } from './dashboard/dialogs/delete/services/delete-dialog.service';
 
 @NgModule({
   declarations: [
@@ -47,5 +48,8 @@ import {
     TableComponent,
     CardComponent
   ],
+  providers: [
+    DeleteDialogService
+  ]
 })
 export class SharedModule { }

@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'src/app/shared-module/dashboard';
 import { EntityDialogComponent } from './components/entity-dialog.component';
 import { AdminDto } from 'src/app/website/dto/admin-dto';
+import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
+import { EntityDialogService } from './services/entity-dialog.service';
 
 @Component({
   selector: 'app-dashboard-main-admins',
@@ -54,6 +56,8 @@ export class AdminsComponent {
   constructor(
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
+    private deleteDialogService: DeleteDialogService,
+    private entityDialogService: EntityDialogService
   ) { }
 
   tableOptionsChanged($event: TableOptions) {
@@ -67,62 +71,38 @@ export class AdminsComponent {
   }
 
   newAdmin() {
-    const dialogRef = this.dialog.open(EntityDialogComponent, {
-      width: '500px',
-      disableClose: true,
-      data: { user: new AdminDto() }
-    });
-
-    dialogRef.componentInstance.title = "Create new Admin";
-    dialogRef.componentInstance.submitBtnText = "Create";
+    const dialogRef = this.entityDialogService.showNew();
 
     dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
       console.log('Create admin: ', admin);
 
       dialogRef.close();
-
-      this.showSnackBar('User created successfully!');
+      this.showSnackBar('Admin created successfully!');
     });
   }
 
   editAdmin() {
-    if(this.selectedRows.length == 1) {
-      const dialogRef = this.dialog.open(EntityDialogComponent, {
-        width: '500px',
-        disableClose: true,
-        data: { user: this.selectedRows[0] }
-      });
-  
-      dialogRef.componentInstance.title = "Edit Admin";
-      dialogRef.componentInstance.submitBtnText = "Edit";
-  
+    const dialogRef = this.entityDialogService.showEdit(this.selectedRows);
+
+    if(dialogRef) {
       dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
         console.log('Edit admin: ', admin);
 
         dialogRef.close();
-
-        this.showSnackBar('User edited successfully!');
+        this.showSnackBar('Admin edited successfully!');
       });
-    } else
-      this.showSnackBar('Please select one row in table!');
+    }
   }
 
   deleteItems() {
-    if(this.selectedRows.length > 0) {
-      const dialogRef = this.dialog.open(DeleteDialogComponent, {
-        width: `${this.selectedRows.length > 1 ? 500 : 250}px`,
-        data: { values: this.selectedRows.map(row => row.username) }
-      });
-  
-      dialogRef.afterClosed().subscribe((result: boolean) => {
-        if(result) {
-          console.log(this.selectedRows);
+    this.deleteDialogService.show(this.selectedRows.map(row => row.username))
+    .afterClosed().subscribe((result: boolean) => {
+      if(result) {
+        console.log('Delete admin(s): ', this.selectedRows);
 
-          this.showSnackBar('User(s) deleted!');
-        }
-      });
-    } else
-    this.showSnackBar('Please select minimum one row in table!');
+        this.showSnackBar('Admin(s) deleted');
+      }
+    });
   }
 
   private showSnackBar(message: string) {
