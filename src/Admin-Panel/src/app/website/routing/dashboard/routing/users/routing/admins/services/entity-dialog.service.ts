@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { EntityDialogComponent } from '../components/entity-dialog.component';
 import { AdminDto } from 'src/app/website/dto/admin-dto';
+import { Admin } from '../../../models';
 
 @Injectable()
 export class EntityDialogService {
@@ -24,7 +25,7 @@ export class EntityDialogService {
     return dialogRef;
   }
 
-  showEdit(admins: Array<any>) {
+  showEdit(admins: Array<Admin>) {
     if(admins.length == 1) {
       const dialogRef = this.dialog.open(EntityDialogComponent, {
         width: '500px',

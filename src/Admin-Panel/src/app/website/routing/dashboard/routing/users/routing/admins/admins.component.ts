@@ -4,9 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { TableButton, TableCellConfiguration, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
 import { Admin } from '../../models';
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteDialogComponent } from 'src/app/shared-module/dashboard';
-import { EntityDialogComponent } from './components/entity-dialog.component';
 import { AdminDto } from 'src/app/website/dto/admin-dto';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
 import { EntityDialogService } from './services/entity-dialog.service';
@@ -54,7 +51,6 @@ export class AdminsComponent {
   selectedRows: Array<Admin> = [];
 
   constructor(
-    public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private deleteDialogService: DeleteDialogService,
     private entityDialogService: EntityDialogService

@@ -11,14 +11,14 @@ import { AdminDto } from 'src/app/website/dto/admin-dto';
 export class EntityDialogComponent {
   ngForm: FormGroup;
 
-  @Input() title: string = "";
-  @Input() submitBtnText: string = "";
+  @Input() title = '';
+  @Input() submitBtnText = '';
 
   @Output() onSubmit = new EventEmitter<AdminDto>();
 
   constructor(
     public dialogRef: MatDialogRef<EntityDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data,
   ) {
     this.ngForm = new FormGroup({
       "username": new FormControl(data.user.username, [
