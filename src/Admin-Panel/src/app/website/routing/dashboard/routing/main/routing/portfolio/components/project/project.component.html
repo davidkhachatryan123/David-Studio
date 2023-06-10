@@ -1,0 +1,26 @@
+<mat-card class="project-card">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-checkbox color="primary"></mat-checkbox>
+    </div>
+
+    <mat-card-title>{{ project.title }}</mat-card-title>
+    <mat-card-subtitle>
+      <a [href]="project.demo_link" target="_blank"
+         class="project-link" [matTooltip]="project.demo_link">
+        Project link
+      </a>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <img mat-card-image [src]="project.img_uri" alt="Photo of a Project">
+
+  <mat-card-content>
+    
+  </mat-card-content>
+  <mat-card-actions>
+    <span class="spacer"></span>
+    <button mat-flat-button color="warn" class="action-btn">Delete</button>
+    <button mat-flat-button color="primary" class="action-btn">Edit</button>
+  </mat-card-actions>
+</mat-card>

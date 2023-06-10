@@ -1,1 +1,37 @@
-Portfolio
+<app-dashboard-card>
+  <app-dashboard-actions-bar style="display: flex">
+    <button action-bar-item
+            mat-raised-button
+            color="primary"
+            (click)="newProject()">New</button>
+
+    <span class="spacer"></span>
+
+    <app-dashboard-action-bar-dropdown action-bar-item>
+      <button mat-menu-item (click)="editProject()">Edit</button>
+      <button mat-menu-item (click)="deleteProject()">Delete</button>
+    </app-dashboard-action-bar-dropdown>
+  </app-dashboard-actions-bar>
+</app-dashboard-card>
+
+<app-dashboard-card title="Projects">
+
+  <mat-grid-list cols="3" rowHeight="1:1.2">
+    <mat-grid-tile *ngFor="let project of projects">
+
+      <app-dashboard-main-portfolio-project class="project"
+                                            [project]="project">
+        
+      </app-dashboard-main-portfolio-project>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-paginator [length]="projectsCount"
+                 [pageSize]="6"
+                 [pageSizeOptions]="[6, 12, 36]"
+                 showFirstLastButtons
+                 aria-label="Select page">
+  </mat-paginator>
+
+</app-dashboard-card>

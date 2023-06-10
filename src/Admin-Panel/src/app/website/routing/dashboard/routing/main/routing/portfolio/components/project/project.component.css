@@ -1,0 +1,16 @@
+.project-card {
+  margin: 10px 5px;
+}
+
+.project-link {
+  text-decoration: none;
+  color: grey;
+}
+
+.project-link:hover {
+  color: var(--color-primary);
+}
+
+.action-btn {
+  margin: 3px;
+}
