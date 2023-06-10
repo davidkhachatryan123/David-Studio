@@ -92,7 +92,7 @@ export class AdminsComponent {
 
   deleteItems() {
     this.deleteDialogService.show(this.selectedRows.map(row => row.username))
-    .afterClosed().subscribe((result: boolean) => {
+    ?.afterClosed().subscribe((result: boolean) => {
       if(result) {
         console.log('Delete admin(s): ', this.selectedRows);
 

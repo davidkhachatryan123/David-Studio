@@ -3,6 +3,7 @@ import { TableCellConfiguration, TableColor, TableOptions, TableText } from 'src
 import { Tag } from '../../../../models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
+import { TagDialogService } from '../../services/tag-dialog.service';
 
 @Component({
   selector: 'app-dashboard-main-portfolio-tags',
@@ -40,7 +41,7 @@ export class TagsComponent {
   constructor(
     private _snackBar: MatSnackBar,
     private deleteDialogService: DeleteDialogService,
-    // private entityDialogService: EntityDialogService
+    private tagDialogService: TagDialogService
   ) { }
 
   tableOptionsChanged($event: TableOptions) {
@@ -48,32 +49,32 @@ export class TagsComponent {
   }
 
   newTag() {
-    // const dialogRef = this.entityDialogService.showNew();
+    const dialogRef = this.tagDialogService.showNew();
 
-    // dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
-    //   console.log('Create admin: ', admin);
+    dialogRef.componentInstance.onSubmit.subscribe((tag: Tag) => {
+      console.log('Create tag: ', tag);
 
-    //   dialogRef.close();
-    //   this.showSnackBar('Admin created successfully!');
-    // });
+      dialogRef.close();
+      this.showSnackBar('Tag created successfully!');
+    });
   }
 
   editTag() {
-    // const dialogRef = this.entityDialogService.showEdit(this.selectedRows);
+    const dialogRef = this.tagDialogService.showEdit(this.selectedRows);
 
-    // if(dialogRef) {
-    //   dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
-    //     console.log('Edit admin: ', admin);
+    if(dialogRef) {
+      dialogRef.componentInstance.onSubmit.subscribe((tag: Tag) => {
+        console.log('Edit tag: ', tag);
 
-    //     dialogRef.close();
-    //     this.showSnackBar('Admin edited successfully!');
-    //   });
-    // }
+        dialogRef.close();
+        this.showSnackBar('Tag edited successfully!');
+      });
+    }
   }
 
   deleteTag() {
     this.deleteDialogService.show(this.selectedRows.map(row => row.name))
-    .afterClosed().subscribe((result: boolean) => {
+    ?.afterClosed().subscribe((result: boolean) => {
       if(result) {
         console.log('Delete tag(s): ', this.selectedRows);
 

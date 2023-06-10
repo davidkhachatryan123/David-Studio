@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
 import { TagsComponent } from './components/tags/tags.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { TopComponent } from './components/top/top.component';
+import { TagDialogComponent } from './dialogs/tag/tag-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TagDialogService } from './services/tag-dialog.service';
 
 const routes: Routes = [
   {
@@ -19,6 +22,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
     SharedModule
   ],
@@ -27,7 +31,11 @@ const routes: Routes = [
     ProjectsComponent,
     ProjectComponent,
     TagsComponent,
-    TopComponent
+    TopComponent,
+    TagDialogComponent
   ],
+  providers: [
+    TagDialogService
+  ]
 })
 export class PortfolioModule { }
