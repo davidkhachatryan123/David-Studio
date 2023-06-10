@@ -33,10 +33,20 @@
         {{ element[property] }}
       </ng-template>
 
+      <ng-template #color
+                   [ngIf]="isTypeOf(tableConfiguration[i].type, 'TableColor')">
+        <div class="color-container">
+          <div class="color-rect"
+               [style]="'background-color:' + element[property]">
+          </div>
+          {{ element[property] }}
+        </div>
+      </ng-template>
+
       <ng-template #image
                    [ngIf]="isTypeOf(tableConfiguration[i].type, 'TableImage')">
         <div class="resource-img-container">
-          <img class="resource-img" [src]="serverConfig.getResourcesUrl() + element[property]">
+          <img class="resource-img" [src]="element[property]">
         </div>
       </ng-template>
 

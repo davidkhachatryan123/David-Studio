@@ -4,3 +4,4 @@ export * from './table-options';
 export * from './table-text';
 export * from './table-button';
 export * from './table-image';
+export * from './table-color';

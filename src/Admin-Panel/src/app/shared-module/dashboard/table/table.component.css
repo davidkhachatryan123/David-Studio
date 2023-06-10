@@ -9,3 +9,20 @@
 .resource-img {
   height: 50px;
 }
+
+
+.color-container {
+  display: flex;
+  align-items: center;
+}
+
+.color-rect {
+  display: inline-block;
+
+  width: 20px;
+  height: 20px;
+
+  border: 1px solid gray;
+
+  margin-right: 10px;
+}

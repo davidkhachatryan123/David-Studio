@@ -1,1 +1,7 @@
-Tags
+<app-dashboard-table [tableConfiguration]="tableConfiguration"
+                     [data]="data"
+                     [tableOptions]="tableOptions"
+                     (tableOptionsChange)="tableOptionsChanged($event)"
+                     [pagesCount]="1"
+                     (selectedRowsChange)="selectedRows = $event">
+</app-dashboard-table>

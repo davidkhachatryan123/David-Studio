@@ -4,7 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { TableButton, TableCellConfiguration, TableImage, TableOptions, TableText } from './models';
+import { TableButton, TableCellConfiguration, TableColor, TableImage, TableOptions, TableText } from './models';
 import { ServerConfigService } from 'src/app/website/services';
 
 @Component({
@@ -86,14 +86,15 @@ export class TableComponent implements AfterViewInit {
     return Object.getOwnPropertyNames(this.data[0]);
   }
 
-  isTypeOf(obj: TableText | TableButton | TableImage, type: string): boolean {
+  isTypeOf(obj: TableText | TableText | TableButton | TableImage, type: string): boolean {
     return type === 'TableText' ? obj instanceof TableText :
            type === 'TableButton' ? obj instanceof TableButton :
            type === 'TableImage' ? obj instanceof TableImage :
+           type === 'TableColor' ? obj instanceof TableColor :
            false;
   }
 
-  getTableButton(obj: TableText | TableButton | TableImage) {
+  getTableButton(obj) {
     return obj as TableButton;
   }
 }

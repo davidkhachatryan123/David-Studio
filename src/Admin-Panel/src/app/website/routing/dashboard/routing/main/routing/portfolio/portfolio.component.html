@@ -29,13 +29,23 @@
 
     </mat-tab>
 
-    <mat-tab label="Long tab">
+    <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">tag</mat-icon>
         Tags
       </ng-template>
 
       <app-dashboard-main-portfolio-tags></app-dashboard-main-portfolio-tags>
+
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">call_made</mat-icon>
+        Top
+      </ng-template>
+
+      <app-dashboard-main-portfolio-top></app-dashboard-main-portfolio-top>
 
     </mat-tab>
   </mat-tab-group>

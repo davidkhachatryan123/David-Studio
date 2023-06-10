@@ -7,6 +7,7 @@ import { ProjectComponent } from './components/projects/project/project.componen
 import { CommonModule } from '@angular/common';
 import { TagsComponent } from './components/tags/tags.component';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { TopComponent } from './components/top/top.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     PortfolioComponent,
     ProjectsComponent,
     ProjectComponent,
-    TagsComponent
+    TagsComponent,
+    TopComponent
   ],
 })
 export class PortfolioModule { }
