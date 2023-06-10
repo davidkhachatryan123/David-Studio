@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from '../../../../models';
 
 @Component({
@@ -8,4 +8,9 @@ import { Project } from '../../../../models';
 })
 export class ProjectComponent {
   @Input() project: Project;
+
+  @Output() isChecked = new EventEmitter<boolean>();
+
+  @Output() onEdit = new EventEmitter();
+  @Output() onDelete = new EventEmitter();
 }

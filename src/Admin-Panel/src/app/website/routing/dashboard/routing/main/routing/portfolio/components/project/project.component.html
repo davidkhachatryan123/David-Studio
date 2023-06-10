@@ -1,7 +1,9 @@
 <mat-card class="project-card">
   <mat-card-header>
     <div mat-card-avatar>
-      <mat-checkbox color="primary"></mat-checkbox>
+      <mat-checkbox color="primary"
+                    (change)="isChecked.emit($event.checked)">
+      </mat-checkbox>
     </div>
 
     <mat-card-title>{{ project.title }}</mat-card-title>
@@ -20,7 +22,13 @@
   </mat-card-content>
   <mat-card-actions>
     <span class="spacer"></span>
-    <button mat-flat-button color="warn" class="action-btn">Delete</button>
-    <button mat-flat-button color="primary" class="action-btn">Edit</button>
+    <button mat-flat-button color="warn"
+            class="action-btn" (click)="onDelete.emit()">
+      Delete
+    </button>
+    <button mat-flat-button color="primary"
+            class="action-btn" (click)="onEdit.emit()">
+      Edit
+    </button>
   </mat-card-actions>
 </mat-card>

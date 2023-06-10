@@ -16,16 +16,17 @@
 
 <app-dashboard-card title="Projects">
 
-  <mat-grid-list cols="3" rowHeight="1:1.2">
-    <mat-grid-tile *ngFor="let project of projects">
-
-      <app-dashboard-main-portfolio-project class="project"
-                                            [project]="project">
-        
-      </app-dashboard-main-portfolio-project>
-
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="projects-grid">
+    <app-dashboard-main-portfolio-project *ngFor="let project of projects"
+                                          [project]="project"
+                                          (isChecked)="$event
+                                            ? selectedItems.push(project)
+                                            : selectedItems.splice(selectedItems.indexOf(project))"
+                                          (onEdit)="editProject(project.id)"
+                                          (onDelete)="deleteProject(project.id)">
+      
+    </app-dashboard-main-portfolio-project>
+  </div>
 
   <mat-paginator [length]="projectsCount"
                  [pageSize]="6"
