@@ -34,12 +34,6 @@ export class DashboardComponent implements OnInit {
           route: `/${AppRoutes.DASHBOARD}/${AppRoutes.DASHBOARD_MAIN}/${AppRoutes.DASHBOARD_MAIN_PORTFOLIO}`
         },
         {
-          title: 'Tags',
-          description: 'Manage tags',
-          material_icon: 'tag',
-          route: `/${AppRoutes.DASHBOARD}/${AppRoutes.DASHBOARD_MAIN}/${AppRoutes.DASHBOARD_MAIN_TAGS}`
-        },
-        {
           title: 'Services',
           description: 'Manage services',
           material_icon: 'price_check',

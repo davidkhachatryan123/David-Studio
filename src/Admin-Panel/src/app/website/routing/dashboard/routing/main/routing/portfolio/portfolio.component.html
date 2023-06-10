@@ -3,36 +3,41 @@
     <button action-bar-item
             mat-raised-button
             color="primary"
-            (click)="newProject()">New</button>
+            (click)="action('new')">
+      New
+    </button>
 
     <span class="spacer"></span>
 
     <app-dashboard-action-bar-dropdown action-bar-item>
-      <button mat-menu-item (click)="editProject()">Edit</button>
-      <button mat-menu-item (click)="deleteProject()">Delete</button>
+      <button mat-menu-item (click)="action('edit')">Edit</button>
+      <button mat-menu-item (click)="action('delete')">Delete</button>
     </app-dashboard-action-bar-dropdown>
   </app-dashboard-actions-bar>
 </app-dashboard-card>
 
-<app-dashboard-card title="Projects">
+<app-dashboard-card title="Portfolio">
 
-  <div class="projects-grid">
-    <app-dashboard-main-portfolio-project *ngFor="let project of projects"
-                                          [project]="project"
-                                          (isChecked)="$event
-                                            ? selectedItems.push(project)
-                                            : selectedItems.splice(selectedItems.indexOf(project))"
-                                          (onEdit)="editProject(project.id)"
-                                          (onDelete)="deleteProject(project.id)">
-      
-    </app-dashboard-main-portfolio-project>
-  </div>
+  <mat-tab-group dynamicHeight>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">apps</mat-icon>
+        Projects
+      </ng-template>
 
-  <mat-paginator [length]="projectsCount"
-                 [pageSize]="6"
-                 [pageSizeOptions]="[6, 12, 36]"
-                 showFirstLastButtons
-                 aria-label="Select page">
-  </mat-paginator>
+      <app-dashboard-main-portfolio-projects></app-dashboard-main-portfolio-projects>
+
+    </mat-tab>
+
+    <mat-tab label="Long tab">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">tag</mat-icon>
+        Tags
+      </ng-template>
+
+      <app-dashboard-main-portfolio-tags></app-dashboard-main-portfolio-tags>
+
+    </mat-tab>
+  </mat-tab-group>
 
 </app-dashboard-card>

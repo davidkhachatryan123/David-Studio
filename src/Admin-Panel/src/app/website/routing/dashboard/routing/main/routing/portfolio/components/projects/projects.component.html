@@ -1,0 +1,17 @@
+<div class="projects-grid">
+  <app-dashboard-main-portfolio-projects-project *ngFor="let project of projects"
+                                                 [project]="project"
+                                                 (isChecked)="$event
+                                                   ? selectedItems.push(project)
+                                                   : selectedItems.splice(selectedItems.indexOf(project))"
+                                                 (onEdit)="editProject(project.id)"
+                                                 (onDelete)="deleteProject(project.id)">
+  </app-dashboard-main-portfolio-projects-project>
+</div>
+
+<mat-paginator [length]="projectsCount"
+               [pageSize]="6"
+               [pageSizeOptions]="[6, 12, 36]"
+               showFirstLastButtons
+               aria-label="Select page">
+</mat-paginator>
