@@ -1,6 +1,6 @@
 .project-card {
   margin: 10px 5px;
-  background-color: var(--color-darker);
+  filter: brightness(95%);
 }
 
 .project-link {
