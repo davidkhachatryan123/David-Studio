@@ -11,6 +11,8 @@ import { TopComponent } from './components/top/top.component';
 import { TagDialogComponent } from './dialogs/tag/tag-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TagDialogService } from './services/tag-dialog.service';
+import { TopProjectComponent } from './components/top/top-project/top-project.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const routes: Routes = [
   {
@@ -24,7 +26,8 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    DragDropModule
   ],
   declarations: [
     PortfolioComponent,
@@ -32,6 +35,7 @@ const routes: Routes = [
     ProjectComponent,
     TagsComponent,
     TopComponent,
+    TopProjectComponent,
     TagDialogComponent
   ],
   providers: [

@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* =========================================== */
+/* Main
+/* =========================================== */
+
 :root {
   --color-background: #0f1922;
   --color-primary: #1ba39c;
@@ -14,12 +18,30 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+a {
+  color: grey;
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
 mat-form-field {
   width: 100%;
 }
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.flex-fill {
+  flex: 1 1 auto !important;
+}
+
+.flex-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 
 .actions {

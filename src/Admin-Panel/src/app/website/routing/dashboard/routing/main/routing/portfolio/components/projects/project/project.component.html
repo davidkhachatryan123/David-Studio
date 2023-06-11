@@ -17,9 +17,15 @@
 
   <img mat-card-image [src]="project.img_uri" alt="Photo of a Project">
 
-  <mat-card-content>
-    
+  <mat-card-content class="flex-fill flex-center">
+    <div class="tag-container">
+      <div *ngFor="let tag of project.tags"
+           [style.background-color]="tag.color"
+           class="tag">{{ tag.name }}
+      </div>
+    </div>
   </mat-card-content>
+
   <mat-card-actions>
     <span class="spacer"></span>
     <button mat-stroked-button color="warn"

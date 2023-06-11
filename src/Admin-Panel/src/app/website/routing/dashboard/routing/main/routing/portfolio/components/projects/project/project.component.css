@@ -1,16 +1,31 @@
 .project-card {
-  margin: 10px 5px;
+  height: 100%;
   filter: brightness(95%);
 }
 
-.project-link {
-  color: grey;
+.project-card .tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.project-link:hover {
-  color: var(--color-primary);
+.project-card .tag-container .tag {
+  width: 90px;
+  height: 40px;
+
+  border-radius: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+  text-align: center;
+
+  margin: 5px 5px;
+  color: white;
 }
 
-.action-btn {
+.project-card .action-btn {
   margin: 3px;
 }

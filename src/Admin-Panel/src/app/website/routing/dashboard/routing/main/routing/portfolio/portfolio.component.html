@@ -36,9 +36,15 @@
     <button action-bar-item
             mat-raised-button
             color="primary"
-            (click)="topComponent.removeFromTop()">
-      Remove from TOP
+            (click)="topComponent.save()">
+      Save
     </button>
+
+    <span class="spacer"></span>
+
+    <app-dashboard-action-bar-dropdown action-bar-item>
+      <button mat-menu-item (click)="topComponent.removeFromTop()">Remove from TOP</button>
+    </app-dashboard-action-bar-dropdown>
   </app-dashboard-actions-bar>
 </app-dashboard-card>
 

@@ -9,7 +9,7 @@ import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/del
   styleUrls: ['projects.component.css']
 })
 export class ProjectsComponent {
-  projectsCount = 4;
+  projectsCount = 5;
   projects: Array<Project> = [
     new Project(1, 'David Studio', 'assets/proj1.jpg', 'https://github.com/davidkhachatryan123/David-Studio', [
       new Tag(1, 'C#', '#8d3aa3'),
@@ -28,6 +28,11 @@ export class ProjectsComponent {
     ]),
     new Project(4, 'Smart Bomb', 'assets/proj4.jpg', 'https://github.com/davidkhachatryan123/SmartBomb', [
 
+    ]),
+    new Project(5, 'Test', 'assets/proj3.jpg', 'https://github.com/davidkhachatryan123/Customs-Clearance-Car', [
+      new Tag(1, 'C#', '#8d3aa3'),
+      new Tag(2, 'ASP.NET Core', '#6c429c'),
+      new Tag(3, 'Angular', '#e23237')
     ])
   ];
 
