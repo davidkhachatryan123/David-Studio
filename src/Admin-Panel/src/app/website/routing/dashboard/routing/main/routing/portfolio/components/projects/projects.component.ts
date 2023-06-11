@@ -59,6 +59,10 @@ export class ProjectsComponent {
     });
   }
 
+  markAsTop() {
+    
+  }
+
   private showSnackBar(message: string) {
     this._snackBar.open(message, 'Ok', {
       duration: 5000,

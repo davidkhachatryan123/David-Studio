@@ -15,7 +15,7 @@ export class TagDialogService {
     const dialogRef = this.dialog.open(TagDialogComponent, {
       width: '500px',
       disableClose: true,
-      data: { tag: new Tag() }
+      data: { tag: new Tag(-1, '', '#00FF00') }
     });
 
     dialogRef.componentInstance.title = "Create new Tag";

@@ -4,4 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-dashboard-main-portfolio-top',
   templateUrl: 'top.component.html'
 })
-export class TopComponent { }
+export class TopComponent {
+  removeFromTop() {
+    
+  }
+}
