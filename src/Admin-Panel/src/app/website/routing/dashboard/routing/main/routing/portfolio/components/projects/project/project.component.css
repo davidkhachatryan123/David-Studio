@@ -3,29 +3,6 @@
   filter: brightness(95%);
 }
 
-.project-card .tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.project-card .tag-container .tag {
-  width: 90px;
-  height: 40px;
-
-  border-radius: 100px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 12px;
-  text-align: center;
-
-  margin: 5px 5px;
-  color: white;
-}
-
 .project-card .action-btn {
   margin: 3px;
 }

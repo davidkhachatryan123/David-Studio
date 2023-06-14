@@ -13,11 +13,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TagDialogService } from './services/tag-dialog.service';
 import { TopProjectComponent } from './components/top/top-project/top-project.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SetupProjectWizardComponent } from './wizards/setup-project-wizard/setup-project-wizard.component';
+import { AppRoutes } from 'src/app/website/consts';
 
 const routes: Routes = [
   {
     path: '',
     component: PortfolioComponent
+  },
+  {
+    path: AppRoutes.DASHBOARD_MAIN_PORTFOLIO_SETUP_PROJECT_WIZARD,
+    component: SetupProjectWizardComponent
   }
 ];
 
@@ -36,7 +42,8 @@ const routes: Routes = [
     TagsComponent,
     TopComponent,
     TopProjectComponent,
-    TagDialogComponent
+    TagDialogComponent,
+    SetupProjectWizardComponent
   ],
   providers: [
     TagDialogService

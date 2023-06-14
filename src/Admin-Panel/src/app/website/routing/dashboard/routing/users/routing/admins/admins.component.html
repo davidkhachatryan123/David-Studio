@@ -1,18 +1,16 @@
-<app-dashboard-card>
-  <app-dashboard-actions-bar style="display: flex">
-    <button action-bar-item
-            mat-raised-button
-            color="primary"
-            (click)="newAdmin()">New</button>
+<app-dashboard-actions-bar>
+  <button action-bar-item
+          mat-raised-button
+          color="primary"
+          (click)="newAdmin()">New</button>
 
-    <span class="spacer"></span>
+  <span class="spacer"></span>
 
-    <app-dashboard-action-bar-dropdown action-bar-item>
-      <button mat-menu-item (click)="editAdmin()">Edit</button>
-      <button mat-menu-item (click)="deleteItems()">Delete</button>
-    </app-dashboard-action-bar-dropdown>
-  </app-dashboard-actions-bar>
-</app-dashboard-card>
+  <app-dashboard-action-bar-dropdown action-bar-item>
+    <button mat-menu-item (click)="editAdmin()">Edit</button>
+    <button mat-menu-item (click)="deleteItems()">Delete</button>
+  </app-dashboard-action-bar-dropdown>
+</app-dashboard-actions-bar>
 
 <app-dashboard-card title="Admins">
   <app-dashboard-table [tableConfiguration]="tableConfiguration"

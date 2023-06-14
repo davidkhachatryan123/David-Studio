@@ -15,7 +15,7 @@ export class SidenavComponent {
   ) { }
 
   isExpanded(menuItem: SidenavMenuItem): boolean {
-    return menuItem.listItems.find(item => item.route === this.router.url)
+    return menuItem.listItems.find(item => this.router.url.includes(item.route))
     ? true
     : false;
   }
