@@ -1,0 +1,18 @@
+.form-field, .project-image {
+  margin-top: 20px;
+}
+
+.project-image {
+  display: flex;
+  flex-direction: row;
+}
+
+.project-image__upload .img-button {
+  margin-top: 10px;
+}
+
+.project-image-preview {
+  margin-left: 50px;
+  max-width: 300px;
+  border: 1px solid black;
+}

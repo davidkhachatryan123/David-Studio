@@ -7,7 +7,63 @@
   </mat-card-header>
 
    <mat-card-content>
+    <form [formGroup]="projectForm" novalidate>
 
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Project Name&nbsp;&nbsp;&nbsp;</mat-label>
+        <input type="text" matInput placeholder="Ex. David Studio" formControlName="name">
+        <mat-error>Name of project is invalid</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Project Link&nbsp;&nbsp;&nbsp;</mat-label>
+        <input type="text" matInput placeholder="Ex. https://github.com/..." formControlName="link">
+        <mat-error>Link of project is invalid</mat-error>
+      </mat-form-field>
+
+      <div class="project-image">
+        <div class="project-image__upload">
+          <div class="img-title">
+            <mat-label>Project Image</mat-label>
+          </div>
+
+          <div class="img-button">
+            <button type="button" mat-raised-button (click)="fileInput.click()" color="primary">Choose File</button>
+            <input hidden type="file"
+                   #fileInput
+                   formControlName="image"
+                   (change)="onFileChange($event)"
+                   (click)="this.img = null">
+          </div>
+        </div>
+
+        <img *ngIf="img" [src]="img" class="project-image-preview">
+      </div>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Tags</mat-label>
+    
+        <mat-chip-grid #chipGrid>
+          <mat-chip-row *ngFor="let tag of project.tags" (removed)="removeTag(tag)">
+            {{tag.name}}
+    
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+    
+        <input #tagInput placeholder="Type tag name" formControlName="tagCtrl"
+               [matChipInputFor]="chipGrid" [matAutocomplete]="tagAuto"/>
+    
+        <mat-autocomplete #tagAuto="matAutocomplete" (optionSelected)="tagSelected($event)">
+          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+            {{tag}}
+          </mat-option>
+        </mat-autocomplete>
+    
+      </mat-form-field>
+    </form>
    </mat-card-content>
 </app-dashboard-card>
 
@@ -15,16 +71,16 @@
   <span class="spacer"></span>
 
   <button action-bar-item
-          mat-raised-button
-          color="primary"
-          >
-    Save
+          mat-stroked-button
+          color="warn"
+          (click)="navigatToReturnUrl()">
+    Cancel
   </button>
 
   <button action-bar-item
-          mat-stroked-button
-          color="warn"
-          >
-    Cancel
+          mat-raised-button
+          color="primary"
+          (click)="submit()">
+    Save
   </button>
 </app-dashboard-actions-bar>

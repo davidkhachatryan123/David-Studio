@@ -1,20 +1,23 @@
 import { NgModule } from '@angular/core';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { PortfolioComponent } from './portfolio.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared-module/shared.module';
 import { ProjectComponent } from './components/projects/project/project.component';
-import { CommonModule } from '@angular/common';
 import { TagsComponent } from './components/tags/tags.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { TopComponent } from './components/top/top.component';
 import { TagDialogComponent } from './dialogs/tag/tag-dialog.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TagDialogService } from './services/tag-dialog.service';
 import { TopProjectComponent } from './components/top/top-project/top-project.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SetupProjectWizardComponent } from './wizards/setup-project-wizard/setup-project-wizard.component';
 import { AppRoutes } from 'src/app/website/consts';
+import { ImageCropDialogComponent } from './wizards/dialogs/image-crop/image-crop-dialog.component';
+import { ImageCropDialogService } from './wizards/services/image-crop-dialog.service';
 
 const routes: Routes = [
   {
@@ -33,7 +36,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     SharedModule,
-    DragDropModule
+    DragDropModule,
+    ImageCropperModule
   ],
   declarations: [
     PortfolioComponent,
@@ -43,10 +47,12 @@ const routes: Routes = [
     TopComponent,
     TopProjectComponent,
     TagDialogComponent,
-    SetupProjectWizardComponent
+    SetupProjectWizardComponent,
+    ImageCropDialogComponent
   ],
   providers: [
-    TagDialogService
+    TagDialogService,
+    ImageCropDialogService
   ]
 })
 export class PortfolioModule { }
