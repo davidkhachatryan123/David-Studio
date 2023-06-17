@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Change service price</h1>
+
+<div mat-dialog-content>
+  <br>
+  <form novalidate>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter price&nbsp;</mat-label>
+      <input type="text" #price matInput placeholder="Name" [formControl]="priceFromControl">
+      
+      <mat-hint align="end">{{price.value.length}}/8</mat-hint>
+      <mat-error>Price value is invalid</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close color="warn">Cancle</button>
+  <button mat-raised-button [mat-dialog-close]="price.value" color="primary"
+          [disabled]="!priceFromControl.valid">
+    Save
+  </button>
+</div>

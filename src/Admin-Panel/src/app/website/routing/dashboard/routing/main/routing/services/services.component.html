@@ -1,1 +1,24 @@
-Services
+<div class="service-price-grid">
+  <mat-card class="service-price-grid__price-card"
+            *ngFor="let priceCard of servicePriceCards">
+    <mat-card-header>
+      <div mat-card-avatar class="price-card__icon">
+        <mat-icon color="primary">{{ priceCard.icon }}</mat-icon>
+      </div>
+  
+      <mat-card-title>{{ priceCard.title }}</mat-card-title>
+      <mat-card-subtitle>{{ priceCard.subtitle }}</mat-card-subtitle>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <div class="price-card__price-container">
+        <mat-label>{{ priceCard.price.value | currency }}</mat-label>
+
+        <button mat-icon-button class="price-card__price-container__price-btn"
+                (click)="priceCard.editEvent(priceCard.price.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
-
-import { ServicesComponent } from './services.component';
 import { RouterModule, Routes } from '@angular/router';
+
+import { SharedModule } from 'src/app/shared-module/shared.module';
+import { ServicesComponent } from './services.component';
+import { CommonModule } from '@angular/common';
+import { EditPriceDialogComponent } from './dialogs/edit/edit-price-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditPriceDialogService } from './services/edit-price-dialog.service';
 
 const routes: Routes = [
   {
@@ -11,8 +16,19 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [],
-  declarations: [ServicesComponent],
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  declarations: [
+    ServicesComponent,
+    EditPriceDialogComponent
+  ],
+  providers: [
+    EditPriceDialogService
+  ]
 })
 export class ServicesModule { }

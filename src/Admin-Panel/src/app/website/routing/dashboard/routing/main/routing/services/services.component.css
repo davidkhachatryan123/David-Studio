@@ -1,0 +1,34 @@
+.service-price-grid {
+  display: flex;
+  width: 100%;
+
+  justify-content: center;
+}
+
+.service-price-grid__price-card {
+  width: 300px;
+  margin: 10px;
+}
+
+.price-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-card__price-container {
+  text-align: center;
+  position: relative;
+  height: 100px;
+}
+
+.price-card__price-container__price-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.price-card__price-container mat-label {
+  font-size: 48px;
+  color: var(--color-primary);
+}
