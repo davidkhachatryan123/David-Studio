@@ -67,7 +67,7 @@ export class ProjectsComponent {
   }
 
   markAsTop() {
-    
+    console.log('Mark as TOP: ', this.selectedItems);
   }
 
   private showSnackBar(message: string) {

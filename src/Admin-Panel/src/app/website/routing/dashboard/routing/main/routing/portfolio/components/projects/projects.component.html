@@ -1,9 +1,9 @@
 <div class="projects-grid">
   <app-dashboard-main-portfolio-projects-project *ngFor="let project of projects"
                                                  [project]="project"
-                                                 (isChecked)="$event
-                                                   ? selectedItems.push(project)
-                                                   : selectedItems.splice(selectedItems.indexOf(project))"
+                                                 (isChecked)=" $event
+                                                   ? this.selectedItems.push(project)
+                                                   : this.selectedItems.splice(this.selectedItems.indexOf(project), 1)"
                                                  (onEdit)="editProject(project.id)"
                                                  (onDelete)="deleteProject(project.id)">
   </app-dashboard-main-portfolio-projects-project>
