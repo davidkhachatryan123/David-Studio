@@ -32,8 +32,7 @@
             <input hidden type="file"
                    #fileInput
                    formControlName="image"
-                   (change)="onFileChange($event)"
-                   (click)="this.img = null">
+                   (change)="onFileChange($event)">
           </div>
         </div>
 
@@ -44,7 +43,7 @@
         <mat-label>Tags</mat-label>
     
         <mat-chip-grid #chipGrid>
-          <mat-chip-row *ngFor="let tag of project.tags" (removed)="removeTag(tag)">
+          <mat-chip-row *ngFor="let tag of projectDto.tags" (removed)="removeTag(tag)">
             {{tag.name}}
     
             <button matChipRemove>

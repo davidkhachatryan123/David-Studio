@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Project, Tag } from '../../../../models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
+import { SetupProjectWizardService } from '../../wizards/services/setup-project-wizard.service';
 
 @Component({
   selector: 'app-dashboard-main-portfolio-projects',
@@ -40,15 +41,16 @@ export class ProjectsComponent {
 
   constructor(
     private _snackBar: MatSnackBar,
-    private deleteDialogService: DeleteDialogService
+    private deleteDialogService: DeleteDialogService,
+    private setupProjectWizard: SetupProjectWizardService
   ) { }
 
   newProject() {
-
+    this.setupProjectWizard.show();
   }
 
   editProject(id: number = undefined) {
-
+    this.setupProjectWizard.show(id ? id : this.selectedItems[0].id);
   }
 
   deleteProject(id: number = undefined) {

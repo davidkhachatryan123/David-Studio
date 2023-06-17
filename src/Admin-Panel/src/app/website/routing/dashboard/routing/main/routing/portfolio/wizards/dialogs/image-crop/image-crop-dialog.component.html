@@ -5,7 +5,6 @@
 
 <div mat-dialog-content>
   <image-cropper [imageChangedEvent]="data.image"
-                 [imageBase64]="data.image"
                  [maintainAspectRatio]="false"
                  (imageCropped)="imageCropped($event)"
                  class="cropper">
