@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicePrice } from './models';
+import { ServicesPrice } from './models';
 import { ServicePriceCard } from './models/service-price-card';
 import { EditPriceDialogService } from './services/edit-price-dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['services.component.css']
 })
 export class ServicesComponent implements OnInit {
-  prices: Array<ServicePrice>;
+  prices: ServicesPrice;
   servicePriceCards: Array<ServicePriceCard>;
 
   constructor(
@@ -20,29 +20,23 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit() {
     // get it from api
-    this.prices = [
-      new ServicePrice(1, 500),
-      new ServicePrice(2, 1000),
-      new ServicePrice(3, 2000)
-    ];
+    this.prices = new ServicesPrice(1, 500, 1000, 2000);
 
     this.servicePriceCards = [
       new ServicePriceCard('ECONOM', 'You can specify pricing', 'money',
-                           this.prices[0], id => this.edit(id)),
+                           'econom', property => this.edit(property)),
       new ServicePriceCard('STANDART', 'You can specify pricing', 'monetization_on',
-                           this.prices[1], id => this.edit(id)),
+                           'standart', property => this.edit(property)),
       new ServicePriceCard('PREMIUM+', 'You can specify pricing', 'diamond',
-                           this.prices[2], id => this.edit(id))
+                           'premiumPlus', property => this.edit(property))
     ];
   }
 
-  edit(id: number) {
-    let price = this.prices.find(price => price.id === id);
-
-    this.editPriceDialog.show(price.value)
+  edit(propertyName: string) {
+    this.editPriceDialog.show(this.prices[propertyName])
     ?.afterClosed().subscribe((result: string) => {
       if(result) {
-        price.value = parseInt(result);
+        this.prices[propertyName] = parseInt(result);
         this.snackBar.open('Project price was updated', 'Ok', { duration: 5000 });
 
         console.log('Prices after change: ', this.prices);

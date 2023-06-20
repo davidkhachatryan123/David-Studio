@@ -12,10 +12,10 @@
   
     <mat-card-content>
       <div class="price-card__price-container">
-        <mat-label>{{ priceCard.price.value | currency }}</mat-label>
+        <mat-label>{{ prices[priceCard.pricePropertyName] | currency }}</mat-label>
 
         <button mat-icon-button class="price-card__price-container__price-btn"
-                (click)="priceCard.editEvent(priceCard.price.id)">
+                (click)="priceCard.editEvent(priceCard.pricePropertyName)">
           <mat-icon>edit</mat-icon>
         </button>
       </div>
