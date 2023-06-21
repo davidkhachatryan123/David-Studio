@@ -1,0 +1,72 @@
+version: '3.4'
+
+services:
+  authentication:
+    image: ${DOCKER_REGISTRY-}authentication
+    build:
+      context: .
+      dockerfile: Authentication/Dockerfile
+    links:
+        - users
+        - portfolio
+        - services
+        - search
+    depends_on:
+        - db
+
+  users:
+    image: ${DOCKER_REGISTRY-}users
+    build:
+      context: .
+      dockerfile: Users/Dockerfile
+    links:
+        - authentication
+        - portfolio
+        - services
+        - search
+    depends_on:
+        - db
+
+
+  portfolio:
+    image: ${DOCKER_REGISTRY-}portfolio
+    build:
+      context: .
+      dockerfile: Portfolio/Dockerfile
+    links:
+        - authentication
+        - users
+        - services
+        - search
+    depends_on:
+        - db
+
+  services:
+    image: ${DOCKER_REGISTRY-}services
+    build:
+      context: .
+      dockerfile: Services/Dockerfile
+    links:
+        - authentication
+        - users
+        - portfolio
+        - search
+    depends_on:
+        - db
+
+  search:
+    image: ${DOCKER_REGISTRY-}search
+    build:
+      context: .
+      dockerfile: Search/Dockerfile
+    links:
+        - authentication
+        - users
+        - portfolio
+        - services
+    depends_on:
+        - db
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+
