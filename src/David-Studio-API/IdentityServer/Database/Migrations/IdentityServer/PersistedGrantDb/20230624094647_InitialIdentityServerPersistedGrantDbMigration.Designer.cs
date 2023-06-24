@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IdentityServer.Database.Migrations.IdentityServer.PersistedGrantDb
 {
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20230624033929_InitialIdentityServerPersistedGrantDbMigration")]
+    [Migration("20230624094647_InitialIdentityServerPersistedGrantDbMigration")]
     partial class InitialIdentityServerPersistedGrantDbMigration
     {
         /// <inheritdoc />

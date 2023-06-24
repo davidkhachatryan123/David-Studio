@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("IdentityDB")!;
-var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
+var migrationsAssembly = typeof(Config).Assembly.GetName().Name;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
