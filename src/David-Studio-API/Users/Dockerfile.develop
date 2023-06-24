@@ -1,0 +1,16 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0
+EXPOSE 5000
+
+ARG BUILD_CONFIGURATION=Debug
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+WORKDIR /src
+COPY ["Users/Users.csproj", "Users/"]
+RUN dotnet restore "Users/Users.csproj"
+
+COPY . .
+WORKDIR "/src/Users"
+RUN dotnet build "Users.csproj" -c $BUILD_CONFIGURATION -o /app
+
+WORKDIR "/app"
+ENTRYPOINT ["dotnet", "Users.dll"]

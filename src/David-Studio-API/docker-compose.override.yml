@@ -1,6 +1,25 @@
 version: '3.4'
 
 services:
+  identity-server:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+    ports:
+      - "5010:5000"
+    depends_on:
+      - db
+
+  users-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "5020:5000"
+    depends_on:
+      - db
+
   db:
     env_file:
       - .env
@@ -10,6 +29,6 @@ services:
         - "1433:1433"
     volumes:
         - sqldata:/var/opt/mssql
-        
+
 volumes:
   sqldata:
