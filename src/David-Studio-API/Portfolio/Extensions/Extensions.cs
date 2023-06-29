@@ -15,6 +15,7 @@ namespace Portfolio.Extensions
                     new QueryStringApiVersionReader("api-version"),
                     new HeaderApiVersionReader("X-Version"),
                     new MediaTypeApiVersionReader("ver"));
+
             });
 
             services.AddVersionedApiExplorer(setup =>
