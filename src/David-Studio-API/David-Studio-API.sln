@@ -5,8 +5,6 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users", "Users\Users.csproj", "{7D5B7CA9-3D2A-42C4-8386-540C000D7EE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portfolio", "Portfolio\Portfolio.csproj", "{05028AE8-9B98-4A65-9227-A2EF355FDEA5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{2D701EDB-FF13-47B4-9C96-5B27A35EFAC5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Search", "Search\Search.csproj", "{7B33E179-A82A-4AE0-986B-D50C57358CB6}"
@@ -14,6 +12,8 @@ EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5829FBA9-07D4-4CED-829D-7448CC105C43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{EF5561C3-794D-4458-8692-152332A00D89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio", "Portfolio\Portfolio.csproj", "{1F077FE2-3EB2-4364-9C7A-A7FC46A7313F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,11 +45,28 @@ Global
 		{EF5561C3-794D-4458-8692-152332A00D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF5561C3-794D-4458-8692-152332A00D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF5561C3-794D-4458-8692-152332A00D89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA0DF85F-02C0-4344-9FA4-7C6524D1C69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA0DF85F-02C0-4344-9FA4-7C6524D1C69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA0DF85F-02C0-4344-9FA4-7C6524D1C69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA0DF85F-02C0-4344-9FA4-7C6524D1C69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F077FE2-3EB2-4364-9C7A-A7FC46A7313F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F077FE2-3EB2-4364-9C7A-A7FC46A7313F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F077FE2-3EB2-4364-9C7A-A7FC46A7313F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F077FE2-3EB2-4364-9C7A-A7FC46A7313F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD1699C8-F840-4632-97E3-6750F819C910}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 80
+		$1.TabsToSpaces = True
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.scope = text/x-csharp
 	EndGlobalSection
 EndGlobal

@@ -26,7 +26,7 @@ services:
       - ASPNETCORE_URLS=http://+:5000
       - ConnectionStrings__PortfolioDb=Server=db;Database=DavidStudio.Service.Portfolio;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
     ports:
-      - "5010:5000"
+      - "5030:5000"
     depends_on:
       - db
 

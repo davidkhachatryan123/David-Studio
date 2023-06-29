@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -6,11 +7,13 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Portfolio.Configuration
 {
-    public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+    public class ConfigureSwaggerOptions
+    : IConfigureNamedOptions<SwaggerGenOptions>
     {
         private readonly IApiVersionDescriptionProvider _provider;
 
-        public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
+        public ConfigureSwaggerOptions(
+            IApiVersionDescriptionProvider provider)
         {
             _provider = provider;
         }
@@ -31,6 +34,16 @@ namespace Portfolio.Configuration
         }
 
         /// <summary>
+        /// Configure Swagger Options. Inherited from the Interface
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="options"></param>
+        public void Configure(string name, SwaggerGenOptions options)
+        {
+            Configure(options);
+        }
+
+        /// <summary>
         /// Create information about the version of the API
         /// </summary>
         /// <param name="description"></param>
@@ -40,7 +53,7 @@ namespace Portfolio.Configuration
         {
             var info = new OpenApiInfo()
             {
-                Title = $"{Assembly.GetCallingAssembly().GetName().Name} Service",
+                Title = $"{Assembly.GetExecutingAssembly().GetName().Name} Service",
                 Version = desc.ApiVersion.ToString()
             };
 

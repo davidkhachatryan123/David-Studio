@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc.Versioning;
+﻿using System;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace Portfolio.Extensions
 {
     public static class Extensions
     {
-        public static void AddApiVersioning(this IServiceCollection services)
+        public static void ConfigureApiVersioning(this IServiceCollection services)
         {
-            services.AddApiVersioning(o =>
+            services.AddApiVersioning(opt =>
             {
-                o.AssumeDefaultVersionWhenUnspecified = true;
-                o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
-                o.ReportApiVersions = true;
-                o.ApiVersionReader = ApiVersionReader.Combine(
-                    new QueryStringApiVersionReader("api-version"),
-                    new HeaderApiVersionReader("X-Version"),
-                    new MediaTypeApiVersionReader("ver"));
-
+                opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.ReportApiVersions = true;
+                opt.ApiVersionReader = ApiVersionReader.Combine(
+                    new UrlSegmentApiVersionReader(),
+                    new HeaderApiVersionReader("x-api-version"),
+                    new MediaTypeApiVersionReader("x-api-version"));
             });
 
             services.AddVersionedApiExplorer(setup =>
