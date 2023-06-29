@@ -90,12 +90,10 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 
 app.UseRouting();
+
 app.UseAuthorization();
 app.UseIdentityServer();
 
-using (var scope = app.Services.CreateScope())
-{
-    await SeedData.EnsureSeedData(scope, app.Configuration, app.Logger);
-}
+await SeedData.EnsureSeedData(app);
 
 await app.RunAsync();

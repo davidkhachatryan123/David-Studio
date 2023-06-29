@@ -32,18 +32,21 @@ namespace IdentityServer
                 {
                     ClientId = "crm",
                     ClientName = "CRM SPA OpenId Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowAccessTokensViaBrowser = true,
-                    RedirectUris =           { $"{configuration["SpaClient"]}/" },
-                    RequireConsent = false,
-                    PostLogoutRedirectUris = { $"{configuration["SpaClient"]}/" },
-                    AllowedCorsOrigins =     { $"{configuration["SpaClient"]}" },
+                    AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "users"
-                    }
+                    },
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris =           { $"{configuration["SpaClient"]}/" },
+                    PostLogoutRedirectUris = { $"{configuration["SpaClient"]}/" },
+                    AllowedCorsOrigins =     { $"{configuration["SpaClient"]}" },
+
+                    RequirePkce = true,
+                    AllowPlainTextPkce = false
                 }
             };
     }

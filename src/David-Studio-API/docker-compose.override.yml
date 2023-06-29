@@ -1,22 +1,32 @@
 version: '3.4'
 
 services:
-  identity-server:
+#  identity-server:
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ASPNETCORE_URLS=http://+:5000
+#      - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+#    ports:
+#      - "5010:5000"
+#    depends_on:
+#      - db
+#
+#  users-api:
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ASPNETCORE_URLS=http://+:5000
+#    ports:
+#      - "5020:5000"
+#    depends_on:
+#      - db
+
+  portfolio-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - ConnectionStrings__PortfolioDb=Server=db;Database=DavidStudio.Service.Portfolio;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
     ports:
       - "5010:5000"
-    depends_on:
-      - db
-
-  users-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-    ports:
-      - "5020:5000"
     depends_on:
       - db
 

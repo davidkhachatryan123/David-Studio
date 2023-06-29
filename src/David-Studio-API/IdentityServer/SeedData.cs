@@ -9,37 +9,38 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polly;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace IdentityServer
 {
     public class SeedData
     {
-        public static async Task EnsureSeedData(IServiceScope scope, IConfiguration configuration, ILogger logger)
+        public static async Task EnsureSeedData(WebApplication app)
         {
-            var retryPolicy = CreateRetryPolicy(configuration, logger);
-
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            var grantContext = scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
-            var configContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-
-            await retryPolicy.ExecuteAsync(async () =>
+            using (var scope = app.Services.CreateScope())
             {
-                await context.Database.MigrateAsync();
-                await grantContext.Database.MigrateAsync();
-                await configContext.Database.MigrateAsync();
+                var retryPolicy = CreateRetryPolicy(app.Configuration, app.Logger);
 
-                var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var grantContext = scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
+                var configContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
-                await EnsureSeedUsers(context, configuration, logger, userMgr);
-                await EnsureSeedData(configContext, configuration);
-            });
+                await retryPolicy.ExecuteAsync(async () =>
+                {
+                    await context.Database.MigrateAsync();
+                    await grantContext.Database.MigrateAsync();
+                    await configContext.Database.MigrateAsync();
+
+                    await EnsureSeedUsers(context, app.Configuration, app.Logger, scope);
+                    await EnsureSeedData(configContext, app.Configuration);
+                });
+            }
         }
 
         private static async Task EnsureSeedUsers(
             ApplicationDbContext context, IConfiguration configuration,
-            ILogger logger, UserManager<ApplicationUser> userMgr)
+            ILogger logger, IServiceScope scope)
         {
+            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var defaultUser = await userMgr.FindByNameAsync(configuration["DefaultUser:UserName"]!);
 
             if (defaultUser == null)
