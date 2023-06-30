@@ -9,6 +9,9 @@ builder.Services.ConfigureApiVersioning();
 
 builder.Services.AddControllers();
 
+builder.Services.ConfigureDb(builder.Configuration);
+builder.Services.ConfigureMapping();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
@@ -33,5 +36,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MigrateDatabase();
 
 await app.RunAsync();
