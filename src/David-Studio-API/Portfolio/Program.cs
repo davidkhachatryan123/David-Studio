@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Portfolio.Configuration;
 using Portfolio.Extensions;
+using Portfolio.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddControllers();
 
 builder.Services.ConfigureDb(builder.Configuration);
 builder.Services.ConfigureMapping();
+
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

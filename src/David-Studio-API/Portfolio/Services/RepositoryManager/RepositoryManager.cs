@@ -4,19 +4,15 @@ using Portfolio.Database;
 
 namespace Portfolio.Services
 {
-    public class RepositoryManager : ITagsRepository
+    public class RepositoryManager : IRepositoryManager
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
 
-        private ITagsRepository _tagsRepository;
+        private ITagsRepository _tagsRepository = null!;
 
-        public RepositoryManager(
-            ApplicationDbContext context,
-            IMapper mapper)
+        public RepositoryManager(ApplicationDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
 
@@ -24,10 +20,15 @@ namespace Portfolio.Services
         {
             get
             {
-                _tagsRepository ??= new TagsRepository(_context, _mapper);
+                _tagsRepository ??= new TagsRepository(_context);
 
                 return _tagsRepository;
             }
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

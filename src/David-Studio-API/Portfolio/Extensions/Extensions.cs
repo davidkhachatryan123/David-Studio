@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Database;
 using Portfolio.Mappings;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Portfolio.Extensions
 {
