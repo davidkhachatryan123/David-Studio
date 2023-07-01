@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Portfolio.Dtos
+namespace Services.Common.Models
 {
-    public class TableOptionsDto
+    public class PageOptions
     {
         [Required(ErrorMessage = "Page is required")]
         public int Page { get; set; }
 
-        [Required(ErrorMessage = "PageSize is required")]
-        public int PageSize { get; set; }
+        [Required(ErrorMessage = "Size is required")]
+        public int Size { get; set; }
 
         [Required(ErrorMessage = "OrderBy is required")]
         public string OrderBy { get; set; } = null!;

@@ -1,10 +1,9 @@
-﻿using System;
-using AutoMapper;
-using Azure;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
 using Portfolio.Models;
 using Portfolio.Services;
+using Services.Common.Models;
 
 namespace Portfolio.Controllers
 {
@@ -15,26 +14,37 @@ namespace Portfolio.Controllers
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
+        private readonly ILogger<Tags> _logger;
 
         public Tags(
             IRepositoryManager repositoryManager,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<Tags> logger)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [MapToApiVersion("1.0")]
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] TableOptionsDto options)
+        public async Task<IActionResult> GetAll([FromQuery] PageOptions options)
         {
-            TablesDataDto<Tag> data = await _repositoryManager.Tags.GetAllAsync(options);
+            PageData<Tag>? data = null;
 
-            return Ok(new TablesDataDto<TagReadDto>
+            try
             {
-                Entities = _mapper.Map<IEnumerable<TagReadDto>>(data.Entities),
-                TotalCount = data.TotalCount
-            });
+                data = await _repositoryManager.Tags.GetAllAsync(options);
+            }
+            catch (Exception ex) { _logger.LogError(ex.Message); }
+
+            return data is null
+                ? NotFound()
+                : Ok(new PageData<TagReadDto>
+                {
+                    Entities = _mapper.Map<IEnumerable<TagReadDto>>(data.Entities),
+                    TotalCount = data.TotalCount
+                });
         }
 
         [MapToApiVersion("1.0")]
@@ -87,8 +97,8 @@ namespace Portfolio.Controllers
             bool deleteId = await _repositoryManager.Tags.DeleteAsync(id);
             await _repositoryManager.SaveAsync();
 
-            return deleteId
-                ? BadRequest()
+            return !deleteId
+                ? NotFound()
                 : Ok();
         }
     }

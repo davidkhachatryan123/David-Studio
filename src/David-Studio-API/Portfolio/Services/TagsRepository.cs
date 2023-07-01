@@ -1,10 +1,8 @@
-﻿using System.Reflection;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Database;
-using Portfolio.Dtos;
-using Portfolio.Extensions;
 using Portfolio.Models;
+using Services.Common;
+using Services.Common.Models;
 
 namespace Portfolio.Services
 {
@@ -17,11 +15,8 @@ namespace Portfolio.Services
             _context = context;
         }
 
-        public async Task<TablesDataDto<Tag>> GetAllAsync(TableOptionsDto options)
-        {
-            return await _context.Tags
-                .ToPagedAsync((options.Page - 1) * options.PageSize, options.PageSize, options.OrderBy);
-        }
+        public async Task<PageData<Tag>> GetAllAsync(PageOptions options)
+            => await _context.Tags.ToPagedAsync(options);
 
         public async Task<Tag?> GetByIdAsync(int id)
             => await _context.Tags.FirstOrDefaultAsync(tag => tag.Id == id);

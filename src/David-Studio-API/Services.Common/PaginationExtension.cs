@@ -1,24 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Linq.Expressions;
-using Portfolio.Dtos;
+using Microsoft.EntityFrameworkCore;
+using Services.Common.Models;
 
-namespace Portfolio.Extensions
+namespace Services.Common
 {
-    public static class PagedContext
+    public static class PaginationExtension
     {
-        public static async Task<TablesDataDto<T>> ToPagedAsync<T>(this IQueryable<T> src, int skip, int take, string orderBy) where T : class
+        public static async Task<PageData<T>> ToPagedAsync<T>(this IQueryable<T> src, PageOptions options) where T : class
         {
             var queryExpression = src.Expression;
-            queryExpression = queryExpression.OrderBy(orderBy);
+            queryExpression = queryExpression.OrderBy(options.OrderBy);
 
             if (queryExpression.CanReduce)
                 queryExpression = queryExpression.Reduce();
 
             src = src.Provider.CreateQuery<T>(queryExpression);
 
-            var results = new TablesDataDto<T>
+            var results = new PageData<T>
             {
-                Entities = await src.Skip(skip).Take(take).ToListAsync(),
+                Entities = await src
+                    .Skip((options.Page - 1) * options.Size)
+                    .Take(options.Size)
+                    .ToListAsync(),
                 TotalCount = await src.CountAsync()
             };
 
@@ -72,7 +76,6 @@ namespace Portfolio.Extensions
 
             return propExpr;
         }
-
     }
 }
 

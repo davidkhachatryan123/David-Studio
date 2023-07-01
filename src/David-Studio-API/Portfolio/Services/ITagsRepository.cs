@@ -1,11 +1,11 @@
-﻿using Portfolio.Dtos;
-using Portfolio.Models;
+﻿using Portfolio.Models;
+using Services.Common.Models;
 
 namespace Portfolio.Services
 {
     public interface ITagsRepository
     {
-        Task<TablesDataDto<Tag>> GetAllAsync(TableOptionsDto options);
+        Task<PageData<Tag>> GetAllAsync(PageOptions options);
         Task<Tag?> GetByIdAsync(int id);
         Task<Tag?> CreateAsync(Tag tag);
         Task<Tag?> UpdateAsync(Tag tag);
