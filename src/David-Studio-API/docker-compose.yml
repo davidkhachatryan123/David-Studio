@@ -12,12 +12,12 @@ services:
 #    build:
 #      context: .
 #      dockerfile: Users/Dockerfile.develop
-#
-#  portfolio-api:
-#    image: ${DOCKER_REGISTRY-}portfolio
-#    build:
-#      context: .
-#      dockerfile: Portfolio/Dockerfile.develop
+
+  portfolio-api:
+    image: ${DOCKER_REGISTRY-}portfolio
+    build:
+      context: .
+      dockerfile: Portfolio/Dockerfile.develop
 
   storage-api:
     image: ${DOCKER_REGISTRY-}storage

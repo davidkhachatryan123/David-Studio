@@ -12,7 +12,7 @@ namespace Storage.Models
         public string FileName { get; set; } = null!;
 
         [Required]
-        public string Path { get; set; } = null!;
+        public string UniqueName { get; set; } = null!;
     }
 }
 

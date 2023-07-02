@@ -1,8 +1,11 @@
-﻿namespace Storage.Services
+﻿using Storage.Models;
+
+namespace Storage.Services
 {
     public interface IFileManagement
     {
-        Task<string?> UploadImageAsync(IFormFile file);
+        Task<Image?> UploadImageAsync(IFormFile file);
+        Task<bool> DeleteImageAsync(int id);
     }
 }
 

@@ -11,7 +11,7 @@ using Portfolio.Database;
 namespace Storage.Database.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230702190940_InitialDbMigration")]
+    [Migration("20230702201450_InitialDbMigration")]
     partial class InitialDbMigration
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace Storage.Database.Migrations.ApplicationDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Path")
+                    b.Property<string>("UniqueName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

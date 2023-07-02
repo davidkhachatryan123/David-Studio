@@ -33,7 +33,7 @@ namespace Storage.Database.Migrations.ApplicationDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Path")
+                    b.Property<string>("UniqueName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
