@@ -12,12 +12,18 @@ services:
 #    build:
 #      context: .
 #      dockerfile: Users/Dockerfile.develop
+#
+#  portfolio-api:
+#    image: ${DOCKER_REGISTRY-}portfolio
+#    build:
+#      context: .
+#      dockerfile: Portfolio/Dockerfile.develop
 
-  portfolio-api:
-    image: ${DOCKER_REGISTRY-}portfolio
+  storage-api:
+    image: ${DOCKER_REGISTRY-}storage
     build:
       context: .
-      dockerfile: Portfolio/Dockerfile.develop
+      dockerfile: Storage/Dockerfile.develop
 
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"

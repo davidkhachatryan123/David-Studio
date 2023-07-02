@@ -48,12 +48,11 @@ namespace Services.Common.Configurations
         /// </summary>
         /// <param name="description"></param>
         /// <returns>Information about the API</returns>
-        private OpenApiInfo CreateVersionInfo(
-                ApiVersionDescription desc)
+        private OpenApiInfo CreateVersionInfo(ApiVersionDescription desc)
         {
             var info = new OpenApiInfo()
             {
-                Title = $"{Assembly.GetExecutingAssembly().GetName().Name} Service",
+                Title = $"David Studio API Service",
                 Version = desc.ApiVersion.ToString()
             };
 

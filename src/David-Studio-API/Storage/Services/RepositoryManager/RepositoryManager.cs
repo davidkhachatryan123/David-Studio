@@ -1,28 +1,26 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Portfolio.Database;
 
-namespace Portfolio.Services
+namespace Storage.Services
 {
     public class RepositoryManager : IRepositoryManager
     {
         private readonly ApplicationDbContext _context;
 
-        private ITagsRepository _tagsRepository = null!;
+        private IFileManagement _filesRepository = null!;
 
         public RepositoryManager(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
-        public ITagsRepository Tags
+        public IFileManagement Files
         {
             get
             {
-                _tagsRepository ??= new TagsRepository(_context);
+                _filesRepository ??= new FileManagement(_context);
 
-                return _tagsRepository;
+                return _filesRepository;
             }
         }
 
