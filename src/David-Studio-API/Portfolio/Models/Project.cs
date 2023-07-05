@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Portfolio.Controllers;
 
 namespace Portfolio.Models
 {
-    public class Tag
+    public class Project
     {
-        public Tag()
+        public Project()
         {
-            Projects = new HashSet<Project>();
+            Tags = new HashSet<Tag>();
             ProjectTags = new HashSet<ProjectTag>();
         }
 
@@ -19,11 +20,13 @@ namespace Portfolio.Models
         public string Name { get; set; } = null!;
 
         [Required]
-        [RegularExpression("^#[0-9A-Fa-f]{6,6}$")]
-        public string Color { get; set; } = null!;
+        public Uri Link { get; set; } = null!;
+
+        [Required]
+        public string ImageUniqueId { get; set; } = null!;
 
         [JsonIgnore]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }

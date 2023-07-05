@@ -31,6 +31,7 @@ namespace Portfolio.Extensions
             var mapperConfig = new MapperConfiguration(map =>
             {
                 map.AddProfile<TagMappingProfile>();
+                map.AddProfile<ProjectMappingProfile>();
             });
 
             services.AddSingleton(mapperConfig.CreateMapper());

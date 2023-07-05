@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Portfolio.Database;
+using Portfolio.Models;
 
 namespace Portfolio.Services
 {
@@ -8,7 +9,8 @@ namespace Portfolio.Services
     {
         private readonly ApplicationDbContext _context;
 
-        private ITagsRepository _tagsRepository = null!;
+        private IBaseRepository<Tag> _tagsRepository = null!;
+        private IBaseRepository<Project> _projectsRespository = null!;
 
         public RepositoryManager(ApplicationDbContext context)
         {
@@ -16,13 +18,23 @@ namespace Portfolio.Services
         }
 
 
-        public ITagsRepository Tags
+        public IBaseRepository<Tag> Tags
         {
             get
             {
                 _tagsRepository ??= new TagsRepository(_context);
 
                 return _tagsRepository;
+            }
+        }
+
+        public IBaseRepository<Project> Projects
+        {
+            get
+            {
+                _projectsRespository ??= new ProjectsRepository(_context);
+
+                return _projectsRespository;
             }
         }
 

@@ -1,8 +1,11 @@
-﻿namespace Portfolio.Services
+﻿using Portfolio.Models;
+
+namespace Portfolio.Services
 {
     public interface IRepositoryManager
     {
-        ITagsRepository Tags { get; }
+        IBaseRepository<Tag> Tags { get; }
+        IBaseRepository<Project> Projects { get; }
 
         Task SaveAsync();
     }
