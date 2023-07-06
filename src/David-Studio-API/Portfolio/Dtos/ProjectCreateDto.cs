@@ -12,7 +12,7 @@ namespace Portfolio.Dtos
         public Uri Link { get; set; } = null!;
 
         [Required]
-        public string ImageUniqueId { get; set; } = null!;
+        public IFormFile File { get; set; } = null!;
 
         [Required]
         public List<Tag> Tags { get; set; } = new();

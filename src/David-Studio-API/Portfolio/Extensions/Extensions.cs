@@ -32,6 +32,7 @@ namespace Portfolio.Extensions
             {
                 map.AddProfile<TagMappingProfile>();
                 map.AddProfile<ProjectMappingProfile>();
+                map.AddProfile<FilesMappingProfile>();
             });
 
             services.AddSingleton(mapperConfig.CreateMapper());

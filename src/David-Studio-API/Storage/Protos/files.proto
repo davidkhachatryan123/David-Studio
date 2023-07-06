@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Storage";
+
+package files;
+
+service Files {
+  rpc StoreImage (stream Request) returns (ImageResponse);
+}
+ 
+message Request {
+  string fileName = 1;
+  bytes file = 2;
+}
+
+message GrpcImageModel {
+  int32 id = 1;
+  string fileName = 2;
+  string uniqueName = 3;
+}
+
+message ImageResponse {
+  GrpcImageModel image = 1;
+}

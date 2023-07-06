@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
+using Portfolio.Grpc;
 using Portfolio.Models;
 using Portfolio.Services;
 using Services.Common.Models;
@@ -13,15 +14,18 @@ namespace Portfolio.Controllers
     public class Projects : ControllerBase
     {
         private readonly IRepositoryManager _repositoryManager;
+        private readonly IStorageDataClient _storageData;
         private readonly IMapper _mapper;
         private readonly ILogger<Projects> _logger;
 
         public Projects(
             IRepositoryManager repositoryManager,
+            IStorageDataClient storageData,
             IMapper mapper,
             ILogger<Projects> logger)
         {
             _repositoryManager = repositoryManager;
+            _storageData = storageData;
             _mapper = mapper;
             _logger = logger;
         }
@@ -59,10 +63,13 @@ namespace Portfolio.Controllers
         }
 
         [MapToApiVersion("1.0")]
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ProjectCreateDto projectDto)
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<IActionResult> Create([FromForm] ProjectCreateDto projectDto)
         {
+            ImageReadDto image = await _storageData.StoreImageAsync(projectDto.File);
+
             Project? project = _mapper.Map<Project>(projectDto);
+            project.ImageUniqueId = image.UniqueName;
 
             project = await _repositoryManager.Projects.CreateAsync(project);
             await _repositoryManager.SaveAsync();
@@ -101,4 +108,3 @@ namespace Portfolio.Controllers
         }
     }
 }
-

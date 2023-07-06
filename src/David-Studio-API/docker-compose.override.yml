@@ -25,6 +25,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
       - ConnectionStrings__PortfolioDb=Server=db;Database=DavidStudio.Service.Portfolio;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - Services__StorageUri=http://storage-api:5009
     ports:
       - "5030:5000"
     depends_on:
@@ -35,6 +36,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
       - ConnectionStrings__StorageDb=Server=db;Database=DavidStudio.Service.Storage;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5009
+      - Kestrel__Endpoints__GRPC__Protocols=Http2
     ports:
       - "5050:5000"
     depends_on:

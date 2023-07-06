@@ -1,19 +1,21 @@
-﻿
-using Microsoft.Extensions.FileProviders;
+﻿using Microsoft.Extensions.FileProviders;
 using Portfolio.Extensions;
 using Services.Common;
-using Storage.Configurations;
+using Services.Common.Configurations;
 using Storage.Services;
+using Storage.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDefaultApiVersioning();
 
 builder.Services.AddControllers();
-
 builder.Services.ConfigureOptions<FormOptionsConfiguration>();
 
+builder.Services.AddGrpc();
+
 builder.Services.ConfigureDb(builder.Configuration);
+builder.Services.ConfigureMapping();
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
@@ -31,6 +33,7 @@ app.UseStaticFiles(new StaticFileOptions()
 });
 
 app.MapControllers();
+app.MapGrpcService<StorageService>();
 
 app.MigrateDatabase();
 

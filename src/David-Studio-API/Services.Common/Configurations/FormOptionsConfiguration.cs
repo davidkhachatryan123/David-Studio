@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Options;
 
-namespace Storage.Configurations
+namespace Services.Common.Configurations
 {
     public class FormOptionsConfiguration : IConfigureNamedOptions<FormOptions>
     {

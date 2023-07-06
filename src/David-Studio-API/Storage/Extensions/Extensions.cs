@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Database;
+using Portfolio.Mappings;
 
 namespace Portfolio.Extensions
 {
@@ -22,6 +24,16 @@ namespace Portfolio.Extensions
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 db.Database.Migrate();
             }
+        }
+
+        public static void ConfigureMapping(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(map =>
+            {
+                map.AddProfile<FilesMappingProfile>();
+            });
+
+            services.AddSingleton(mapperConfig.CreateMapper());
         }
     }
 }
