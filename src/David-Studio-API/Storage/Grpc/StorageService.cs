@@ -20,11 +20,11 @@ namespace Storage.Grpc
             _mapper = mapper;
         }
 
-        public override async Task<ImageResponse> StoreImage(IAsyncStreamReader<Request> requestStream, ServerCallContext context)
+        public override async Task<ImageResponse> StoreImage(IAsyncStreamReader<ImageRequest> requestStream, ServerCallContext context)
         {
             Image? image = new();
 
-            await foreach (Request request in requestStream.ReadAllAsync())
+            await foreach (ImageRequest request in requestStream.ReadAllAsync())
             {
                 byte[] fileBytes = request.File.ToByteArray();
 

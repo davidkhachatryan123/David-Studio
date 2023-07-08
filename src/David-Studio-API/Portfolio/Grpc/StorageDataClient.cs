@@ -36,7 +36,7 @@ namespace Portfolio.Grpc
                 await file.CopyToAsync(ms);
                 ms.Seek(0, SeekOrigin.Begin);
 
-                await call.RequestStream.WriteAsync(new Request
+                await call.RequestStream.WriteAsync(new ImageRequest
                 {
                     FileName = file.FileName,
                     File = ByteString.CopyFrom(ms.ToArray())

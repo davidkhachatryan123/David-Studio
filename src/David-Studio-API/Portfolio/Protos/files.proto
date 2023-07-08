@@ -5,20 +5,20 @@ option csharp_namespace = "Portfolio";
 package files;
 
 service Files {
-  rpc StoreImage (stream Request) returns (ImageResponse);
+  rpc StoreImage (stream ImageRequest) returns (ImageResponse);
 }
  
-message Request {
+message ImageRequest {
   string fileName = 1;
   bytes file = 2;
+}
+
+message ImageResponse {
+  GrpcImageModel image = 1;
 }
 
 message GrpcImageModel {
   int32 id = 1;
   string fileName = 2;
   string uniqueName = 3;
-}
-
-message ImageResponse {
-  GrpcImageModel image = 1;
 }
