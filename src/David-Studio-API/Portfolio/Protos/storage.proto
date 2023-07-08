@@ -1,10 +1,10 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "Storage";
+option csharp_namespace = "Portfolio";
 
-package files;
+package storage;
 
-service Files {
+service Storage {
   rpc StoreImage (stream ImageRequest) returns (ImageResponse);
 }
  
@@ -20,5 +20,6 @@ message ImageResponse {
 message GrpcImageModel {
   int32 id = 1;
   string fileName = 2;
-  string uniqueName = 3;
+  string imageUrl = 3;
 }
+

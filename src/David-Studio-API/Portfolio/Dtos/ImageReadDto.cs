@@ -6,6 +6,6 @@
 
         public string FileName { get; set; } = null!;
 
-        public string UniqueName { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
     }
 }

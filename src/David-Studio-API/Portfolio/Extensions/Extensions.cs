@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Database;
 using Portfolio.Mappings;
+using Portfolio.MessageBus;
 
 namespace Portfolio.Extensions
 {

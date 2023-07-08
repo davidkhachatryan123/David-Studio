@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Portfolio.Extensions;
 using Portfolio.Grpc;
+using Portfolio.MessageBus;
 using Portfolio.Services;
 using Services.Common;
 using Services.Common.Configurations;
@@ -18,6 +19,7 @@ builder.Services.ConfigureDb(builder.Configuration);
 builder.Services.ConfigureMapping();
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 builder.Services.AddScoped<IStorageDataClient, StorageDataClient>();
 
 builder.Services.AddDefaultSwagger();

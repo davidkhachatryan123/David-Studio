@@ -7,17 +7,17 @@ using System;
 
 namespace Storage.Services
 {
-    public class FileManagement : IFileManagement
+    public class ImagesService : IImagesService
     {
         private readonly ApplicationDbContext _context;
         private readonly string imagesFolderName = Path.Combine("Resources", "Images");
 
-        public FileManagement(ApplicationDbContext context)
+        public ImagesService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Image?> UploadImageAsync(IFormFile file)
+        public async Task<Image?> UploadAsync(IFormFile file)
         {
             if (file.Length <= 0) return null;
 
@@ -40,9 +40,9 @@ namespace Storage.Services
             return image;
         }
 
-        public async Task<bool> DeleteImageAsync(int id)
+        public async Task<bool> DeleteAsync(string name)
         {
-            Image? image = await _context.Images.FirstOrDefaultAsync(img => img.Id == id);
+            Image? image = await _context.Images.FirstOrDefaultAsync(img => img.UniqueName == name);
 
             if (image is null) return false;
 

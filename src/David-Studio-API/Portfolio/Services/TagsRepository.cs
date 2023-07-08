@@ -43,14 +43,14 @@ namespace Portfolio.Services
             return tag;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<Tag?> DeleteAsync(int id)
         {
             Tag? tag = await GetByIdAsync(id);
-            if (tag is null) return false;
+            if (tag is null) return null;
 
             _context.Tags.Remove(tag);
 
-            return true;
+            return tag;
         }
     }
 }

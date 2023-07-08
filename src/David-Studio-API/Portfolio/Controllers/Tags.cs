@@ -94,10 +94,10 @@ namespace Portfolio.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            bool deleteId = await _repositoryManager.Tags.DeleteAsync(id);
+            Tag? tag = await _repositoryManager.Tags.DeleteAsync(id);
             await _repositoryManager.SaveAsync();
 
-            return !deleteId
+            return tag is null
                 ? NotFound()
                 : Ok();
         }

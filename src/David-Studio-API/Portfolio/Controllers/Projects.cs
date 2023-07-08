@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
 using Portfolio.Grpc;
+using Portfolio.MessageBus;
 using Portfolio.Models;
 using Portfolio.Services;
 using Services.Common.Models;
@@ -15,17 +16,20 @@ namespace Portfolio.Controllers
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IStorageDataClient _storageData;
+        private readonly IMessageBusClient _messageBus;
         private readonly IMapper _mapper;
         private readonly ILogger<Projects> _logger;
 
         public Projects(
             IRepositoryManager repositoryManager,
             IStorageDataClient storageData,
+            IMessageBusClient messageBus,
             IMapper mapper,
             ILogger<Projects> logger)
         {
             _repositoryManager = repositoryManager;
             _storageData = storageData;
+            _messageBus = messageBus;
             _mapper = mapper;
             _logger = logger;
         }
@@ -69,7 +73,7 @@ namespace Portfolio.Controllers
             ImageReadDto image = await _storageData.StoreImageAsync(projectDto.File);
 
             Project? project = _mapper.Map<Project>(projectDto);
-            project.ImageUniqueId = image.UniqueName;
+            project.ImageUrl = image.ImageUrl;
 
             project = await _repositoryManager.Projects.CreateAsync(project);
             await _repositoryManager.SaveAsync();
@@ -99,12 +103,14 @@ namespace Portfolio.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            bool deleteId = await _repositoryManager.Projects.DeleteAsync(id);
+            Project? project = await _repositoryManager.Projects.DeleteAsync(id);
             await _repositoryManager.SaveAsync();
 
-            return !deleteId
-                ? NotFound()
-                : Ok();
+            if (project is null) return NotFound();
+
+            _messageBus.StorageClient.PublishDeleteImage(project.ImageUrl);
+
+            return Ok();
         }
     }
 }

@@ -7,7 +7,7 @@ using Storage.Services;
 
 namespace Storage.Grpc
 {
-    public class StorageService : Files.FilesBase
+    public class StorageService : Storage.StorageBase
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
@@ -32,7 +32,7 @@ namespace Storage.Grpc
 
                 IFormFile file = new FormFile(stream, 0, fileBytes.Length, "name", request.FileName);
 
-                image = await _repositoryManager.Files.UploadImageAsync(file);
+                image = await _repositoryManager.Images.UploadAsync(file);
                 await _repositoryManager.SaveAsync();
             }
 

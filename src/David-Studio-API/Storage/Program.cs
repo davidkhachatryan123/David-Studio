@@ -19,6 +19,8 @@ builder.Services.ConfigureMapping();
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
+builder.Services.ConfigureMessageBus();
+
 builder.Services.AddDefaultSwagger();
 
 var app = builder.Build();

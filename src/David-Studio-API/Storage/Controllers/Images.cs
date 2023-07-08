@@ -6,7 +6,7 @@ namespace Storage.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/storage/[controller]")]
     public class Images : ControllerBase
     {
         private readonly IRepositoryManager _repositoryManager;
@@ -20,7 +20,7 @@ namespace Storage.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> Upload(IFormFile file)
         {
-            Image? image = await _repositoryManager.Files.UploadImageAsync(file);
+            Image? image = await _repositoryManager.Images.UploadAsync(file);
             await _repositoryManager.SaveAsync();
 
             return image is null
@@ -30,10 +30,10 @@ namespace Storage.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [Route("{imageName}")]
+        public async Task<IActionResult> Delete(string imageName)
         {
-            bool isDeleted = await _repositoryManager.Files.DeleteImageAsync(id);
+            bool isDeleted = await _repositoryManager.Images.DeleteAsync(imageName);
             await _repositoryManager.SaveAsync();
 
             return !isDeleted

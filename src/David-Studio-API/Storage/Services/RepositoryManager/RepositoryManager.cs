@@ -7,20 +7,20 @@ namespace Storage.Services
     {
         private readonly ApplicationDbContext _context;
 
-        private IFileManagement _filesRepository = null!;
+        private IImagesService _imagesRepository = null!;
 
         public RepositoryManager(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IFileManagement Files
+        public IImagesService Images
         {
             get
             {
-                _filesRepository ??= new FileManagement(_context);
+                _imagesRepository ??= new ImagesService(_context);
 
-                return _filesRepository;
+                return _imagesRepository;
             }
         }
 

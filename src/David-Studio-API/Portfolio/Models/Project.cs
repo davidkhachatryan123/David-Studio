@@ -23,7 +23,7 @@ namespace Portfolio.Models
         public Uri Link { get; set; } = null!;
 
         [Required]
-        public string ImageUniqueId { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
 
         [JsonIgnore]
         public virtual ICollection<Tag> Tags { get; set; }

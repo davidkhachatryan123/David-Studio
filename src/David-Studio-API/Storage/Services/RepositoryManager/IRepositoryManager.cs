@@ -2,7 +2,7 @@
 {
     public interface IRepositoryManager
     {
-        IFileManagement Files { get; }
+        IImagesService Images { get; }
 
         Task SaveAsync();
     }

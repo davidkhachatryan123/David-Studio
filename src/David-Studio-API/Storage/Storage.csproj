@@ -18,6 +18,8 @@
 		<None Remove="Protos\" />
 		<None Remove="Grpc\" />
 		<None Remove="Mappings\" />
+		<None Remove="MessageBus\" />
+		<None Remove="MessageBus\Services\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Controllers\" />
@@ -31,6 +33,8 @@
 		<Folder Include="Protos\" />
 		<Folder Include="Grpc\" />
 		<Folder Include="Mappings\" />
+		<Folder Include="MessageBus\" />
+		<Folder Include="MessageBus\Services\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Services.Common\Services.Common.csproj">
@@ -46,10 +50,11 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
+		<PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<Protobuf Include="Protos/files.proto" GrpcService="Server" />
+		<Protobuf Include="Protos\storage.proto" GrpcServices="Server" />
 	</ItemGroup>
 </Project>

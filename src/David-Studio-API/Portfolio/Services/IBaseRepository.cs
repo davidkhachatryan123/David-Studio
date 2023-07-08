@@ -10,7 +10,7 @@ namespace Portfolio.Services
         Task<T?> GetByIdAsync(int id);
         Task<T?> CreateAsync(T tag);
         Task<T?> UpdateAsync(T tag);
-        Task<bool> DeleteAsync(int id);
+        Task<T?> DeleteAsync(int id);
     }
 }
 

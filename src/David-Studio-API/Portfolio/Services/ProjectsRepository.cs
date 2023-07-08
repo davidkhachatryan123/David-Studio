@@ -61,14 +61,14 @@ namespace Portfolio.Services
             return project;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<Project?> DeleteAsync(int id)
         {
             Project? project = await GetByIdAsync(id);
-            if (project is null) return false;
+            if (project is null) return null;
 
             _context.Projects.Remove(project);
 
-            return true;
+            return project;
         }
     }
 }

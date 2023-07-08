@@ -27,7 +27,7 @@ namespace Portfolio.Grpc
         public async Task<ImageReadDto> StoreImageAsync(IFormFile file)
         {
             using var channel = GrpcChannel.ForAddress(uri!);
-            var client = new Files.FilesClient(channel);
+            var client = new Storage.StorageClient(channel);
 
             var call = client.StoreImage();
 

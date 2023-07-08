@@ -10,7 +10,7 @@ namespace Portfolio.Dtos
 
         public Uri Link { get; set; } = null!;
 
-        public string ImageUniqueId { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
 
         public List<Tag> Tags { get; } = new();
     }

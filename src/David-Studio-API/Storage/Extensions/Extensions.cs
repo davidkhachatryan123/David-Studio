@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Database;
 using Portfolio.Mappings;
+using Storage.MessageBus;
+using Storage.MessageBus.Services;
 
 namespace Portfolio.Extensions
 {
@@ -28,12 +30,19 @@ namespace Portfolio.Extensions
 
         public static void ConfigureMapping(this IServiceCollection services)
         {
-            var mapperConfig = new MapperConfiguration(map =>
-            {
-                map.AddProfile<FilesMappingProfile>();
-            });
+            services.AddSingleton(provider => new MapperConfiguration(
+                map =>
+                {
+                    map.AddProfile(new FilesMappingProfile(provider.GetService<IConfiguration>()!));
+                })
+            .CreateMapper());
+        }
 
-            services.AddSingleton(mapperConfig.CreateMapper());
+        public static void ConfigureMessageBus(this IServiceCollection services)
+        {
+            services.AddSingleton<IMessageBusClient, MessageBusClient>();
+
+            services.AddHostedService<StorageImagesSubscriber>();
         }
     }
 }
