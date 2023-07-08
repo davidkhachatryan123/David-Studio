@@ -17,4 +17,4 @@
 | Projects                 | In Progress |
 | Portfolio                | Back Log    |
 | Services                 | Back Log    |
-| Storage                  | In Progress |
+| Storage                  | Done        |
