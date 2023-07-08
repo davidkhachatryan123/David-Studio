@@ -1,8 +1,8 @@
 # David-Studio
 
-## This project is in Development stage
+> Note. This project is in **Development** stage.
 
-### To Do
+## To Do
 
 - [x] David Studio in Angular
 - [x] Admin Panel (CMS) UI in Angular using Angular Material
