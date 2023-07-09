@@ -17,4 +17,4 @@
 | Portfolio                | In Progress |
 | Services                 | Back Log    |
 | Storage                  | Done        |
-| SerachEngine             | Back Log    |
+| SearchEngine             | Back Log    |
