@@ -9,7 +9,7 @@ namespace Portfolio.Services
         Task<PageData<T>> GetAllAsync(PageOptions options);
         Task<T?> GetByIdAsync(int id);
         Task<T?> CreateAsync(T tag);
-        Task<T?> UpdateAsync(T tag);
+        Task<T> UpdateAsync(T tag);
         Task<T?> DeleteAsync(int id);
     }
 }

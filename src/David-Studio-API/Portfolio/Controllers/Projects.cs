@@ -83,20 +83,24 @@ namespace Portfolio.Controllers
         }
 
         [MapToApiVersion("1.0")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ProjectCreateDto projectDto)
+        [HttpPut("{id}"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Update(int id, [FromForm] ProjectCreateDto projectDto)
         {
-            Project project = _mapper.Map<Project>(projectDto);
+            ImageReadDto image = await _storageData.StoreImageAsync(projectDto.File);
+
+            Project? project = _mapper.Map<Project>(projectDto);
             project.Id = id;
 
-            Project? updatedProject = await _repositoryManager.Projects.UpdateAsync(project);
+            project = await _repositoryManager.Projects.UpdateAsync(project);
+
+            _messageBus.StorageClient.PublishDeleteImage(project.ImageUrl);
+            project.ImageUrl = image.ImageUrl;
+
             await _repositoryManager.SaveAsync();
 
-            ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(updatedProject);
+            ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
 
-            return updatedProject is null
-                ? NotFound()
-                : CreatedAtRoute(nameof(GetById), new { id = projectRes.Id }, projectRes);
+            return CreatedAtRoute(nameof(GetById), new { id = projectRes.Id }, projectRes);
         }
 
         [MapToApiVersion("1.0")]

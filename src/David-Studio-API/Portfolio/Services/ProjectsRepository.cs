@@ -39,22 +39,35 @@ namespace Portfolio.Services
             return project;
         }
 
-        public async Task<Project?> UpdateAsync(Project project)
+        public async Task<Project> UpdateAsync(Project project)
         {
-            Project? projDb = await _context.Projects
-                .AsNoTracking()
-                .Include(p => p.ProjectTags)
-                .FirstOrDefaultAsync(p => p.Id == project.Id);
-            if (projDb is null) return null;
+            // Get and remove all tags releationships assosiated with our project
+            IEnumerable<ProjectTag> projectTags = await _context.ProjectTags
+                .Where(p => p.ProjectId == project.Id)
+                .ToArrayAsync();
+
+            int[] existingTagIds = projectTags.Select(p => p.TagId).ToArray();
+
+            _context.ProjectTags.RemoveRange(
+                projectTags.Where(pt => existingTagIds.Contains(pt.TagId)));
+            await _context.SaveChangesAsync();
+
+            // Get existing tags with selected ids and update project
+            int[] tagIds = project.Tags.Select(t => t.Id).ToArray();
+
+            ICollection<Tag> tags =
+                await _context.Tags
+                .Where(t => tagIds.Contains(t.Id))
+                .ToArrayAsync();
+
+            project.Tags = tags;
 
             foreach (Tag tag in project.Tags)
                 _context.Entry(tag).State = EntityState.Unchanged;
 
-            int[] tagIds = projDb.ProjectTags.Select(p => p.TagId).ToArray();
-
-            _context.ProjectTags.RemoveRange(
-                projDb.ProjectTags.Where(pt => tagIds.Contains(pt.TagId)));
-            await _context.SaveChangesAsync();
+            Project? dbProject =
+                await _context.Projects.AsNoTracking().FirstOrDefaultAsync(p => p.Id == project.Id);
+            project.ImageUrl = dbProject!.ImageUrl;
 
             _context.Projects.Update(project);
 
