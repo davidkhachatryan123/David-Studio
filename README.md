@@ -14,7 +14,6 @@
 | ------------------------ | ----------- |
 | Duende (Identity Server) | In Progress |
 | Users                    | Back Log    |
-| Projects                 | In Progress |
-| Portfolio                | Back Log    |
+| Portfolio                | In Progress |
 | Services                 | Back Log    |
 | Storage                  | Done        |
