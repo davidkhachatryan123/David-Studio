@@ -3,10 +3,14 @@ using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Portfolio.Database;
 using Portfolio.Mappings;
+using Storage;
 using Storage.MessageBus;
 using Storage.MessageBus.Services;
+using Storage.Options;
 
 namespace Portfolio.Extensions
 {
@@ -43,6 +47,22 @@ namespace Portfolio.Extensions
             services.AddSingleton<IMessageBusClient, MessageBusClient>();
 
             services.AddHostedService<StorageImagesSubscriber>();
+        }
+
+        public static void UseStaticFilesDefaults(this WebApplication app)
+        {
+            StorageOptions storageOptions =
+                app.Services.GetRequiredService<IOptions<StorageOptions>>().Value;
+
+            StorageSetup.CreateDirIfNotExists(Path.Combine(
+                    storageOptions.StoragePath,
+                    storageOptions.ImagesDir));
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(storageOptions.StoragePath),
+                RequestPath = new PathString("/Resources")
+            });
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Portfolio.Database;
 using Storage.Models;
+using Storage.Options;
 using System;
 
 namespace Storage.Services
@@ -10,11 +12,17 @@ namespace Storage.Services
     public class ImagesService : IImagesService
     {
         private readonly ApplicationDbContext _context;
-        private readonly string imagesFolderName = Path.Combine("Resources", "Images");
+        private readonly string ImagesFolderName;
 
-        public ImagesService(ApplicationDbContext context)
+        public ImagesService(
+            ApplicationDbContext context,
+            IOptions<StorageOptions> storageOptions)
         {
             _context = context;
+
+            ImagesFolderName = Path.Combine(
+                storageOptions.Value.StoragePath,
+                storageOptions.Value.ImagesDir);
         }
 
         public async Task<Image?> UploadAsync(IFormFile file)
@@ -25,7 +33,7 @@ namespace Storage.Services
                 string.Concat(
                     Guid.NewGuid().ToString(),
                     file.FileName.AsSpan(file.FileName.LastIndexOf(".")));
-            string fullPath = Path.Combine(imagesFolderName, fileUniqueName);
+            string fullPath = Path.Combine(ImagesFolderName, fileUniqueName);
 
             using FileStream stream = new FileStream(fullPath, FileMode.Create);
             await file.CopyToAsync(stream);
@@ -46,7 +54,7 @@ namespace Storage.Services
 
             if (image is null) return false;
 
-            string imgPath = Path.Combine(imagesFolderName, image.UniqueName);
+            string imgPath = Path.Combine(ImagesFolderName, image.UniqueName);
 
             if (File.Exists(imgPath))
                 File.Delete(imgPath);

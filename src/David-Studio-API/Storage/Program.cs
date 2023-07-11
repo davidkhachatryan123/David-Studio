@@ -4,8 +4,12 @@ using Services.Common;
 using Services.Common.Configurations;
 using Storage.Services;
 using Storage.Grpc;
+using Storage.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<StorageOptions>(
+    builder.Configuration.GetSection(nameof(StorageOptions)));
 
 builder.Services.AddDefaultApiVersioning();
 
@@ -28,11 +32,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.UseDefaultSwagger();
 
-app.UseStaticFiles(new StaticFileOptions()
-{
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-    RequestPath = new PathString("/Resources")
-});
+app.UseStaticFilesDefaults();
 
 app.MapControllers();
 app.MapGrpcService<StorageService>();

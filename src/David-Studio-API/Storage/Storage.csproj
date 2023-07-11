@@ -13,13 +13,12 @@
 		<None Remove="Database\" />
 		<None Remove="Models\" />
 		<None Remove="Extensions\" />
-		<None Remove="Resources\" />
-		<None Remove="Resources\Images\" />
 		<None Remove="Protos\" />
 		<None Remove="Grpc\" />
 		<None Remove="Mappings\" />
 		<None Remove="MessageBus\" />
 		<None Remove="MessageBus\Services\" />
+		<None Remove="Options\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Controllers\" />
@@ -28,13 +27,12 @@
 		<Folder Include="Models\" />
 		<Folder Include="Extensions\" />
 		<Folder Include="Database\" />
-		<Folder Include="Resources\" />
-		<Folder Include="Resources\Images\" />
 		<Folder Include="Protos\" />
 		<Folder Include="Grpc\" />
 		<Folder Include="Mappings\" />
 		<Folder Include="MessageBus\" />
 		<Folder Include="MessageBus\Services\" />
+		<Folder Include="Options\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Services.Common\Services.Common.csproj">
