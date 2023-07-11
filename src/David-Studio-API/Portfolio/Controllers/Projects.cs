@@ -55,6 +55,13 @@ namespace Portfolio.Controllers
                 });
         }
 
+        //[MapToApiVersion("1.0")]
+        //[HttpGet]
+        //public async Task<IActionResult> GetAllWithTop([FromQuery] PageOptions options)
+        //{
+
+        //}
+
         [MapToApiVersion("1.0")]
         [HttpGet("{id}", Name = nameof(Projects) + nameof(GetById))]
         public async Task<IActionResult> GetById(int id)

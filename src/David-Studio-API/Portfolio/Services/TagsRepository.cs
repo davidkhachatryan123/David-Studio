@@ -6,7 +6,7 @@ using Services.Common.Models;
 
 namespace Portfolio.Services
 {
-    public class TagsRepository : IBaseRepository<Tag>
+    public class TagsRepository : ITagsRepository
     {
         private readonly ApplicationDbContext _context;
 

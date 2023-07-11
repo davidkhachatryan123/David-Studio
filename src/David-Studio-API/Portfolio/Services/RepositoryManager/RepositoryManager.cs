@@ -8,27 +8,21 @@ namespace Portfolio.Services
     public class RepositoryManager : IRepositoryManager
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        private IBaseRepository<Tag> _tagsRepository = null!;
-        private IBaseRepository<Project> _projectsRespository = null!;
+        private IProjectsRepository _projectsRespository = null!;
+        private ITagsRepository _tagsRepository = null!;
+        private ITopProjectsRepository _topProjectsRepository = null!;
 
-        public RepositoryManager(ApplicationDbContext context)
+        public RepositoryManager(
+            ApplicationDbContext context,
+            IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
-
-        public IBaseRepository<Tag> Tags
-        {
-            get
-            {
-                _tagsRepository ??= new TagsRepository(_context);
-
-                return _tagsRepository;
-            }
-        }
-
-        public IBaseRepository<Project> Projects
+        public IProjectsRepository Projects
         {
             get
             {
@@ -38,8 +32,27 @@ namespace Portfolio.Services
             }
         }
 
+        public ITagsRepository Tags
+        {
+            get
+            {
+                _tagsRepository ??= new TagsRepository(_context);
+
+                return _tagsRepository;
+            }
+        }
+
+        public ITopProjectsRepository TopProjects
+        {
+            get
+            {
+                _topProjectsRepository ??= new TopProjectsRepository(_context, _configuration);
+
+                return _topProjectsRepository;
+            }
+        }
+
         public async Task SaveAsync()
             => await _context.SaveChangesAsync();
     }
 }
-

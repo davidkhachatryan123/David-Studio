@@ -7,7 +7,7 @@ using Services.Common.Models;
 
 namespace Portfolio.Services
 {
-    public class ProjectsRepository : IBaseRepository<Project>
+    public class ProjectsRepository : IProjectsRepository
     {
         private readonly ApplicationDbContext _context;
 
