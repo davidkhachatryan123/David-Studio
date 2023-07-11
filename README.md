@@ -1,6 +1,6 @@
 # David-Studio
 
-> Note. This project is in **Development** stage.
+> Note: This project is in **Development** stage.
 
 ## To Do
 
