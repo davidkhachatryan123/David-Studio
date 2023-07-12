@@ -19,7 +19,22 @@ namespace Portfolio.Services
             MaxTopProjectsCount = configuration.GetValue<int>("MaxTopProjectsCount");
         }
 
-        public async Task<int[]> MarkAsTop(int[] ids)
+        public async Task<IEnumerable<Project>> GetAllAsync(int? limit = null)
+        {
+            IQueryable<Project> projects =
+                _context.Projects
+                        .Include(p => p.Tags)
+                        .Include(p => p.TopProject)
+                        .Where(p => p.TopProject != null)
+                        .OrderBy(p => p.TopProject!.Rank);
+
+            if (limit is not null)
+                projects = projects.Take(Convert.ToInt32(limit));
+
+            return await projects.ToArrayAsync();
+        }
+
+        public async Task<int[]> MarkAsync(int[] ids)
         {
             int CountOfTopProjects = await _context.TopProjects.CountAsync();
             int MaxRankInDb = CountOfTopProjects > 0
@@ -33,13 +48,9 @@ namespace Portfolio.Services
 
             foreach (int id in ids)
             {
-                Project? project =
-                    await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
-                if (project is null) continue;
+                Project? project = await GetProjectByIdIncludeingTopProject(id);
 
-                TopProject? topProject =
-                    await _context.TopProjects.FirstOrDefaultAsync(t => t.ProjectId == id);
-                if (topProject is not null) continue;
+                if (project is null || project.TopProject is not null) continue;
 
                 await _context.TopProjects.AddAsync(new TopProject
                 {
@@ -52,6 +63,31 @@ namespace Portfolio.Services
 
             return res.ToArray();
         }
+
+        public async Task<bool> RemoveAsync(int id)
+        {
+            Project? project = await GetProjectByIdIncludeingTopProject(id);
+
+            if (project is null || project.TopProject is null)
+                return false;
+
+            _context.TopProjects.Remove(project.TopProject);
+
+            IQueryable<TopProject> topProjects =
+                _context.TopProjects
+                        .Where(t => t.Rank > project.TopProject.Rank);
+
+            await topProjects.ForEachAsync(t => t.Rank--);
+
+            _context.TopProjects.UpdateRange(topProjects);
+
+            return true;
+        }
+
+        private async Task<Project?> GetProjectByIdIncludeingTopProject(int id)
+            => await _context.Projects
+                             .Include(p => p.TopProject)
+                             .FirstOrDefaultAsync(p => p.Id == id);
     }
 }
 
