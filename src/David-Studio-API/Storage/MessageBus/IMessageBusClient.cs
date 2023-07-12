@@ -4,7 +4,7 @@ namespace Storage.MessageBus
 {
     public interface IMessageBusClient
     {
-        IModel GetChannel();
+        void CreateSubsciber(string eventSource, Func<string, string, Task> eventExecuter);
     }
 }
 

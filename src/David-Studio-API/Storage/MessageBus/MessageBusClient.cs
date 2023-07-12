@@ -1,4 +1,6 @@
-﻿using RabbitMQ.Client;
+﻿using System.Text;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace Storage.MessageBus
 {
@@ -20,7 +22,28 @@ namespace Storage.MessageBus
             _channel.ExchangeDeclare("storage", ExchangeType.Topic, durable: true);
         }
 
-        public IModel GetChannel() => _channel;
+        public void CreateSubsciber(string eventSource, Func<string, string, Task> eventExecuter)
+        {
+            string queueName = _channel.QueueDeclare().QueueName;
+
+            _channel.QueueBind(queue: queueName,
+                               exchange: "storage",
+                               routingKey: $"{eventSource}.*");
+
+            var consumer = new EventingBasicConsumer(_channel);
+            consumer.Received += async (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+                var routingKey = ea.RoutingKey;
+
+                await eventExecuter(routingKey, message);
+            };
+
+            _channel.BasicConsume(queue: queueName,
+                                  autoAck: true,
+                                  consumer: consumer);
+        }
 
         public void Dispose()
         {

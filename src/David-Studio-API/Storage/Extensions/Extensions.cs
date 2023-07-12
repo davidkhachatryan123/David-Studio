@@ -9,7 +9,7 @@ using Portfolio.Database;
 using Portfolio.Mappings;
 using Storage;
 using Storage.MessageBus;
-using Storage.MessageBus.Services;
+using Storage.MessageBus.Subscribers;
 using Storage.Options;
 
 namespace Portfolio.Extensions
@@ -46,7 +46,7 @@ namespace Portfolio.Extensions
         {
             services.AddSingleton<IMessageBusClient, MessageBusClient>();
 
-            services.AddHostedService<StorageImagesSubscriber>();
+            services.AddHostedService<ImagesSubscriber>();
         }
 
         public static void UseStaticFilesDefaults(this WebApplication app)
