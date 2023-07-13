@@ -84,6 +84,28 @@ namespace Portfolio.Services
             return true;
         }
 
+        public async Task Reorder(int[] projectIds)
+        {
+            if (projectIds.Length != await _context.TopProjects.CountAsync())
+                throw new Exception("Provided project ids length has not equivalent with db top projects count");
+            if (projectIds.Length != projectIds.Distinct().Count())
+                throw new Exception("Array of projects is must have contains unique indexes");
+
+            for (int i = 0; i < projectIds.Length; i++)
+            {
+                TopProject? topProject =
+                    await _context.TopProjects.FirstOrDefaultAsync(
+                        t => t.ProjectId == projectIds[i]);
+
+                if (topProject is null)
+                    throw new Exception("Provided project ids has invalid items");
+
+                topProject.Rank = i + 1;
+
+                _context.TopProjects.Update(topProject);
+            }
+        }
+
         private async Task<Project?> GetProjectByIdIncludeingTopProject(int id)
             => await _context.Projects
                              .Include(p => p.TopProject)

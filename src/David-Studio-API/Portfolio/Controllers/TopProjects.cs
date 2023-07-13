@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
 using Portfolio.Models;
@@ -69,11 +70,23 @@ namespace Portfolio.Controllers
             return !res ? NotFound() : Ok();
         }
 
-        //[MapToApiVersion("1.0")]
-        //[HttpPost]
-        //public async Task<IActionResult> Reorder([FromBody] IEnumerable<ProjectReadDto> projectDto)
-        //{
+        [MapToApiVersion("1.0")]
+        [HttpPost]
+        [Route("Reorder")]
+        public async Task<IActionResult> Reorder([FromBody] int[] projectIds)
+        {
+            try
+            {
+                await _repositoryManager.TopProjects.Reorder(projectIds);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
-        //}
+            await _repositoryManager.SaveAsync();
+
+            return Ok();
+        }
     }
 }

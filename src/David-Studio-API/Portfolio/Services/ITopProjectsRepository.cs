@@ -8,6 +8,8 @@ namespace Portfolio.Services
 
         Task<int[]> MarkAsync(int[] ids);
         Task<bool> RemoveAsync(int id);
+
+        Task Reorder(int[] projectIds);
     }
 }
 
