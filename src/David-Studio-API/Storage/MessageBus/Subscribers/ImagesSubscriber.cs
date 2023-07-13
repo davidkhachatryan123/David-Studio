@@ -35,12 +35,15 @@ namespace Storage.MessageBus.Subscribers
             return Task.CompletedTask;
         }
 
-        private async Task ProccedEventAsync(string routingKey, string message)
+        private async Task ProccedEventAsync(string routingKey, string? message)
         {
+            if (message is null) throw new ArgumentNullException(message);
+
             switch (routingKey)
             {
                 case $"{topic}.delete":
-                    await _repositoryManager.Images.DeleteAsync(message);
+                    await _repositoryManager.Images.DeleteAsync(
+                        message.Substring(message.LastIndexOf('/') + 1));
                     await _repositoryManager.SaveAsync();
                     break;
             }

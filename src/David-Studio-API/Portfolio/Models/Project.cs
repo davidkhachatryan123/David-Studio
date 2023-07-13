@@ -31,7 +31,7 @@ namespace Portfolio.Models
         [JsonIgnore]
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }
 
-        [JsonInclude]
+        [JsonIgnore]
         public virtual TopProject? TopProject { get; set; }
     }
 }

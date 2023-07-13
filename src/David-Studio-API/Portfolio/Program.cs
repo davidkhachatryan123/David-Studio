@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Portfolio.Extensions;
 using Portfolio.Grpc;
-using Portfolio.MessageBus;
 using Portfolio.Services;
 using Services.Common;
 using Services.Common.Configurations;
+using Services.Common.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,9 @@ builder.Services.ConfigureDb(builder.Configuration);
 builder.Services.ConfigureMapping();
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
+
+builder.Services.AddEventBus(builder.Configuration, "portfolio");
+
 builder.Services.AddScoped<IStorageDataClient, StorageDataClient>();
 
 builder.Services.AddDefaultSwagger();

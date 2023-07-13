@@ -4,7 +4,7 @@ namespace Storage.MessageBus
 {
     public interface IMessageBusClient
     {
-        void CreateSubsciber(string eventSource, Func<string, string, Task> eventExecuter);
+        void CreateSubsciber(string eventSource, Func<string, string?, Task> eventExecuter);
     }
 }
 

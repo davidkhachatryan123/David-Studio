@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
 using Services.Common.Configurations;
+using Services.Common.EventBus;
 
 namespace Services.Common
 {
@@ -47,6 +51,29 @@ namespace Services.Common
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
                         description.GroupName.ToUpperInvariant());
                 }
+            });
+        }
+
+        public static void AddEventBus(this IServiceCollection services, IConfiguration configuration, string exchangeName)
+        {
+            services.AddSingleton<IMessageBusClient, MessageBusClient>(sp =>
+            {
+                var logger = sp.GetRequiredService<ILogger<IMessageBusClient>>();
+
+                var factory = new ConnectionFactory()
+                {
+                    Uri = new Uri(configuration.GetConnectionString("EventBus")!),
+                    DispatchConsumersAsync = true
+                };
+
+                return new MessageBusClient(factory, logger, configuration.GetValue<int>("EventBus:RetryCount"));
+            });
+
+            services.AddSingleton<IMessageBus, MessageBus>(sp =>
+            {
+                var rabbitMQPersistentConnection = sp.GetRequiredService<IMessageBusClient>();
+
+                return new MessageBus(rabbitMQPersistentConnection, exchangeName);
             });
         }
     }

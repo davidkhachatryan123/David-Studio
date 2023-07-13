@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
 using Portfolio.Grpc;
-using Portfolio.MessageBus;
 using Portfolio.Models;
 using Portfolio.Services;
+using Services.Common.EventBus;
+using Services.Common.EventBus.Events;
+using Services.Common.EventBus.Sources;
 using Services.Common.Models;
 
 namespace Portfolio.Controllers
@@ -16,14 +18,14 @@ namespace Portfolio.Controllers
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IStorageDataClient _storageData;
-        private readonly IMessageBusClient _messageBus;
+        private readonly IMessageBus _messageBus;
         private readonly IMapper _mapper;
         private readonly ILogger<Projects> _logger;
 
         public Projects(
             IRepositoryManager repositoryManager,
             IStorageDataClient storageData,
-            IMessageBusClient messageBus,
+            IMessageBus messageBus,
             IMapper mapper,
             ILogger<Projects> logger)
         {
@@ -93,7 +95,7 @@ namespace Portfolio.Controllers
 
             project = await _repositoryManager.Projects.UpdateAsync(project);
 
-            _messageBus.StorageClient.PublishDeleteImage(project.ImageUrl);
+            _messageBus.Publish(ProjectSource.Projects, BusCommonEvent.Delete, project.ImageUrl);
             project.ImageUrl = image.ImageUrl;
 
             await _repositoryManager.SaveAsync();
@@ -112,7 +114,7 @@ namespace Portfolio.Controllers
 
             if (project is null) return NotFound();
 
-            _messageBus.StorageClient.PublishDeleteImage(project.ImageUrl);
+            _messageBus.Publish(StorageSource.Images, BusCommonEvent.Delete, project.ImageUrl);
 
             return Ok();
         }
