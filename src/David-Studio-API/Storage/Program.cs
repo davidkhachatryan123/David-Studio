@@ -23,7 +23,7 @@ builder.Services.ConfigureMapping();
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-builder.Services.ConfigureMessageBus();
+builder.Services.AddEventBus(builder.Configuration);
 
 builder.Services.AddDefaultSwagger();
 
@@ -35,6 +35,8 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFilesDefaults();
 
 app.MapControllers();
+
+app.ConfigureEventBus();
 app.MapGrpcService<StorageService>();
 
 app.MigrateDatabase();

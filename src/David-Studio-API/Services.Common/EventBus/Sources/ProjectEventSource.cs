@@ -1,6 +1,6 @@
 ﻿namespace Services.Common.EventBus.Sources
 {
-    public enum ProjectSource
+    public enum ProjectEventSource
     {
         Projects,
         TopProjects

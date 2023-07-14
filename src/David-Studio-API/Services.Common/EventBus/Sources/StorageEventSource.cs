@@ -1,6 +1,6 @@
 ﻿namespace Services.Common.EventBus.Sources
 {
-    public enum StorageSource
+    public enum StorageEventSource
     {
         Images = 0
     }

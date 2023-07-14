@@ -7,9 +7,10 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Portfolio.Database;
 using Portfolio.Mappings;
+using Services.Common.EventBus;
+using Services.Common.EventBus.Events;
+using Services.Common.EventBus.Sources;
 using Storage;
-using Storage.MessageBus;
-using Storage.MessageBus.Subscribers;
 using Storage.Options;
 
 namespace Portfolio.Extensions
@@ -42,11 +43,11 @@ namespace Portfolio.Extensions
             .CreateMapper());
         }
 
-        public static void ConfigureMessageBus(this IServiceCollection services)
+        public static void ConfigureEventBus(this WebApplication app)
         {
-            services.AddSingleton<IMessageBusClient, MessageBusClient>();
+            var eventBus = app.Services.GetRequiredService<IMessageBus>();
 
-            services.AddHostedService<ImagesSubscriber>();
+            eventBus.Subscribe(StorageEventSource.Images, BusCommonEvent.Delete);
         }
 
         public static void UseStaticFilesDefaults(this WebApplication app)

@@ -21,7 +21,7 @@ builder.Services.ConfigureMapping();
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-builder.Services.AddEventBus(builder.Configuration, "portfolio");
+builder.Services.AddEventBus(builder.Configuration);
 
 builder.Services.AddScoped<IStorageDataClient, StorageDataClient>();
 

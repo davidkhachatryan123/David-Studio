@@ -16,7 +16,6 @@
 		<None Remove="Protos\" />
 		<None Remove="Grpc\" />
 		<None Remove="Mappings\" />
-		<None Remove="MessageBus\" />
 		<None Remove="Options\" />
 	</ItemGroup>
 	<ItemGroup>
@@ -29,7 +28,6 @@
 		<Folder Include="Protos\" />
 		<Folder Include="Grpc\" />
 		<Folder Include="Mappings\" />
-		<Folder Include="MessageBus\" />
 		<Folder Include="Options\" />
 	</ItemGroup>
 	<ItemGroup>
@@ -46,6 +44,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
+		<PackageReference Include="Polly" Version="7.2.4" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />

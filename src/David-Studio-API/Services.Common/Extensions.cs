@@ -54,7 +54,7 @@ namespace Services.Common
             });
         }
 
-        public static void AddEventBus(this IServiceCollection services, IConfiguration configuration, string exchangeName)
+        public static void AddEventBus(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IMessageBusClient, MessageBusClient>(sp =>
             {
@@ -71,9 +71,10 @@ namespace Services.Common
 
             services.AddSingleton<IMessageBus, MessageBus>(sp =>
             {
-                var rabbitMQPersistentConnection = sp.GetRequiredService<IMessageBusClient>();
+                var messageBusClient = sp.GetRequiredService<IMessageBusClient>();
+                var logger = sp.GetRequiredService<ILogger<MessageBus>>();
 
-                return new MessageBus(rabbitMQPersistentConnection, exchangeName);
+                return new MessageBus(messageBusClient, logger);
             });
         }
     }
