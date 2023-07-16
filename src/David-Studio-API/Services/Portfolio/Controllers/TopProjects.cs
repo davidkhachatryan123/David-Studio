@@ -15,13 +15,16 @@ namespace Portfolio.Controllers
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
+        private readonly ILogger<TopProjects> _logger;
 
         public TopProjects(
             IRepositoryManager repositoryManager,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<TopProjects> logger)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [MapToApiVersion("1.0")]
@@ -33,6 +36,8 @@ namespace Portfolio.Controllers
 
             IEnumerable<ProjectReadDto> projectsResult =
                 _mapper.Map<IEnumerable<ProjectReadDto>>(projects);
+
+            _logger.LogInformation("Get all projects marked as Top by limit: {Limit}", Limit);
 
             return Ok(projectsResult);
         }
@@ -46,11 +51,17 @@ namespace Portfolio.Controllers
 
             try
             {
+                _logger.LogInformation("Trying to mark as Top projects by ids: {@Ids}", projectIds);
+
                 addedProjectIds = await _repositoryManager.TopProjects.MarkAsync(projectIds);
                 await _repositoryManager.SaveAsync();
+
+                _logger.LogInformation("Marked as Top projects by ids: {@Ids}", addedProjectIds);
             }
             catch (Exception ex)
             {
+                _logger.LogInformation("Error was occurred while trying to mark projects as Top: {ExceptionMessage}", ex.Message);
+
                 return BadRequest(ex.Message);
             }
 
@@ -67,6 +78,8 @@ namespace Portfolio.Controllers
             bool res = await _repositoryManager.TopProjects.RemoveAsync(id);
             await _repositoryManager.SaveAsync();
 
+            _logger.LogInformation("Remove project from top by id: {Id}", id);
+
             return !res ? NotFound() : Ok();
         }
 
@@ -78,9 +91,13 @@ namespace Portfolio.Controllers
             try
             {
                 await _repositoryManager.TopProjects.Reorder(projectIds);
+
+                _logger.LogInformation("Projects reordering with fllowing order: {@Ids}", projectIds);
             }
             catch (Exception ex)
             {
+                _logger.LogInformation("Error was occurred while trying to reorder projects as Top: {ExceptionMessage}", ex.Message);
+
                 return BadRequest(ex.Message);
             }
 

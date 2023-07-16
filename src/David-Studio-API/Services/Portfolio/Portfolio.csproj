@@ -18,7 +18,6 @@
 		<None Remove="Protos\files.proto" />
 		<None Remove="Protos\" />
 		<None Remove="Grpc\" />
-		<None Remove="MessageBus\" />
 		<None Remove="IntegrationEvents\" />
 		<None Remove="IntegrationEvents\Events\" />
 	</ItemGroup>
@@ -32,7 +31,6 @@
 		<Folder Include="Services\" />
 		<Folder Include="Protos\" />
 		<Folder Include="Grpc\" />
-		<Folder Include="MessageBus\" />
 		<Folder Include="IntegrationEvents\" />
 		<Folder Include="IntegrationEvents\Events\" />
 	</ItemGroup>

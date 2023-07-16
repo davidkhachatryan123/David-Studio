@@ -34,9 +34,14 @@ namespace Portfolio.Controllers
 
             try
             {
+                _logger.LogInformation("Trying to get all tags");
+
                 data = await _repositoryManager.Tags.GetAllAsync(options);
             }
-            catch (Exception ex) { _logger.LogError(ex.Message); }
+            catch (Exception ex)
+            {
+                _logger.LogError("Get all tags function thrown exception: {Message}", ex.Message);
+            }
 
             return data is null
                 ? NotFound()
@@ -52,6 +57,8 @@ namespace Portfolio.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             Tag? tag = await _repositoryManager.Tags.GetByIdAsync(id);
+
+            _logger.LogInformation("Return tag by id: {Id}", id);
 
             return tag is null
                 ? NotFound()
@@ -69,6 +76,8 @@ namespace Portfolio.Controllers
 
             if (createdTag is null) return Conflict();
 
+            _logger.LogInformation("Saved tag with name: {TagName}", tag.Name);
+
             TagReadDto tagRes = _mapper.Map<TagReadDto>(createdTag);
             return CreatedAtRoute(nameof(GetById), new { id = tagRes.Id }, tagRes);
         }
@@ -83,6 +92,8 @@ namespace Portfolio.Controllers
             Tag? updatedTag = await _repositoryManager.Tags.UpdateAsync(tag);
             await _repositoryManager.SaveAsync();
 
+            _logger.LogInformation("Tag was updated by name: {TagName}", tag.Name);
+
             TagReadDto tagRes = _mapper.Map<TagReadDto>(updatedTag);
 
             return updatedTag is null
@@ -96,6 +107,8 @@ namespace Portfolio.Controllers
         {
             Tag? tag = await _repositoryManager.Tags.DeleteAsync(id);
             await _repositoryManager.SaveAsync();
+
+            _logger.LogInformation("Delete tag by id: {TagId}", id);
 
             return tag is null
                 ? NotFound()

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using EventBus.Abstractions;
 using EventBus.Events;
 using Microsoft.AspNetCore.Mvc;
@@ -44,9 +45,14 @@ namespace Portfolio.Controllers
 
             try
             {
+                _logger.LogInformation("Trying to get all projects");
+
                 data = await _repositoryManager.Projects.GetAllAsync(options);
             }
-            catch (Exception ex) { _logger.LogError(ex.Message); }
+            catch (Exception ex)
+            {
+                _logger.LogError("Get all projects function thrown exception: {Message}", ex.Message);
+            }
 
             return data is null
                 ? NotFound()
@@ -63,6 +69,8 @@ namespace Portfolio.Controllers
         {
             Project? project = await _repositoryManager.Projects.GetByIdAsync(id);
 
+            _logger.LogInformation("Return project by id: {Id}", id);
+
             return project is null
                 ? NotFound()
                 : Ok(_mapper.Map<ProjectReadDto>(project));
@@ -72,6 +80,7 @@ namespace Portfolio.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> Create([FromForm] ProjectCreateDto projectDto)
         {
+            _logger.LogInformation("Saving image in storage by name: {FileName}", projectDto.File.FileName);
             ImageReadDto image = await _storageData.StoreImageAsync(projectDto.File);
 
             Project? project = _mapper.Map<Project>(projectDto);
@@ -79,6 +88,8 @@ namespace Portfolio.Controllers
 
             project = await _repositoryManager.Projects.CreateAsync(project);
             await _repositoryManager.SaveAsync();
+
+            _logger.LogInformation("Save project with name: {ProjectName}", project.Name);
 
             ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
             return CreatedAtRoute(nameof(Projects) + nameof(GetById), new { id = projectRes.Id }, projectRes);
@@ -88,6 +99,7 @@ namespace Portfolio.Controllers
         [HttpPut("{id}"), DisableRequestSizeLimit]
         public async Task<IActionResult> Update(int id, [FromForm] ProjectCreateDto projectDto)
         {
+            _logger.LogInformation("Saving image in storage by name: {FileName}", projectDto.File.FileName);
             ImageReadDto image = await _storageData.StoreImageAsync(projectDto.File);
 
             Project? project = _mapper.Map<Project>(projectDto);
@@ -95,12 +107,15 @@ namespace Portfolio.Controllers
 
             project = await _repositoryManager.Projects.UpdateAsync(project);
 
+            _logger.LogInformation("Publishing message to event bus for remove old image by url: {ImageUrl}", project.ImageUrl);
             IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
             _eventBus.Publish(@event);
 
             project.ImageUrl = image.ImageUrl;
 
             await _repositoryManager.SaveAsync();
+
+            _logger.LogInformation("Project was updated by name: {ProjectName}", project.Name);
 
             ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
 
@@ -116,6 +131,9 @@ namespace Portfolio.Controllers
 
             if (project is null) return NotFound();
 
+            _logger.LogInformation("Deleted project by id: {ProjectId}", project.Id);
+
+            _logger.LogInformation("Publishing message to event bus for remove image by url: {ImageUrl}", project.ImageUrl);
             IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
             _eventBus.Publish(@event);
 
