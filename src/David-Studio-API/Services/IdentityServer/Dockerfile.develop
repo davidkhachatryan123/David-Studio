@@ -5,11 +5,12 @@ ARG BUILD_CONFIGURATION=Debug
 ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 
 WORKDIR /src
-COPY ["IdentityServer/IdentityServer.csproj", "IdentityServer/"]
-RUN dotnet restore "IdentityServer/IdentityServer.csproj"
+COPY ["Services/IdentityServer/IdentityServer.csproj", "Services/IdentityServer/"]
+
+RUN dotnet restore "Services/IdentityServer/IdentityServer.csproj"
 
 COPY . .
-WORKDIR "/src/IdentityServer"
+WORKDIR "/src/Services/IdentityServer"
 RUN dotnet build "IdentityServer.csproj" -c $BUILD_CONFIGURATION -o /app
 
 WORKDIR "/app"

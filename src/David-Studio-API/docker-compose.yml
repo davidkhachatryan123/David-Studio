@@ -1,17 +1,11 @@
 version: '3.4'
 
 services:
-#  identity-server:
-#    image: ${DOCKER_REGISTRY-}identityserver
-#    build:
-#      context: .
-#      dockerfile: IdentityServer/Dockerfile.develop
-#
-#  users-api:
-#    image: ${DOCKER_REGISTRY-}usersapi
-#    build:
-#      context: .
-#      dockerfile: Users/Dockerfile.develop
+  identity-server:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: Services/IdentityServer/Dockerfile.develop
 
   portfolio-api:
     image: ${DOCKER_REGISTRY-}portfolio

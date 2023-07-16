@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Portfolio.Extensions;
 using Portfolio.Grpc;
 using Portfolio.Services;
+using Serilog;
 using Services.Common;
 using Services.Common.Configurations;
 using Services.Common.Extensions;
@@ -27,6 +28,10 @@ builder.Services.AddScoped<IStorageDataClient, StorageDataClient>();
 
 builder.Services.AddDefaultSwagger();
 
+builder.Services.AddSerilog();
+builder.Host.UseSerilog((ctx, lc) => lc
+.WriteTo.Console());
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -37,6 +42,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseSerilogRequestLogging();
 
 app.MigrateDatabase();
 

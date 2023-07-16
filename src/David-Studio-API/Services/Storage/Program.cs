@@ -10,6 +10,7 @@ using Storage.IntegrationEvents;
 using EventBus.Abstractions;
 using Storage.IntegrationEvents.Handlers;
 using Storage.IntegrationEvents.Events;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,10 @@ builder.Services.AddTransient<IIntegrationEventHandler<ImagesDeleteIntegrationEv
 
 builder.Services.AddDefaultSwagger();
 
+builder.Services.AddSerilog();
+builder.Host.UseSerilog((ctx, lc) => lc
+.WriteTo.Console());
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -44,6 +49,8 @@ app.MapControllers();
 
 app.ConfigureEventBus();
 app.MapGrpcService<StorageService>();
+
+app.UseSerilogRequestLogging();
 
 app.MigrateDatabase();
 

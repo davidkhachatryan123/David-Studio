@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +85,10 @@ builder.Services.AddIdentityServer(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddSerilog();
+builder.Host.UseSerilog((ctx, lc) => lc
+.WriteTo.Console());
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -93,6 +98,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseIdentityServer();
+
+app.UseSerilogRequestLogging();
 
 await SeedData.EnsureSeedData(app);
 
