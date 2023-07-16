@@ -9,22 +9,25 @@ namespace Storage.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IOptions<StorageOptions> _storageOptions;
+        private readonly ILogger<RepositoryManager> _logger;
 
         private IImagesService _imagesRepository = null!;
 
         public RepositoryManager(
             ApplicationDbContext context,
-            IOptions<StorageOptions> storageOptions)
+            IOptions<StorageOptions> storageOptions,
+            ILogger<RepositoryManager> logger)
         {
             _context = context;
             _storageOptions = storageOptions;
+            _logger = logger;
         }
 
         public IImagesService Images
         {
             get
             {
-                _imagesRepository ??= new ImagesService(_context, _storageOptions);
+                _imagesRepository ??= new ImagesService(_context, _storageOptions, _logger);
 
                 return _imagesRepository;
             }

@@ -11,14 +11,18 @@ namespace Storage.Services
 {
     public class ImagesService : IImagesService
     {
-        private readonly ApplicationDbContext _context;
         private readonly string ImagesFolderName;
+
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger _logger;
 
         public ImagesService(
             ApplicationDbContext context,
-            IOptions<StorageOptions> storageOptions)
+            IOptions<StorageOptions> storageOptions,
+            ILogger logger)
         {
             _context = context;
+            _logger = logger;
 
             ImagesFolderName = Path.Combine(
                 storageOptions.Value.StoragePath,
@@ -38,12 +42,16 @@ namespace Storage.Services
             using FileStream stream = new FileStream(fullPath, FileMode.Create);
             await file.CopyToAsync(stream);
 
+            _logger.LogInformation("Image saved to file system by path: {Path}", fullPath);
+
             Image image = new()
             {
                 FileName = file.FileName,
                 UniqueName = fileUniqueName
             };
             await _context.Images.AddAsync(image);
+
+            _logger.LogInformation("Add image to database: {UniqueName}", image.UniqueName);
 
             return image;
         }
@@ -61,10 +69,13 @@ namespace Storage.Services
             else
                 return false;
 
+            _logger.LogInformation("Image deleted from file system by path: {Path}", imgPath);
+
             _context.Images.Remove(image);
+
+            _logger.LogInformation("Remove image from database: {UniqueName}", image.UniqueName);
 
             return true;
         }
     }
 }
-
