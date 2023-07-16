@@ -17,13 +17,13 @@ services:
     image: ${DOCKER_REGISTRY-}portfolio
     build:
       context: .
-      dockerfile: Portfolio/Dockerfile.develop
+      dockerfile: Services/Portfolio/Dockerfile.develop
 
   storage-api:
     image: ${DOCKER_REGISTRY-}storage
     build:
       context: .
-      dockerfile: Storage/Dockerfile.develop
+      dockerfile: Services/Storage/Dockerfile.develop
 
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"

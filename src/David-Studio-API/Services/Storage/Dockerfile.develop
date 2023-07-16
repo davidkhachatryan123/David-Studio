@@ -1,0 +1,17 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0
+EXPOSE 5000
+
+ARG BUILD_CONFIGURATION=Debug
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+WORKDIR /src
+COPY ["Services/Storage/Storage.csproj", "Services/Storage/"]
+
+RUN dotnet restore "Services/Storage/Storage.csproj"
+
+COPY . .
+WORKDIR "/src/Services/Storage"
+RUN dotnet build "Storage.csproj" -c $BUILD_CONFIGURATION -o /app
+
+WORKDIR "/app"
+ENTRYPOINT ["dotnet", "Storage.dll"]
