@@ -1,26 +1,22 @@
 ﻿using EventBus.Abstractions;
+using EventBus.Events;
 
 namespace EventBus
 {
     public interface IEventBusSubscriptionsManager
     {
-        void AddSubscription<TData, TEventHandler>(string eventKey)
-            where TEventHandler : IIntegrationEventHandler<TData>;
+        void AddSubscription<TEvent, TEventHandler>()
+            where TEvent : IntegrationEvent
+            where TEventHandler : IIntegrationEventHandler<TEvent>;
 
-        bool HasSubscriptionForEvent<TEventSource, TEventAction>
-            (TEventSource source, TEventAction action)
-            where TEventSource : Enum
-            where TEventAction : Enum;
+        bool HasSubscriptionForEvent<TEvent>()
+            where TEvent : IntegrationEvent;
 
-        bool HasSubscriptionForEvent(string eventKey);
+        bool HasSubscriptionForEvent(string eventName);
 
-        public string GetEventKey<TEventSource, TEventAction>
-            (TEventSource source, TEventAction action)
-            where TEventSource : Enum
-            where TEventAction : Enum;
+        public string GetEventName<TEvent>()
+            where TEvent : IntegrationEvent;
 
-        public Type GetHandlerForEvent(string eventKey);
-
-        public Type GetEventTypeByName(string eventKey);
+        public SubscriptionInfo GetSubscribtion(string eventName);
     }
 }

@@ -18,6 +18,8 @@
 		<None Remove="Mappings\" />
 		<None Remove="Options\" />
 		<None Remove="IntegrationEvents\" />
+		<None Remove="IntegrationEvents\Events\" />
+		<None Remove="IntegrationEvents\Handlers\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Controllers\" />
@@ -31,6 +33,8 @@
 		<Folder Include="Mappings\" />
 		<Folder Include="Options\" />
 		<Folder Include="IntegrationEvents\" />
+		<Folder Include="IntegrationEvents\Events\" />
+		<Folder Include="IntegrationEvents\Handlers\" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />

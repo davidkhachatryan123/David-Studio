@@ -1,6 +1,5 @@
-﻿using System;
-using System.Linq;
-using EventBus.Abstractions;
+﻿using EventBus.Abstractions;
+using EventBus.Events;
 
 namespace EventBus
 {
@@ -13,40 +12,30 @@ namespace EventBus
             _handlers = new Dictionary<string, SubscriptionInfo>();
         }
 
-        public void AddSubscription<TData, TEventHandler>(string eventKey)
-            where TEventHandler : IIntegrationEventHandler<TData>
+        public void AddSubscription<TEvent, TEventHandler>()
+            where TEvent : IntegrationEvent
+            where TEventHandler : IIntegrationEventHandler<TEvent>
         {
-            if (!HasSubscriptionForEvent(eventKey))
-                _handlers.Add(eventKey, new SubscriptionInfo());
+            string eventName = GetEventName<TEvent>();
 
-            _handlers[eventKey].Data = typeof(TData);
-            _handlers[eventKey].Handler = typeof(TEventHandler);
+            if (!HasSubscriptionForEvent(eventName))
+                _handlers.Add(eventName, new SubscriptionInfo());
+
+            _handlers[eventName].Event = typeof(TEvent);
+            _handlers[eventName].Handler = typeof(TEventHandler);
         }
 
-        public bool HasSubscriptionForEvent<TEventSource, TEventAction>
-            (TEventSource source, TEventAction action)
-            where TEventSource : Enum
-            where TEventAction : Enum
-            => HasSubscriptionForEvent(GetEventKey(source, action));
+        public bool HasSubscriptionForEvent<TEvent>()
+            where TEvent : IntegrationEvent
+            => HasSubscriptionForEvent(GetEventName<TEvent>());
 
-        public bool HasSubscriptionForEvent(string eventKey)
-            => _handlers.ContainsKey(eventKey);
+        public bool HasSubscriptionForEvent(string eventName)
+            => _handlers.ContainsKey(eventName);
 
-        public string GetEventKey<TEventSource, TEventAction>
-            (TEventSource source, TEventAction action)
-            where TEventSource : Enum
-            where TEventAction : Enum
-        {
-            string eventSource = Enum.GetName(typeof(TEventSource), source)!.ToLower();
-            string eventAction = Enum.GetName(typeof(TEventAction), action)!.ToLower();
+        public string GetEventName<TEvent>()
+            where TEvent : IntegrationEvent
+            => typeof(TEvent).Name;
 
-            if (eventAction == "any") eventAction = "*";
-
-            return $"{eventSource}.{eventAction}";
-        }
-
-        public Type GetHandlerForEvent(string eventKey) => _handlers[eventKey].Handler;
-
-        public Type GetEventTypeByName(string eventKey) => _handlers[eventKey].Data;
+        public SubscriptionInfo GetSubscribtion(string eventName) => _handlers[eventName];
     }
 }

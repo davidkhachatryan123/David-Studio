@@ -7,6 +7,9 @@ using Storage.Grpc;
 using Storage.Options;
 using Services.Common.Extensions;
 using Storage.IntegrationEvents;
+using EventBus.Abstractions;
+using Storage.IntegrationEvents.Handlers;
+using Storage.IntegrationEvents.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +29,7 @@ builder.Services.ConfigureMapping();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 builder.Services.AddEventBus(builder.Configuration);
-builder.Services.AddTransient<DeleteImagesIntegrationEventHandler>();
+builder.Services.AddTransient<IIntegrationEventHandler<ImagesDeleteIntegrationEvent>, ImagesDeleteIntegrationEventHandler>();
 
 builder.Services.AddDefaultSwagger();
 

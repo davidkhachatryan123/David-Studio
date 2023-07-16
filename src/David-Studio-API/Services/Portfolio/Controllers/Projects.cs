@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using EventBus.Abstractions;
 using EventBus.Events;
-using EventBus.Sources;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
 using Portfolio.Grpc;
+using Portfolio.IntegrationEvents.Events;
 using Portfolio.Models;
 using Portfolio.Services;
 using Services.Common.Models;
@@ -95,7 +95,9 @@ namespace Portfolio.Controllers
 
             project = await _repositoryManager.Projects.UpdateAsync(project);
 
-            _eventBus.Publish(ProjectEventSource.Projects, BusCommonAction.Delete, project.ImageUrl);
+            IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
+            _eventBus.Publish(@event);
+
             project.ImageUrl = image.ImageUrl;
 
             await _repositoryManager.SaveAsync();
@@ -114,7 +116,8 @@ namespace Portfolio.Controllers
 
             if (project is null) return NotFound();
 
-            _eventBus.Publish(StorageEventSource.Images, BusCommonAction.Delete, project.ImageUrl);
+            IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
+            _eventBus.Publish(@event);
 
             return Ok();
         }

@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Sources\" />
     <None Remove="Abstractions\" />
+    <None Remove="Events\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Sources\" />
     <Folder Include="Abstractions\" />
+    <Folder Include="Events\" />
   </ItemGroup>
 </Project>

@@ -58,6 +58,8 @@ namespace Services.Common.Extensions
 
         public static void AddEventBus(this IServiceCollection services, IConfiguration configuration)
         {
+            int retryCount = configuration.GetValue<int>("EventBus:RetryCount");
+
             services.AddSingleton<IRabbitMQPersistenConnection, RabbitMQPersistenConnection>(sp =>
             {
                 var logger = sp.GetRequiredService<ILogger<RabbitMQPersistenConnection>>();
@@ -68,7 +70,7 @@ namespace Services.Common.Extensions
                     DispatchConsumersAsync = true
                 };
 
-                return new RabbitMQPersistenConnection(factory, logger, configuration.GetValue<int>("EventBus:RetryCount"));
+                return new RabbitMQPersistenConnection(factory, logger, retryCount);
             });
 
             services.AddSingleton<IEventBus, EventBusRabbitMQ.EventBusRabbitMQ>(sp =>
@@ -77,7 +79,7 @@ namespace Services.Common.Extensions
                 var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ.EventBusRabbitMQ>>();
                 var eventBusSubscriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
 
-                return new EventBusRabbitMQ.EventBusRabbitMQ(rabbitMQPersistentConnection, eventBusSubscriptionsManager, sp, logger);
+                return new EventBusRabbitMQ.EventBusRabbitMQ(rabbitMQPersistentConnection, eventBusSubscriptionsManager, sp, logger, retryCount);
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();

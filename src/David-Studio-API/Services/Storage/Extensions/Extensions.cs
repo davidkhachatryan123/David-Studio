@@ -1,17 +1,14 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using AutoMapper;
 using EventBus.Abstractions;
-using EventBus.Events;
-using EventBus.Sources;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Portfolio.Database;
 using Portfolio.Mappings;
 using Storage;
-using Storage.IntegrationEvents;
+using Storage.IntegrationEvents.Events;
+using Storage.IntegrationEvents.Handlers;
 using Storage.Options;
 
 namespace Portfolio.Extensions
@@ -48,9 +45,7 @@ namespace Portfolio.Extensions
         {
             var eventBus = app.Services.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe<string, DeleteImagesIntegrationEventHandler,
-                               StorageEventSource, BusCommonAction>
-                (StorageEventSource.Images, BusCommonAction.Delete);
+            eventBus.Subscribe<ImagesDeleteIntegrationEvent, IIntegrationEventHandler<ImagesDeleteIntegrationEvent>>();
         }
 
         public static void UseStaticFilesDefaults(this WebApplication app)
