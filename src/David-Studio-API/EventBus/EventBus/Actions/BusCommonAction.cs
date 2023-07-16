@@ -1,6 +1,6 @@
 ﻿namespace EventBus.Events
 {
-    public enum BusCommonEvent
+    public enum BusCommonAction
     {
         Create = 0,
         Update = 1,

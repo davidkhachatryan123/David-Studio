@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Portfolio.Database;
 using Portfolio.Mappings;
 using Storage;
+using Storage.IntegrationEvents;
 using Storage.Options;
 
 namespace Portfolio.Extensions
@@ -47,7 +48,9 @@ namespace Portfolio.Extensions
         {
             var eventBus = app.Services.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe(StorageEventSource.Images, BusCommonEvent.Delete);
+            eventBus.Subscribe<string, DeleteImagesIntegrationEventHandler,
+                               StorageEventSource, BusCommonAction>
+                (StorageEventSource.Images, BusCommonAction.Delete);
         }
 
         public static void UseStaticFilesDefaults(this WebApplication app)

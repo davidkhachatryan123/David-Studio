@@ -1,6 +1,6 @@
 ﻿namespace EventBus.Events
 {
-    public enum TopProjectEvent
+    public enum TopProjectAction
     {
         Mark,
         Remove,

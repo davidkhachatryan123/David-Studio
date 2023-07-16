@@ -8,6 +8,7 @@ using Services.Common.Configurations;
 using EventBus.Abstractions;
 using EventBusRabbitMQ;
 using RabbitMQ.Client;
+using EventBus;
 
 namespace Services.Common.Extensions
 {
@@ -72,11 +73,14 @@ namespace Services.Common.Extensions
 
             services.AddSingleton<IEventBus, EventBusRabbitMQ.EventBusRabbitMQ>(sp =>
             {
-                var messageBusClient = sp.GetRequiredService<IRabbitMQPersistenConnection>();
+                var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistenConnection>();
                 var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ.EventBusRabbitMQ>>();
+                var eventBusSubscriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
 
-                return new EventBusRabbitMQ.EventBusRabbitMQ(messageBusClient, logger);
+                return new EventBusRabbitMQ.EventBusRabbitMQ(rabbitMQPersistentConnection, eventBusSubscriptionsManager, sp, logger);
             });
+
+            services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
         }
     }
 }

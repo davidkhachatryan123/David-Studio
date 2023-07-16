@@ -95,7 +95,7 @@ namespace Portfolio.Controllers
 
             project = await _repositoryManager.Projects.UpdateAsync(project);
 
-            _eventBus.Publish(ProjectEventSource.Projects, BusCommonEvent.Delete, project.ImageUrl);
+            _eventBus.Publish(ProjectEventSource.Projects, BusCommonAction.Delete, project.ImageUrl);
             project.ImageUrl = image.ImageUrl;
 
             await _repositoryManager.SaveAsync();
@@ -114,7 +114,7 @@ namespace Portfolio.Controllers
 
             if (project is null) return NotFound();
 
-            _eventBus.Publish(StorageEventSource.Images, BusCommonEvent.Delete, project.ImageUrl);
+            _eventBus.Publish(StorageEventSource.Images, BusCommonAction.Delete, project.ImageUrl);
 
             return Ok();
         }

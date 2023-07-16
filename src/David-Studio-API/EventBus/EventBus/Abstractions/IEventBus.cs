@@ -8,8 +8,10 @@
             where TEventSource : Enum
             where TEventAction : Enum;
 
-        public void Subscribe<TEventSource, TEventAction>
+        public void Subscribe<TData, TEventHandler, TEventSource, TEventAction>
             (TEventSource source, TEventAction action)
+            where TData : class
+            where TEventHandler : IIntegrationEventHandler<TData>
             where TEventSource : Enum
             where TEventAction : Enum;
     }

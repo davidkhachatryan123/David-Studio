@@ -17,6 +17,7 @@
 		<None Remove="Grpc\" />
 		<None Remove="Mappings\" />
 		<None Remove="Options\" />
+		<None Remove="IntegrationEvents\" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Controllers\" />
@@ -29,6 +30,7 @@
 		<Folder Include="Grpc\" />
 		<Folder Include="Mappings\" />
 		<Folder Include="Options\" />
+		<Folder Include="IntegrationEvents\" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />

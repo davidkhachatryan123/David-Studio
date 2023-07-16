@@ -2,10 +2,14 @@
 using System.Text;
 using System.Text.Json;
 using System.Threading.Channels;
+using EventBus;
 using EventBus.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using static System.Formats.Asn1.AsnWriter;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EventBusRabbitMQ
 {
@@ -14,6 +18,8 @@ namespace EventBusRabbitMQ
         private const string EXCHANGE_NAME = "david-studio";
 
         private readonly IRabbitMQPersistenConnection _persistenConnection;
+        private readonly IEventBusSubscriptionsManager _subsManager;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<EventBusRabbitMQ> _logger;
 
         private IModel _consumerChannel;
@@ -21,12 +27,17 @@ namespace EventBusRabbitMQ
 
         public EventBusRabbitMQ(
             IRabbitMQPersistenConnection eventBusConnection,
+            IEventBusSubscriptionsManager subsManager,
+            IServiceProvider serviceProvider,
             ILogger<EventBusRabbitMQ> logger)
         {
             _logger = logger;
+            _serviceProvider = serviceProvider;
 
             _persistenConnection = eventBusConnection
                 ?? throw new ArgumentNullException(nameof(_persistenConnection));
+            _subsManager = subsManager;
+
             _consumerChannel = CreateConsumerChannel();
         }
 
@@ -39,44 +50,49 @@ namespace EventBusRabbitMQ
             if (!_persistenConnection.IsConnected)
                 _persistenConnection.TryConnect();
 
-            byte[] body = JsonSerializer.SerializeToUtf8Bytes(data);
-            string eventSource = Enum.GetName(typeof(TEventSource), source)!.ToLower();
-            string eventAction = Enum.GetName(typeof(TEventAction), action)!.ToLower();
+            byte[] body = JsonSerializer.SerializeToUtf8Bytes(data, data.GetType());
+            string eventKey = _subsManager.GetEventKey(source, action);
 
-            _logger.LogTrace("Creating RabbitMQ channel to publish event: {EventSource} ({EventAction})", eventSource, eventAction);
+            _logger.LogTrace("Creating RabbitMQ channel to publish event: {EventKey}", eventKey);
 
             using var channel = _persistenConnection.CreateModel();
 
-            _logger.LogTrace("Declaring RabbitMQ exchange to publish event: {EventSource}", eventSource);
+            _logger.LogTrace("Declaring RabbitMQ exchange to publish event: {EventKey}", eventKey);
 
-            channel.ExchangeDeclare(EXCHANGE_NAME, ExchangeType.Topic, durable: true);
+            channel.ExchangeDeclare(EXCHANGE_NAME, ExchangeType.Direct, durable: true);
 
             var properties = channel.CreateBasicProperties();
             properties.Persistent = true;
 
-            _logger.LogTrace("Publishing event to RabbitMQ: {EventSource}", eventSource);
+            _logger.LogTrace("Publishing event to RabbitMQ: {EventKey}", eventKey);
 
             channel.BasicPublish(exchange: EXCHANGE_NAME,
-                     routingKey: $"{eventSource}.{eventAction}",
+                     routingKey: eventKey,
                      basicProperties: null,
-                     body: body);
+            body: body);
         }
 
-        public void Subscribe<TEventSource, TEventAction>
+        public void Subscribe<TData, TEventHandler, TEventSource, TEventAction>
             (TEventSource source, TEventAction action)
+            where TData : class
+            where TEventHandler : IIntegrationEventHandler<TData>
             where TEventSource : Enum
             where TEventAction : Enum
         {
-            string eventSource = Enum.GetName(typeof(TEventSource), source)!.ToLower();
-            string eventAction = Enum.GetName(typeof(TEventAction), action)!.ToLower();
+            string eventKey = _subsManager.GetEventKey(source, action);
 
-            _logger.LogInformation("Subscribing to event {EventSource}", eventSource);
+            if (!_subsManager.HasSubscriptionForEvent(eventKey))
+            {
+                _logger.LogInformation("Subscribing to event {EventKey}", eventKey);
 
-            _consumerChannel.QueueBind(queue: _queueName,
+                _subsManager.AddSubscription<TData, TEventHandler>(eventKey);
+
+                _consumerChannel.QueueBind(queue: _queueName,
                                        exchange: EXCHANGE_NAME,
-                                       routingKey: $"{eventSource}.{eventAction}");
+                                       routingKey: eventKey);
 
-            StartBasicConsume();
+                StartBasicConsume();
+            }
         }
 
         private IModel CreateConsumerChannel()
@@ -88,7 +104,7 @@ namespace EventBusRabbitMQ
 
             var channel = _persistenConnection.CreateModel();
 
-            channel.ExchangeDeclare(EXCHANGE_NAME, ExchangeType.Topic, durable: true);
+            channel.ExchangeDeclare(EXCHANGE_NAME, ExchangeType.Direct, durable: true);
 
             _queueName = channel.QueueDeclare().QueueName;
 
@@ -127,24 +143,44 @@ namespace EventBusRabbitMQ
 
         private async Task Consumer_Received(object sender, BasicDeliverEventArgs eventArgs)
         {
-            var topic = eventArgs.RoutingKey;
+            var eventKey = eventArgs.RoutingKey;
             var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
 
             try
             {
-                await ProcessEvent(topic, message);
+                await ProcessEvent(eventKey, message);
             }
             catch (Exception ex)
             {
                 _logger.LogWarning(ex, "Error Processing message \"{Message}\"", message);
+
+                return;
             }
 
             _consumerChannel.BasicAck(eventArgs.DeliveryTag, multiple: false);
         }
 
-        private async Task ProcessEvent(string topic, string message)
+        private async Task ProcessEvent(string eventKey, string message)
         {
-            _logger.LogTrace("Processing RabbitMQ event: {Topic}", topic);
+            _logger.LogTrace("Start processing RabbitMQ event: {EventKey}", eventKey);
+            if (_subsManager.HasSubscriptionForEvent(eventKey))
+            {
+                await using var scope = _serviceProvider.CreateAsyncScope();
+                var subscription = _subsManager.GetHandlerForEvent(eventKey);
+
+                var handler = scope.ServiceProvider.GetService(subscription);
+
+                var eventType = _subsManager.GetEventTypeByName(eventKey);
+                var integrationEvent = JsonSerializer.Deserialize(message, eventType);
+                var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
+
+                await Task.Yield();
+                await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { integrationEvent });
+            }
+            else
+            {
+                _logger.LogWarning("No subscription for RabbitMQ event: {EventKey}", eventKey);
+            }
         }
 
         public void Dispose()
