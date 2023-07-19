@@ -1,5 +1,4 @@
-﻿using System;
-using Duende.IdentityServer.EntityFramework.DbContexts;
+﻿using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using IdentityServer.Database;
 using IdentityServer.Models;
@@ -50,8 +49,7 @@ namespace IdentityServer
                     Id = Guid.NewGuid().ToString(),
                     UserName = configuration["DefaultUser:UserName"],
                     Email = configuration["DefaultUser:Email"],
-                    EmailConfirmed = true,
-
+                    EmailConfirmed = true
                 };
 
                 var result = userMgr.CreateAsync(defaultUser, configuration["DefaultUser:Password"]!).Result;
@@ -96,7 +94,7 @@ namespace IdentityServer
             }
         }
 
-        private static AsyncPolicy CreateRetryPolicy(IConfiguration configuration, Microsoft.Extensions.Logging.ILogger logger)
+        private static AsyncPolicy CreateRetryPolicy(IConfiguration configuration, ILogger logger)
         {
             var retryMigrations = false;
             bool.TryParse(configuration["RetryMigrations"], out retryMigrations);
@@ -115,4 +113,3 @@ namespace IdentityServer
         }
     }
 }
-

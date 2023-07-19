@@ -3,8 +3,13 @@ using IdentityServer.Database;
 using IdentityServer.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Services.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDefaultApiVersioning();
+
+builder.Services.AddControllers();
 
 string connectionString = builder.Configuration.GetConnectionString("IdentityDB")!;
 var migrationsAssembly = typeof(Config).Assembly.GetName().Name;
@@ -13,7 +18,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
 
 builder.Services.AddDefaultIdentity();
-
 builder.Services.AddDefaultIdentityServer(connectionString, migrationsAssembly);
 
 builder.Services.AddAuthorization();
@@ -27,10 +31,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 
+app.UseStaticFiles();
+
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseIdentityServer();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.MapFallbackToFile("index.html");
 
 app.UseSerilogRequestLogging();
 

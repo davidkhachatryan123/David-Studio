@@ -1,10 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace IdentityServer.Models
-{
-    public class ApplicationUser : IdentityUser
-    {
-    }
-}
+namespace IdentityServer.Models;
 
+public class ApplicationUser : IdentityUser { }
