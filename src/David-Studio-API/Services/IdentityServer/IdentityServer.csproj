@@ -28,10 +28,12 @@
     <None Remove="Configuration\" />
     <None Remove="Database\" />
     <None Remove="Models\" />
+    <None Remove="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="Database\" />
     <Folder Include="Models\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>
