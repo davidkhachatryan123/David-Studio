@@ -30,6 +30,7 @@ namespace IdentityServer.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpPost]
+        [Route("/api/login")]
         public async Task<IActionResult> Login([FromForm] UserLoginDto userLoginDto)
         {
             if (!ModelState.IsValid)
@@ -64,7 +65,7 @@ namespace IdentityServer.Controllers
 
                 // TODO: Send MFA code
 
-                return Ok(new { returnUrl });
+                return Ok(new { mfa = true });
             }
             else
             {
@@ -78,6 +79,7 @@ namespace IdentityServer.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpGet]
+        [Route("/api/logout")]
         public async Task<IActionResult> Logout([FromQuery] string logoutId)
         {
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
@@ -85,6 +87,21 @@ namespace IdentityServer.Controllers
             if (logoutRequest is null ||
                 (logoutRequest.ShowSignoutPrompt && User.Identity?.IsAuthenticated == true))
                 return Ok(new { prompt = User.Identity?.IsAuthenticated ?? false });
+
+            await _signInManger.SignOutAsync();
+
+            return Ok(new
+            {
+                postLogoutRedirectUri = logoutRequest.PostLogoutRedirectUri
+            });
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost]
+        [Route("/api/logout")]
+        public async Task<IActionResult> PostLogout([FromQuery] string logoutId)
+        {
+            var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
 
             await _signInManger.SignOutAsync();
 

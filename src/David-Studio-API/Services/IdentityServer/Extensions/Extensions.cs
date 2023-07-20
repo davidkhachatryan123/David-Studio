@@ -43,6 +43,11 @@ namespace IdentityServer.Extensions
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
 
+                options.UserInteraction.LoginUrl = "/account/login";
+                options.UserInteraction.LoginReturnUrlParameter = "returnUrln";
+                options.UserInteraction.LogoutUrl = "/account/logout";
+                options.UserInteraction.LogoutIdParameter = "logoutId";
+
                 // new key every 30 days
                 options.KeyManagement.RotationInterval = TimeSpan.FromDays(30);
                 // announce new key 2 days in advance in discovery
