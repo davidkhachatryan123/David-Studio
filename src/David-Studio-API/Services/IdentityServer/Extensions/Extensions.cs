@@ -44,7 +44,7 @@ namespace IdentityServer.Extensions
                 options.Events.RaiseInformationEvents = true;
 
                 options.UserInteraction.LoginUrl = "/account/login";
-                options.UserInteraction.LoginReturnUrlParameter = "returnUrln";
+                options.UserInteraction.LoginReturnUrlParameter = "returnUrl";
                 options.UserInteraction.LogoutUrl = "/account/logout";
                 options.UserInteraction.LogoutIdParameter = "logoutId";
 

@@ -1,0 +1,2 @@
+dist/**/*.js
+karma.conf.js

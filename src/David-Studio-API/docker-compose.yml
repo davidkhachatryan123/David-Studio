@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}identityserver
     build:
       context: .
-      dockerfile: Services/IdentityServer/Dockerfile.develop
+      dockerfile: Services/IdentityServer/Dockerfile
 
   portfolio-api:
     image: ${DOCKER_REGISTRY-}portfolio
