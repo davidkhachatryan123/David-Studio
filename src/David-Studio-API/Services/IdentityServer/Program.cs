@@ -7,6 +7,8 @@ using Services.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDefaultCors(builder.Configuration);
+
 builder.Services.AddDefaultApiVersioning();
 
 builder.Services.AddControllers();
@@ -18,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly)));
 
 builder.Services.AddDefaultIdentity();
-builder.Services.AddDefaultIdentityServer(connectionString, migrationsAssembly);
+builder.Services.AddDefaultIdentityServer(builder.Configuration, connectionString, migrationsAssembly);
 
 builder.Services.AddAuthorization();
 
@@ -31,16 +33,17 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 
-app.UseStaticFiles();
+app.UseCors();
 
+app.UseHttpsRedirection();
+
+app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 app.UseRouting();
 
 app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapFallbackToFile("index.html");
 
 app.UseSerilogRequestLogging();
 

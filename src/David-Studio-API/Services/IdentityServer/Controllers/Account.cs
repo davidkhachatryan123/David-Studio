@@ -1,49 +1,51 @@
-﻿using Duende.IdentityServer.Services;
+﻿using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Services;
 using IdentityServer.Dtos;
 using IdentityServer.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static IdentityModel.OidcConstants;
 
 namespace IdentityServer.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [AllowAnonymous]
     public class Account : ControllerBase
     {
         private readonly IIdentityServerInteractionService _interactionService;
         private readonly IServerUrls _serverUrls;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManger;
+        private readonly IEventService _events;
 
         public Account(
             IIdentityServerInteractionService interactionService,
             IServerUrls serverUrls,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManger)
+            SignInManager<ApplicationUser> signInManger,
+            IEventService events)
         {
             _interactionService = interactionService;
             _serverUrls = serverUrls;
             _userManager = userManager;
             _signInManger = signInManger;
+            _events = events;
         }
 
         [MapToApiVersion("1.0")]
         [HttpPost]
         [Route("/api/login")]
-        public async Task<IActionResult> Login([FromForm] UserLoginDto userLoginDto)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             string? returnUrl = userLoginDto.ReturnUrl is not null
                 ? Uri.UnescapeDataString(userLoginDto.ReturnUrl) : null;
-
-            if (returnUrl is null ||
-                await _interactionService.GetAuthorizationContextAsync(returnUrl) is null)
-            {
-                returnUrl = _serverUrls.BaseUrl;
-            }
 
             ApplicationUser? user = await _userManager.FindByNameAsync(userLoginDto.Username);
 
@@ -71,9 +73,14 @@ namespace IdentityServer.Controllers
             {
                 var result = await _signInManger.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, true);
 
-                return !result.Succeeded
-                    ? Unauthorized("Wrong username or password")
-                    : Ok(new { returnUrl });
+                if (!result.Succeeded)
+                {
+                    await _events.RaiseAsync(new UserLoginFailureEvent(userLoginDto.Username, "Invalid credentials"));
+                    return Unauthorized("Wrong username or password");
+                }
+
+                await _events.RaiseAsync(new UserLoginSuccessEvent(userLoginDto.Username, user.Id, userLoginDto.Username));
+                return Ok(new { returnUrl });
             }
         }
 

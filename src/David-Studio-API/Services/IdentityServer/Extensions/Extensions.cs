@@ -9,6 +9,20 @@ namespace IdentityServer.Extensions
 {
     public static class Extensions
     {
+        public static void AddDefaultCors(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowCredentials();
+                    policy.WithOrigins(configuration["IdentityWebSpa"]!);
+                });
+            });
+        }
+
         public static void AddDefaultIdentity(this IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -32,7 +46,7 @@ namespace IdentityServer.Extensions
             .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
         }
 
-        public static void AddDefaultIdentityServer(this IServiceCollection services, string connectionString, string? migrationsAssembly)
+        public static void AddDefaultIdentityServer(this IServiceCollection services, IConfiguration configuration, string connectionString, string? migrationsAssembly)
         {
             services.AddIdentityServer(options =>
             {
@@ -43,9 +57,9 @@ namespace IdentityServer.Extensions
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
 
-                options.UserInteraction.LoginUrl = "/account/login";
+                options.UserInteraction.LoginUrl = $"{configuration["IdentityWebSpa"]}/account/login";
                 options.UserInteraction.LoginReturnUrlParameter = "returnUrl";
-                options.UserInteraction.LogoutUrl = "/account/logout";
+                options.UserInteraction.LogoutUrl = $"{configuration["IdentityWebSpa"]}/account/logout";
                 options.UserInteraction.LogoutIdParameter = "logoutId";
 
                 // new key every 30 days

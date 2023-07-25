@@ -46,7 +46,8 @@ namespace IdentityServer
                     AllowedCorsOrigins =     { $"{configuration["SpaClient"]}" },
 
                     RequirePkce = true,
-                    AllowPlainTextPkce = false
+                    AllowPlainTextPkce = false,
+                    RequireClientSecret = false,
                 }
             };
     }
