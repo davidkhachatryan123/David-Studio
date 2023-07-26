@@ -8,19 +8,21 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASS}
       - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-      - IdentityWebSpa=http://localhost:44200
-      - SpaClient=http://localhost:4200
+      - IdentityWebSpa=https://localhost:44300
+      - SpaClient=https://localhost:4200
     ports:
       - "5010:5000"
       - "5011:5001"
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ../certs:/https:ro
     depends_on:
       - db
 
   identity-server-web:
     ports:
-      - "44200:80"
+      - "44300:443"
+    volumes:
+      - ../certs:/https:ro
     depends_on:
       - identity-server
 

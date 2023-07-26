@@ -33,11 +33,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 
+app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 app.UseCors();
 
+app.UseHsts();
 app.UseHttpsRedirection();
 
-app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 app.UseRouting();
 
 app.UseIdentityServer();
