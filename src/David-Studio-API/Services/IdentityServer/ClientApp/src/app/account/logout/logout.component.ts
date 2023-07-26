@@ -16,8 +16,8 @@ export class LogoutComponent {
       if (this.logoutId != null) {
         authService.logout(this.logoutId).subscribe({
           next: ({ prompt, postLogoutRedirectUri }) => {
-            if(prompt)
-              this.router.navigate(['account', 'confirmLogout'],
+            if(prompt == true)
+              this.router.navigate(['account', 'confirm-logout'],
                 { queryParams: { logoutId: this.logoutId } });
             else
               window.location.href = postLogoutRedirectUri;

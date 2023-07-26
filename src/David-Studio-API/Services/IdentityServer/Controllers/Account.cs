@@ -91,9 +91,8 @@ namespace IdentityServer.Controllers
         {
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
 
-            if (logoutRequest is null ||
-                (logoutRequest.ShowSignoutPrompt && User.Identity?.IsAuthenticated == true))
-                return Ok(new { prompt = User.Identity?.IsAuthenticated ?? false });
+            if (logoutRequest is null || logoutRequest.ShowSignoutPrompt)
+                return Ok(new { prompt = logoutRequest?.ShowSignoutPrompt ?? false });
 
             await _signInManger.SignOutAsync();
 
