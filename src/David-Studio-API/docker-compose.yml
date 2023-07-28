@@ -7,12 +7,6 @@ services:
       context: .
       dockerfile: Services/IdentityServer/Dockerfile.develop
 
-  identity-server-web:
-    image: ${DOCKER_REGISTRY-}identityserverweb
-    build:
-      context: Services/IdentityServer/ClientApp
-      dockerfile: Dockerfile
-
   portfolio-api:
     image: ${DOCKER_REGISTRY-}portfolio
     build:

@@ -17,7 +17,7 @@ export class AuthService {
     let queryParams = new HttpParams().set('logoutId', logoutId);
 
     return this.http.get<{ prompt: boolean, postLogoutRedirectUri: string }>
-      (`${environment.api_url}/api/logout`, { params: queryParams });
+      (`${environment.api_url}/api/logout`, { params: queryParams, withCredentials: true });
   }
 
   confirmLogout(logoutId: string): Observable<{ postLogoutRedirectUri: string }> {

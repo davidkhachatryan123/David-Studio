@@ -1,12 +1,15 @@
 ﻿using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
 using IdentityServer.Dtos;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static IdentityModel.OidcConstants;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace IdentityServer.Controllers
 {
@@ -19,7 +22,7 @@ namespace IdentityServer.Controllers
         private readonly IIdentityServerInteractionService _interactionService;
         private readonly IServerUrls _serverUrls;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManger;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEventService _events;
 
         public Account(
@@ -32,7 +35,7 @@ namespace IdentityServer.Controllers
             _interactionService = interactionService;
             _serverUrls = serverUrls;
             _userManager = userManager;
-            _signInManger = signInManger;
+            _signInManager = signInManger;
             _events = events;
         }
 
@@ -71,7 +74,7 @@ namespace IdentityServer.Controllers
             }
             else
             {
-                var result = await _signInManger.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, true);
+                var result = await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, true);
 
                 if (!result.Succeeded)
                 {
@@ -94,7 +97,7 @@ namespace IdentityServer.Controllers
             if (logoutRequest is null || logoutRequest.ShowSignoutPrompt)
                 return Ok(new { prompt = logoutRequest?.ShowSignoutPrompt ?? false });
 
-            await _signInManger.SignOutAsync();
+            await _signInManager.SignOutAsync();
 
             return Ok(new
             {
@@ -109,7 +112,12 @@ namespace IdentityServer.Controllers
         {
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
 
-            await _signInManger.SignOutAsync();
+            if (User?.Identity?.IsAuthenticated == true)
+            {
+                await _signInManager.SignOutAsync();
+
+                await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+            }
 
             return Ok(new
             {

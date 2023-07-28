@@ -71,7 +71,12 @@
             },
             "development": {
               "browserTarget": "Authentication:build:development",
-              "proxyConfig": "proxy.conf.json"
+              "proxyConfig": "proxy.conf.json",
+              "port": 44300
+            },
+            "options": {
+              "sslKey": "../../../../certs/certificate.key",
+              "sslCert": "../../../../certs/certificate.crt"
             }
           },
           "defaultConfiguration": "development"

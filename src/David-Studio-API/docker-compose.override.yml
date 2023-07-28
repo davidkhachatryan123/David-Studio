@@ -18,14 +18,6 @@ services:
     depends_on:
       - db
 
-  identity-server-web:
-    ports:
-      - "44300:443"
-    volumes:
-      - ../certs:/https:ro
-    depends_on:
-      - identity-server
-
   portfolio-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
