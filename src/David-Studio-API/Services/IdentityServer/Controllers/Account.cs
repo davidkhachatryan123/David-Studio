@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using static IdentityModel.OidcConstants;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace IdentityServer.Controllers
 {
@@ -94,8 +92,8 @@ namespace IdentityServer.Controllers
         {
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
 
-            if (logoutRequest is null || logoutRequest.ShowSignoutPrompt)
-                return Ok(new { prompt = logoutRequest?.ShowSignoutPrompt ?? false });
+            if (logoutRequest is null || (logoutRequest.ShowSignoutPrompt && User.Identity?.IsAuthenticated == true))
+                return Ok(new { prompt = User.Identity?.IsAuthenticated ?? false });
 
             await _signInManager.SignOutAsync();
 
@@ -112,7 +110,7 @@ namespace IdentityServer.Controllers
         {
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
 
-            if (User?.Identity?.IsAuthenticated == true)
+            if (User.Identity?.IsAuthenticated == true)
             {
                 await _signInManager.SignOutAsync();
 

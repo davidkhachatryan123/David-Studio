@@ -19,6 +19,7 @@ namespace IdentityServer.Extensions
                     policy.AllowAnyMethod();
                     policy.AllowCredentials();
                     policy.WithOrigins(configuration["IdentityWebSpa"]!);
+                    policy.WithOrigins(configuration["SpaClient"]!);
                 });
             });
         }
@@ -50,7 +51,7 @@ namespace IdentityServer.Extensions
         {
             services.AddIdentityServer(options =>
             {
-                options.IssuerUri = "null";
+                options.IssuerUri = configuration["IdentityServer"]!;
 
                 options.Events.RaiseSuccessEvents = true;
                 options.Events.RaiseFailureEvents = true;

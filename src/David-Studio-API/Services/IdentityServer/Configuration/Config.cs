@@ -37,6 +37,7 @@ namespace IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
                         "users"
                     },
                     AllowAccessTokensViaBrowser = true,
@@ -48,6 +49,7 @@ namespace IdentityServer
                     RequirePkce = true,
                     AllowPlainTextPkce = false,
                     RequireClientSecret = false,
+                    AllowOfflineAccess = true
                 }
             };
     }
