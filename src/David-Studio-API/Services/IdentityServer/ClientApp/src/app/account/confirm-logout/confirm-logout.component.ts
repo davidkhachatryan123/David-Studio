@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-confirm-logout',
@@ -11,16 +12,20 @@ export class ConfirmLogoutComponent {
 
   constructor(
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   yes() {
     if(this.logoutId != null) {
       this.authService.confirmLogout(this.logoutId).subscribe({
-        next: ({ postLogoutRedirectUri }) => {
-          window.location.href = postLogoutRedirectUri;
-        }
+        next: ({ postLogoutRedirectUri }) =>
+          window.location.href = postLogoutRedirectUri
       });
     }
+  }
+
+  cancel() {
+    window.location.href = environment.app_url;
   }
 }

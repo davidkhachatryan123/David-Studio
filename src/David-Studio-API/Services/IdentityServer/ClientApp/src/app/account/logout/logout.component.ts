@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LogoutComponent {
   logoutId: string | null = this.route.snapshot.queryParamMap.get('logoutId');
+  returnUrl: string = '';
 
   constructor(
     private authService: AuthService,
@@ -20,13 +21,12 @@ export class LogoutComponent {
               this.router.navigate(['account', 'confirm-logout'],
                 { queryParams: { logoutId: this.logoutId } });
             else
+            {
+              this.returnUrl = postLogoutRedirectUri;
               window.location.href = postLogoutRedirectUri;
+            }
           }
         });
       }
     }
-
-  rediredtToLogin() {
-    this.router.navigate(['account', 'login'])
-  }
 }

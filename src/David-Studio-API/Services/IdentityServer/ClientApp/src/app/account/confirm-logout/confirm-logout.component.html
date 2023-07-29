@@ -1,6 +1,10 @@
 <h1>Would you like to logout?</h1>
 
 <div class="actions">
+  <button type="submit" mat-raised-button color="primary"
+          class="actions__btn" (click)="cancel()">
+    Cancel
+  </button>
   <button type="submit" mat-raised-button color="warn"
           class="actions__btn" (click)="yes()">
     Yes
