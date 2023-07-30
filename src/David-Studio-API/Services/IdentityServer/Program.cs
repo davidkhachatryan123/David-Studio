@@ -26,6 +26,8 @@ builder.Services.AddDefaultIdentityServer(builder.Configuration, connectionStrin
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddDefaultSwagger();
+
 builder.Services.AddSerilog();
 builder.Host.UseSerilog((ctx, lc) => lc
 .WriteTo.Console());
@@ -33,7 +35,10 @@ builder.Host.UseSerilog((ctx, lc) => lc
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
+{
     app.UseDeveloperExceptionPage();
+    app.UseDefaultSwagger();
+}
 
 app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 app.UseCors();
@@ -46,7 +51,7 @@ app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 app.UseSerilogRequestLogging();
 
