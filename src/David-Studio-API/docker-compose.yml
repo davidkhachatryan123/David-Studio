@@ -19,6 +19,12 @@ services:
       context: .
       dockerfile: Services/Storage/Dockerfile.develop
 
+  messanger:
+    image: ${DOCKER_REGISTRY-}messagner
+    build:
+      context: .
+      dockerfile: Services/Messanger/Dockerfile.develop
+
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
 

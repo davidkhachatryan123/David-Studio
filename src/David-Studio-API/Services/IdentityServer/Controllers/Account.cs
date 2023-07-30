@@ -1,7 +1,10 @@
 ﻿using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
+using EventBus.Abstractions;
+using EventBus.Events;
 using IdentityServer.Dtos;
+using IdentityServer.IntegrationEvents.Events;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -22,19 +25,25 @@ namespace IdentityServer.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEventService _events;
+        private readonly IEventBus _eventBus;
+        private readonly ILogger<Account> _logger;
 
         public Account(
             IIdentityServerInteractionService interactionService,
             IServerUrls serverUrls,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManger,
-            IEventService events)
+            IEventService events,
+            IEventBus eventBus,
+            ILogger<Account> logger)
         {
             _interactionService = interactionService;
             _serverUrls = serverUrls;
             _userManager = userManager;
             _signInManager = signInManger;
             _events = events;
+            _eventBus = eventBus;
+            _logger = logger;
         }
 
         [MapToApiVersion("1.0")]
@@ -66,7 +75,9 @@ namespace IdentityServer.Controllers
 
                 string code = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultEmailProvider);
 
-                // TODO: Send MFA code
+                _logger.LogInformation("Publishing message to event bus for send email to: {EmailAddress}", user.Email);
+                IntegrationEvent @event = new SendEmailIntegrationEvent(user.Email!, "David Studio - 2FA Code", code);
+                _eventBus.Publish(@event);
 
                 return Ok(new { mfa = true });
             }

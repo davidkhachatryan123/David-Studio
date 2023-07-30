@@ -14,6 +14,7 @@
 		<None Remove="$(SpaRoot)**" />
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
 		<Content Remove="wwwroot\" />
+		<None Remove="IntegrationEvents\" />
 	</ItemGroup>
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
@@ -49,6 +50,7 @@
 		<Folder Include="Controllers\" />
 		<Folder Include="Dtos\" />
 		<Folder Include="wwwroot\" />
+		<Folder Include="IntegrationEvents\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Services.Common\Services.Common.csproj">

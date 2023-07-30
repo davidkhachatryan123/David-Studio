@@ -13,6 +13,8 @@ builder.Services.AddDefaultApiVersioning();
 
 builder.Services.AddControllers();
 
+builder.Services.AddEventBus(builder.Configuration);
+
 string connectionString = builder.Configuration.GetConnectionString("IdentityDB")!;
 var migrationsAssembly = typeof(Config).Assembly.GetName().Name;
 

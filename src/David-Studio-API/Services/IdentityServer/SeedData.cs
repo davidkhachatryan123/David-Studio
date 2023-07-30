@@ -49,8 +49,8 @@ namespace IdentityServer
                     Id = Guid.NewGuid().ToString(),
                     UserName = configuration["DefaultUser:UserName"],
                     Email = configuration["DefaultUser:Email"],
-                    EmailConfirmed = true
-                    // TODO: Add TwoFactorEnabled = true
+                    EmailConfirmed = true,
+                    TwoFactorEnabled = true
                 };
 
                 var result = userMgr.CreateAsync(defaultUser, configuration["DefaultUser:Password"]!).Result;
