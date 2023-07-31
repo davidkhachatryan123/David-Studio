@@ -9,8 +9,14 @@ export class AuthService {
     private http: HttpClient
   ) { }
   
-  login(login: any): Observable<{ returnUrl: string }> {
-    return this.http.post<{returnUrl: string}>(`${environment.api_url}/api/login`, login, { withCredentials: true });
+  login(login: any): Observable<{ returnUrl: string, mfa: string, rememberMe: string }> {
+    return this.http.post<{returnUrl: string, mfa: string, rememberMe: string}>
+      (`${environment.api_url}/api/login`, login, { withCredentials: true });
+  }
+
+  mfaLogin(loginMfa: any): Observable<{ returnUrl: string }> {
+    return this.http.post<{returnUrl: string}>
+      (`${environment.api_url}/api/login/mfa`, loginMfa, { withCredentials: true });
   }
 
   logout(logoutId: string): Observable<{ prompt: boolean, postLogoutRedirectUri: string }> {

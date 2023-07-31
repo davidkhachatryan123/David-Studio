@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -16,7 +16,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
     ) {
     this.rememberMe = false;
 
@@ -37,8 +38,12 @@ export class LoginComponent {
   submit() {
     if(this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
-        next: ({ returnUrl } ) => {
-          window.location.href = returnUrl;
+        next: ({ returnUrl, mfa, rememberMe }) => {
+          if(mfa)
+            this.router.navigate(['account', 'mfa'],
+              { queryParams: {returnUrl, rememberMe } });
+          else
+            window.location.href = returnUrl;
         },
         error: (error: HttpErrorResponse) => {
           this.loginForm.get("password")?.reset();

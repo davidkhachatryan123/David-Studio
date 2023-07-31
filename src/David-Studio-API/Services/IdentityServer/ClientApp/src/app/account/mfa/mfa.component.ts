@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-mfa',
@@ -10,47 +13,32 @@ export class MfaComponent {
   mfaForm: FormGroup;
 
   constructor(
-    // private authService: AuthService,
-    private _snackBar: MatSnackBar,
-    // private _router: Router,
-    // private _route: ActivatedRoute,
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
     ) {
     this.mfaForm = new FormGroup({
-        "mfa": new FormControl('', [
+        "code": new FormControl('', [
           Validators.required, Validators.minLength(6), Validators.maxLength(6),
           Validators.pattern('^[0-9]*$')
-        ])
+        ]),
+        "rememberMe": new FormControl(Boolean(route.snapshot.queryParamMap.get('rememberMe'))),
+        "returnUrl": new FormControl(route.snapshot.queryParamMap.get('returnUrl'))
     });
   }
 
   submit(){
     if(this.mfaForm.valid) {
-      console.log(this.mfaForm);
-
-      // this.authService.login(new LoginDto(
-      //   this.loginForm.controls['username'].value,
-      //   this.loginForm.controls['password'].value
-      // ))
-      // .subscribe({
-      //   next: () => {
-
-      //     this._router.navigate([], {
-      //       relativeTo: this._route,
-      //       queryParams: {
-      //         username: this.loginForm.controls['username'].value
-      //       },
-      //       queryParamsHandling: 'merge',
-      //       skipLocationChange: false
-      //     });
-
-      //     this.nextEvent.emit();
-      //   },
-      //   error: (error: HttpErrorResponse) => {
-      //       this._snackBar.open(error.error.errorMessage, 'Ok', {
-      //         duration: 10000,
-      //       });
-      //   }
-      // });
+      this.authService.mfaLogin(this.mfaForm.value).subscribe({
+        next: ({ returnUrl }) => {
+          window.location.href = returnUrl;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(error.message, 'Ok', {
+            duration: 10000,
+          });
+        }
+      });
     }
   }
 }

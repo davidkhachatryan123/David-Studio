@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace IdentityServer.Controllers
 {
@@ -74,28 +76,53 @@ namespace IdentityServer.Controllers
                 return Unauthorized("Email doesn't confirmed! Confirmation email sended to your Email");
             }
 
-            if (user.TwoFactorEnabled)
+            var result = await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, true);
+
+            if (result.Succeeded)
             {
-                if (!await _userManager.CheckPasswordAsync(user, userLoginDto.Password))
-                    return BadRequest();
-
-                await SendMfaCode(user.Email!);
-
-                return Ok(new { mfa = true });
-            }
-            else
-            {
-                var result = await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, true);
-
-                if (!result.Succeeded)
-                {
-                    await _events.RaiseAsync(new UserLoginFailureEvent(userLoginDto.Username, "Invalid credentials"));
-                    return Unauthorized("Wrong username or password");
-                }
-
                 await _events.RaiseAsync(new UserLoginSuccessEvent(userLoginDto.Username, user.Id, userLoginDto.Username));
                 return Ok(new { returnUrl });
             }
+            else if (result.RequiresTwoFactor)
+            {
+                await SendMfaCode(user.Email!);
+                return Ok(new { mfa = true, returnUrl, userLoginDto.RememberMe });
+            }
+            else
+            {
+                await _events.RaiseAsync(new UserLoginFailureEvent(userLoginDto.Username, "Invalid credentials"));
+                return Unauthorized("Wrong username or password");
+            }
+        }
+
+        [AllowAnonymous]
+        [MapToApiVersion("1.0")]
+        [HttpPost]
+        [Route("/api/login/mfa")]
+        public async Task<IActionResult> LoginMfa([FromBody] UserTwoFactorLoginDto userTwoFactorLoginDto)
+        {
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user is null)
+                return BadRequest("User not found");
+
+            var result = await _signInManager.TwoFactorSignInAsync(
+                TokenOptions.DefaultEmailProvider,
+                userTwoFactorLoginDto.Code,
+                userTwoFactorLoginDto.RememberMe,
+                false);
+
+            string? returnUrl = userTwoFactorLoginDto.ReturnUrl is not null
+                ? Uri.UnescapeDataString(userTwoFactorLoginDto.ReturnUrl)
+                : _configuration.GetValue<string>("SpaClient");
+
+            if (!result.Succeeded)
+            {
+                //await _events.RaiseAsync(new UserLoginFailureEvent(userLoginDto.Username, "Invalid credentials"));
+                return Unauthorized("Two factor code is not valid");
+            }
+
+            //await _events.RaiseAsync(new UserLoginSuccessEvent(userLoginDto.Username, user.Id, userLoginDto.Username));
+            return Ok(new { returnUrl });
         }
 
         [AllowAnonymous]
