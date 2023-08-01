@@ -7,17 +7,17 @@ services:
       context: .
       dockerfile: Services/IdentityServer/Dockerfile.develop
 
-  portfolio-api:
-    image: ${DOCKER_REGISTRY-}portfolio
-    build:
-      context: .
-      dockerfile: Services/Portfolio/Dockerfile.develop
+  # portfolio-api:
+  #   image: ${DOCKER_REGISTRY-}portfolio
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Portfolio/Dockerfile.develop
 
-  storage-api:
-    image: ${DOCKER_REGISTRY-}storage
-    build:
-      context: .
-      dockerfile: Services/Storage/Dockerfile.develop
+  # storage-api:
+  #   image: ${DOCKER_REGISTRY-}storage
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Storage/Dockerfile.develop
 
   messanger:
     image: ${DOCKER_REGISTRY-}messagner

@@ -1,5 +1,4 @@
-﻿using System;
-using Duende.IdentityServer.Events;
+﻿using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
 using EventBus.Abstractions;
@@ -13,8 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace IdentityServer.Controllers
 {
@@ -58,9 +55,6 @@ namespace IdentityServer.Controllers
         [Route("/api/login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             string? returnUrl = userLoginDto.ReturnUrl is not null
                 ? Uri.UnescapeDataString(userLoginDto.ReturnUrl)
                 : _configuration.GetValue<string>("SpaClient");
@@ -117,11 +111,11 @@ namespace IdentityServer.Controllers
 
             if (!result.Succeeded)
             {
-                //await _events.RaiseAsync(new UserLoginFailureEvent(userLoginDto.Username, "Invalid credentials"));
+                await _events.RaiseAsync(new UserLoginFailureEvent(user.UserName, "Invalid credentials"));
                 return Unauthorized("Two factor code is not valid");
             }
 
-            //await _events.RaiseAsync(new UserLoginSuccessEvent(userLoginDto.Username, user.Id, userLoginDto.Username));
+            await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName));
             return Ok(new { returnUrl });
         }
 
@@ -138,7 +132,7 @@ namespace IdentityServer.Controllers
 
             _logger.LogInformation("Publishing message to event bus for send email to: {EmailAddress}", user.Email);
 
-            IntegrationEvent @event = new SendEmailIntegrationEvent(user.Email!, "David Studio - 2FA Code", code);
+            IntegrationEvent @event = new SendTwoFactorCodeEmailIntegrationEvent(user.Email!, code);
             _eventBus.Publish(@event);
 
             return Ok();
@@ -161,7 +155,7 @@ namespace IdentityServer.Controllers
 
             _logger.LogInformation("Publishing message to event bus for user email confirmation: {EmailAddress}", user.Email);
 
-            IntegrationEvent @event = new SendEmailIntegrationEvent(user.Email!, "David Studio - Please confirm your email", confirmUrl);
+            IntegrationEvent @event = new SendConfirmationEmailIntegrationEvent(user.Email!, confirmUrl);
             _eventBus.Publish(@event);
 
             return Ok();

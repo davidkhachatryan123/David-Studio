@@ -20,37 +20,37 @@ services:
     depends_on:
       - db
 
-  portfolio-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__PortfolioDb=Server=db;Database=DavidStudio.Service.Portfolio;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-      - Services__StorageUri=http://storage-api:5009
-    ports:
-      - "5030:5000"
-    depends_on:
-      - db
+  # portfolio-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://+:5000
+  #     - ConnectionStrings__PortfolioDb=Server=db;Database=DavidStudio.Service.Portfolio;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+  #     - Services__StorageUri=http://storage-api:5009
+  #   ports:
+  #     - "5030:5000"
+  #   depends_on:
+  #     - db
 
-  storage-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__StorageDb=Server=db;Database=DavidStudio.Service.Storage;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5000
-      - Kestrel__Endpoints__Http__Protocols=Http1AndHttp2
-      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5009
-      - Kestrel__Endpoints__GRPC__Protocols=Http2
-      - Resources_Url=http://localhost:5050/Resources
-      - StorageOptions__StoragePath=/storage
-    volumes:
-        - storage:/storage
-    ports:
-      - "5050:5000"
-      - "5059:5009"
-    depends_on:
-      - db
+  # storage-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://+:5000
+  #     - ConnectionStrings__StorageDb=Server=db;Database=DavidStudio.Service.Storage;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+  #     - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5000
+  #     - Kestrel__Endpoints__Http__Protocols=Http1AndHttp2
+  #     - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5009
+  #     - Kestrel__Endpoints__GRPC__Protocols=Http2
+  #     - Resources_Url=http://localhost:5050/Resources
+  #     - StorageOptions__StoragePath=/storage
+  #   volumes:
+  #       - storage:/storage
+  #   ports:
+  #     - "5050:5000"
+  #     - "5059:5009"
+  #   depends_on:
+  #     - db
 
   messanger:
     environment:

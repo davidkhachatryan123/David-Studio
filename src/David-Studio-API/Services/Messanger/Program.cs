@@ -1,18 +1,16 @@
-﻿using EventBus.Abstractions;
-using Messanger.Extensions;
-using Messanger.IntegrationEvents.Events;
-using Messanger.IntegrationEvents.Handlers;
-using Messanger.Options;
+﻿using Messanger.Extensions;
+using Messanger.Services;
 using Serilog;
 using Services.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<SmtpOptions>(
-    builder.Configuration.GetSection(nameof(SmtpOptions)));
+builder.Services.ConfigureOptions(builder.Configuration);
+
+builder.Services.AddSingleton<IEmailService, EmailService>();
 
 builder.Services.AddEventBus(builder.Configuration);
-builder.Services.AddTransient<IIntegrationEventHandler<SendEmailIntegrationEvent>, SendEmailIntegrationEventHandler>();
+builder.Services.AddEventBusHandlers();
 
 builder.Services.AddSerilog();
 builder.Host.UseSerilog((ctx, lc) => lc
