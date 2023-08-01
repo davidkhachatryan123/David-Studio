@@ -33,8 +33,8 @@ export class MfaComponent {
         next: ({ returnUrl }) => {
           window.location.href = returnUrl;
         },
-        error: (error: HttpErrorResponse) => {
-          this.snackBar.open(error.message, 'Ok', {
+        error: (ex: any) => {
+          this.snackBar.open(ex.error, 'Ok', {
             duration: 10000,
           });
         }

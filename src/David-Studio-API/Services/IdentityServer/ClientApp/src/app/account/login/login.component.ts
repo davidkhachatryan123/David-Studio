@@ -45,10 +45,10 @@ export class LoginComponent {
           else
             window.location.href = returnUrl;
         },
-        error: (error: HttpErrorResponse) => {
+        error: (ex: any) => {
           this.loginForm.get("password")?.reset();
 
-          this.snackBar.open(error.message, 'Ok', {
+          this.snackBar.open(ex.error, 'Ok', {
             duration: 10000,
           });
         }
