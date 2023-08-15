@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option csharp_namespace = "Users";
+
+package users;
+
+service Users {
+  rpc GetAll (PageData) returns (UsersResponse);
+  rpc GetById (UserIdData) returns (UserResponse);
+  rpc Create (UserCreateData) returns (UserResponse);
+  rpc Update (UserUpdateData) returns (UserResponse);
+  rpc Delete (UserIdData) returns (UserResponse);
+}
+
+message PageData {
+  string page = 1;
+  string size = 2;
+  string orderBy = 3;
+}
+
+message UserIdData {
+  string id = 1;
+}
+
+message UserReadData {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  optional string phoneNumber = 4;
+}
+
+message UserCreateData {
+  string username = 1;
+  string password = 2;
+  string email = 3;
+  optional string phoneNumber = 4;
+}
+
+message UserUpdateData {
+  string id = 1;
+  UserCreateData user = 2;
+}
+
+message UserResponse {
+  UserReadData user = 1;
+  AccountStatus status = 2;
+}
+
+message UsersResponse {
+  repeated UserReadData users = 1;
+  AccountStatus status = 2;
+}
+
+enum AccountStatus {
+  ACCOUNT_STATUS_SUCCESSFULL = 0;
+  ACCOUNT_STATUS_ERROR_OCCURRED = 1;
+}

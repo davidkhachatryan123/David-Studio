@@ -7,23 +7,29 @@ services:
       context: .
       dockerfile: Services/IdentityServer/Dockerfile.develop
 
-  portfolio-api:
-    image: ${DOCKER_REGISTRY-}portfolio
+  users-api:
+    image: ${DOCKER_REGISTRY-}users
     build:
       context: .
-      dockerfile: Services/Portfolio/Dockerfile.develop
+      dockerfile: Services/Users/Dockerfile.develop
 
-  storage-api:
-    image: ${DOCKER_REGISTRY-}storage
-    build:
-      context: .
-      dockerfile: Services/Storage/Dockerfile.develop
+  # portfolio-api:
+  #   image: ${DOCKER_REGISTRY-}portfolio
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Portfolio/Dockerfile.develop
 
-  messanger:
-    image: ${DOCKER_REGISTRY-}messagner
-    build:
-      context: .
-      dockerfile: Services/Messanger/Dockerfile.develop
+  # storage-api:
+  #   image: ${DOCKER_REGISTRY-}storage
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Storage/Dockerfile.develop
+
+  # messanger:
+  #   image: ${DOCKER_REGISTRY-}messagner
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Messanger/Dockerfile.develop
 
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"

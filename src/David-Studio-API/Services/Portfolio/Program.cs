@@ -35,9 +35,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-{
     app.UseDefaultSwagger();
-}
 
 app.UseAuthorization();
 

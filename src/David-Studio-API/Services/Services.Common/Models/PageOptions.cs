@@ -14,4 +14,3 @@ namespace Services.Common.Models
         public string OrderBy { get; set; } = null!;
     }
 }
-

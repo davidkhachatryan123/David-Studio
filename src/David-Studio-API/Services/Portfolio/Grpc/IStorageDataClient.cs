@@ -7,4 +7,3 @@ namespace Portfolio.Grpc
         Task<ImageReadDto> StoreImageAsync(IFormFile file);
     }
 }
-

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+	<ItemGroup>
+		<ProjectReference Include="..\Services.Common\Services.Common.csproj">
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
+		</ProjectReference>
+		<ProjectReference Include="..\..\EventBus\EventBus\EventBus.csproj">
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
+		</ProjectReference>
+		<ProjectReference Include="..\..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj">
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Models\" />
+		<None Remove="Controllers\" />
+		<None Remove="Protos\" />
+		<None Remove="Grpc\" />
+		<None Remove="Grpc\Clients\" />
+		<None Remove="Dtos\" />
+		<None Remove="Mappings\" />
+		<None Remove="Extensions\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Models\" />
+		<Folder Include="Controllers\" />
+		<Folder Include="Protos\" />
+		<Folder Include="Grpc\" />
+		<Folder Include="Grpc\Clients\" />
+		<Folder Include="Dtos\" />
+		<Folder Include="Mappings\" />
+		<Folder Include="Extensions\" />
+		<Folder Include="Models\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="Grpc.Tools" Version="2.57.0">
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		  <PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<Protobuf Include="Protos\users.proto" GrpcServices="Client" />
+		<PackageReference Include="Google.Protobuf" Version="3.24.0" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.55.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+	</ItemGroup>
+</Project>
