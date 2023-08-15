@@ -7,18 +7,18 @@ namespace Users.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class Users : ControllerBase
+    public class Admins : ControllerBase
     {
         private readonly IUsersDataClient _usersData;
         private readonly IEventBus _eventBus;
         //private readonly IMapper _mapper;
-        private readonly ILogger<Users> _logger;
+        private readonly ILogger<Admins> _logger;
 
-        public Users(
+        public Admins(
             IUsersDataClient usersData,
             IEventBus eventBus,
             //IMapper mapper,
-            ILogger<Users> logger)
+            ILogger<Admins> logger)
         {
             _usersData = usersData;
             _eventBus = eventBus;

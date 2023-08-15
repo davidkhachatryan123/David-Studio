@@ -2,7 +2,7 @@
 
 namespace Users.Models
 {
-    public class User
+    public class Admin
     {
         [Key]
         [Required]

@@ -1,10 +1,11 @@
 ﻿namespace Users.Dtos
 {
-    public class UserReadDto
+    public class AdminCreateDto
     {
         public string Id { get; set; } = null!;
 
         public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
 
         public string Email { get; set; } = null!;
         public string? PhoneNumber { get; set; }

@@ -9,11 +9,11 @@ namespace Users.Mappings
     {
         public UsersMappingProfile()
         {
-            CreateMap<User, UserReadDto>();
-            CreateMap<UserCreateDto, User>();
+            CreateMap<Admin, AdminReadDto>();
+            CreateMap<AdminCreateDto, Admin>();
 
-            CreateMap<UserCreateDto, UserCreateData>();
-            CreateMap<UserReadData, UserReadDto>();
+            CreateMap<AdminReadData, AdminReadDto>();
+            CreateMap<AdminCreateDto, AdminCreateData>();
 
             CreateMap<PageOptions, PageData>();
         }

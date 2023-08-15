@@ -44,10 +44,10 @@
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="Grpc.Tools" Version="2.57.0">
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		  <PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<Protobuf Include="Protos\users.proto" GrpcServices="Client" />
+		<Protobuf Include="Protos\admins.proto" GrpcServices="Client" />
 		<PackageReference Include="Google.Protobuf" Version="3.24.0" />
 		<PackageReference Include="Grpc.Net.Client" Version="2.55.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />

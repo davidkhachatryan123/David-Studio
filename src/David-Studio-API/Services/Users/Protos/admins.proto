@@ -2,14 +2,14 @@ syntax = "proto3";
 
 option csharp_namespace = "Users";
 
-package users;
+package admins;
 
-service Users {
-  rpc GetAll (PageData) returns (UsersResponse);
-  rpc GetById (UserIdData) returns (UserResponse);
-  rpc Create (UserCreateData) returns (UserResponse);
-  rpc Update (UserUpdateData) returns (UserResponse);
-  rpc Delete (UserIdData) returns (UserResponse);
+service Admins {
+  rpc GetAll (PageData) returns (AdminsResponse);
+  rpc GetById (AdminIdData) returns (AdminResponse);
+  rpc Create (AdminCreateData) returns (AdminResponse);
+  rpc Update (AdminUpdateData) returns (AdminResponse);
+  rpc Delete (AdminIdData) returns (AdminResponse);
 }
 
 message PageData {
@@ -18,36 +18,36 @@ message PageData {
   string orderBy = 3;
 }
 
-message UserIdData {
+message AdminIdData {
   string id = 1;
 }
 
-message UserReadData {
+message AdminReadData {
   string id = 1;
   string username = 2;
   string email = 3;
   optional string phoneNumber = 4;
 }
 
-message UserCreateData {
+message AdminCreateData {
   string username = 1;
   string password = 2;
   string email = 3;
   optional string phoneNumber = 4;
 }
 
-message UserUpdateData {
+message AdminUpdateData {
   string id = 1;
-  UserCreateData user = 2;
+  AdminCreateData user = 2;
 }
 
-message UserResponse {
-  UserReadData user = 1;
+message AdminResponse {
+  AdminReadData user = 1;
   AccountStatus status = 2;
 }
 
-message UsersResponse {
-  repeated UserReadData users = 1;
+message AdminsResponse {
+  repeated AdminReadData users = 1;
   AccountStatus status = 2;
 }
 
