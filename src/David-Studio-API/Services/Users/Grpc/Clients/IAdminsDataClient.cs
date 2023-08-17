@@ -3,7 +3,7 @@ using Users.Dtos;
 
 namespace Users.Grpc.Clients
 {
-    public interface IUsersDataClient
+    public interface IAdminsDataClient
     {
         Task<PageData<AdminReadDto>> GetAllAsync(PageOptions options);
         Task<AdminReadDto?> GetByIdAsync(string id);

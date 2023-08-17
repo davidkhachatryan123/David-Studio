@@ -9,7 +9,7 @@ using Azure;
 
 namespace Users.Grpc.Clients
 {
-    public class UsersDataClient : IUsersDataClient, IDisposable
+    public class AdminsDataClient : IAdminsDataClient, IDisposable
     {
         private readonly IMapper _mapper;
 
@@ -17,7 +17,7 @@ namespace Users.Grpc.Clients
         private readonly GrpcChannel _channel;
         private readonly Admins.AdminsClient _client;
 
-        public UsersDataClient(IMapper mapper, IConfiguration configuration)
+        public AdminsDataClient(IMapper mapper, IConfiguration configuration)
         {
             _mapper = mapper;
 
