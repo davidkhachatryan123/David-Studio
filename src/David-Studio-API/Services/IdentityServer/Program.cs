@@ -1,6 +1,7 @@
 ﻿using IdentityServer;
 using IdentityServer.Database;
 using IdentityServer.Extensions;
+using IdentityServer.Grpc.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Services.Common.Extensions;
@@ -14,6 +15,10 @@ builder.Services.AddDefaultApiVersioning();
 builder.Services.AddControllers();
 
 builder.Services.AddEventBus(builder.Configuration);
+
+builder.Services.AddGrpc();
+
+builder.Services.ConfigureMapping();
 
 string connectionString = builder.Configuration.GetConnectionString("IdentityDB")!;
 var migrationsAssembly = typeof(Config).Assembly.GetName().Name;
@@ -44,7 +49,6 @@ app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMo
 app.UseCors();
 
 app.UseHsts();
-app.UseHttpsRedirection();
 
 app.UseRouting();
 
@@ -52,6 +56,8 @@ app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
+
+app.MapGrpcService<AdminsService>();
 
 app.UseSerilogRequestLogging();
 

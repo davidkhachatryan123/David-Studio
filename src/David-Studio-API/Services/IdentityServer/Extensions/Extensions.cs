@@ -1,5 +1,7 @@
-﻿using Duende.IdentityServer.Configuration;
+﻿using AutoMapper;
+using Duende.IdentityServer.Configuration;
 using IdentityServer.Database;
+using IdentityServer.Mappings;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -99,6 +101,16 @@ namespace IdentityServer.Extensions
                 options.TokenCleanupInterval = 3600;
             })
             .AddAspNetIdentity<ApplicationUser>();
+        }
+
+        public static void ConfigureMapping(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(map =>
+            {
+                map.AddProfile<UsersMappingProfile>();
+            });
+
+            services.AddSingleton(mapperConfig.CreateMapper());
         }
     }
 }

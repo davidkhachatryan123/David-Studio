@@ -13,7 +13,8 @@ namespace Users.Mappings
             CreateMap<AdminCreateDto, Admin>();
 
             CreateMap<AdminReadData, AdminReadDto>();
-            CreateMap<AdminCreateDto, AdminCreateData>();
+            CreateMap<AdminCreateDto, AdminCreateData>()
+                .AddTransform<string?>(value => value ?? string.Empty);
 
             CreateMap<PageOptions, PageData>();
         }

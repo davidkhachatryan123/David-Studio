@@ -1,6 +1,7 @@
 ﻿using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using IdentityServer.Database;
+using IdentityServer.Enums;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,7 @@ namespace IdentityServer
             ILogger logger, IServiceScope scope)
         {
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var defaultUser = await userMgr.FindByNameAsync(configuration["DefaultUser:UserName"]!);
 
             if (defaultUser == null)
@@ -62,6 +64,19 @@ namespace IdentityServer
             }
             else
                 logger.LogDebug("Default user already exists");
+
+
+            if (!await roleMgr.RoleExistsAsync(nameof(UserRoles.Admin)))
+            {
+                var result = await roleMgr.CreateAsync(new IdentityRole(nameof(UserRoles.Admin)));
+
+                if (!result.Succeeded)
+                    throw new Exception(result.Errors.First().Description);
+
+                logger.LogDebug("Admin role is created");
+            }
+            else
+                logger.LogDebug("Admin role is already exists");
         }
 
         private static async Task EnsureSeedData(ConfigurationDbContext context, IConfiguration configuration)

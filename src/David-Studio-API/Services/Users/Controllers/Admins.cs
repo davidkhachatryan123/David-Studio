@@ -83,7 +83,7 @@ namespace Users.Controllers
 
             return admin is null
                 ? BadRequest()
-                : CreatedAtRoute(nameof(GetById), new { id = admin.Id }, admin);
+                : CreatedAtRoute(nameof(Admins) + nameof(GetById), new { id = admin.Id }, admin);
         }
 
         [MapToApiVersion("1.0")]
@@ -95,7 +95,7 @@ namespace Users.Controllers
             AdminReadDto? admin = await _adminsData.DeleteAsync(id);
 
             return admin is null
-                ? BadRequest()
+                ? NotFound()
                 : Ok(admin);
         }
     }

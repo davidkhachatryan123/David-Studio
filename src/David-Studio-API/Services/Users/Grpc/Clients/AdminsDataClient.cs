@@ -1,11 +1,7 @@
-﻿using System;
-using Grpc.Net.Client;
-using Google.Protobuf;
-using Microsoft.Extensions.Configuration;
+﻿using Grpc.Net.Client;
 using Users.Dtos;
 using Services.Common.Models;
 using AutoMapper;
-using Azure;
 
 namespace Users.Grpc.Clients
 {
@@ -38,7 +34,7 @@ namespace Users.Grpc.Clients
             return new PageData<AdminReadDto>
             {
                 Entities = _mapper.Map<IEnumerable<AdminReadDto>>(reply.Users),
-                TotalCount = reply.Users.Count
+                TotalCount = reply.TotalCount
             };
         }
 

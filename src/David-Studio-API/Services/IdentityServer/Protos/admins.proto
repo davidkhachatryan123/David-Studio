@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Users";
+option csharp_namespace = "IdentityServer";
 
 package admins;
 
