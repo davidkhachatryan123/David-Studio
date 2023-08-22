@@ -53,24 +53,24 @@ services:
   #     - Kestrel__Endpoints__Http__Protocols=Http1AndHttp2
   #     - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5009
   #     - Kestrel__Endpoints__GRPC__Protocols=Http2
-  #     - Resources_Url=http://localhost:5050/Resources
+  #     - Resources_Url=http://localhost:5070/Resources
   #     - StorageOptions__StoragePath=/storage
   #   volumes:
   #       - storage:/storage
   #   ports:
-  #     - "5050:5000"
-  #     - "5059:5009"
+  #     - "5070:5000"
+  #     - "5079:5009"
   #   depends_on:
   #     - db
 
-  messanger:
+  messenger-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
       - ConnectionStrings__MessagesDb=Server=db;Database=DavidStudio.Service.MessagesDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
     ports:
-      - "5070:5000"
+      - "5080:5000"
     volumes:
       - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets
       - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets

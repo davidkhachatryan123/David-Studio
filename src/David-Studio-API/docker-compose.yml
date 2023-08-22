@@ -25,8 +25,8 @@ services:
   #     context: .
   #     dockerfile: Services/Storage/Dockerfile.develop
 
-  messanger:
-    image: ${DOCKER_REGISTRY-}messagner
+  messenger-api:
+    image: ${DOCKER_REGISTRY-}messenger
     build:
       context: .
       dockerfile: Services/Messanger/Dockerfile.develop
