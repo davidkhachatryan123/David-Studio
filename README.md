@@ -13,7 +13,7 @@
 | Microservie              | Status      |
 | ------------------------ | ----------- |
 | Duende (Identity Server) | Done        |
-| Users                    | Back Log    |
+| Users                    | Done        |
 | Portfolio                | Done        |
 | Services                 | Back Log    |
 | SearchEngine             | Back Log    |
