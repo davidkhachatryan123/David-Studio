@@ -40,5 +40,65 @@ namespace Messanger.Controllers
 
             return Ok("You sent message successfully. Please wait for answer");
         }
+
+        [MapToApiVersion("1.0")]
+        [HttpGet]
+        [Route(nameof(GetMessagesList))]
+        public async Task<IActionResult> GetMessagesList([FromQuery] PageOptions options)
+        {
+            PageData<Message>? messagesList = null;
+
+            try
+            {
+                _logger.LogInformation("Trying to get user messages with pagination");
+
+                messagesList = await _repositoryManager.Messages.GetMessagesListAsync(options);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error was occurred when trying to get list of the messages: {Message}", ex.Message);
+            }
+
+            return messagesList is null
+                ? NotFound()
+                : Ok(new PageData<MessagesListItemDto>
+                {
+                    Entities = _mapper.Map<IEnumerable<MessagesListItemDto>>(messagesList.Entities),
+                    TotalCount = messagesList.TotalCount
+                });
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpGet]
+        [Route(nameof(ReadMessage))]
+        public async Task<IActionResult> ReadMessage(int id)
+        {
+            Message? message = await _repositoryManager.Messages.ReadMessageAsync(id);
+
+            return message is null
+                ? NotFound()
+                : Ok(_mapper.Map<MessageReadDto>(message));
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost]
+        [Route(nameof(Answer))]
+        public async Task<IActionResult> Answer([FromQuery] int id, [FromBody] string message)
+        {
+            Answer? answer = null;
+
+            try
+            {
+                answer = await _repositoryManager.Messages.AnswerAsync(id, message);
+                await _repositoryManager.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+            return Ok(_mapper.Map<AnswerReadDto>(answer));
+        }
     }
 }

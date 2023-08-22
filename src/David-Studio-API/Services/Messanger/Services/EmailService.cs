@@ -21,13 +21,13 @@ namespace Messanger.Services
             _logger = logger;
         }
 
-        public async Task<bool> SendEmailAsync(string to, string subject, string body, bool withPrefix = true)
+        public async Task<bool> SendEmailAsync(string from, string to, string subject, string body, bool withPrefix = true)
         {
             _logger.LogInformation("Send email to: {EmailAddress}", to);
 
             using (MailMessage mailMessage = new MailMessage())
             {
-                mailMessage.From = new MailAddress(_smtpOptions.From);
+                mailMessage.From = new MailAddress(from);
                 mailMessage.To.Add(new MailAddress(to));
 
                 mailMessage.Subject = withPrefix ? $"{_emailOptions.Prefix} - {subject}" : subject;

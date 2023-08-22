@@ -10,6 +10,13 @@ namespace Messanger.Mappings
         public ContactMappingProfile()
         {
             CreateMap<ContactFormDto, Message>();
+
+            CreateMap<Message, MessagesListItemDto>()
+                .ForMember(dest => dest.HasAnswer, opt =>
+                    opt.MapFrom(src => src.Answer != null));
+            CreateMap<Message, MessageReadDto>();
+
+            CreateMap<Answer, AnswerReadDto>();
         }
     }
 }

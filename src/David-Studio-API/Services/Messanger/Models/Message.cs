@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Messanger.Models
 {
@@ -25,5 +26,8 @@ namespace Messanger.Models
         public bool IsReaded { get; set; }
 
         public DateTime SentDate { get; set; } = DateTime.Now;
+
+        [JsonIgnore]
+        public virtual Answer? Answer { get; set; }
     }
 }
