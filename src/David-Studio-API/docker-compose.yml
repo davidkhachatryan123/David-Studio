@@ -19,17 +19,23 @@ services:
   #     context: .
   #     dockerfile: Services/Portfolio/Dockerfile.develop
 
+  pricing-api:
+    image: ${DOCKER_REGISTRY-}pricing
+    build:
+      context: .
+      dockerfile: Services/Pricing/Dockerfile.develop
+
   # storage-api:
   #   image: ${DOCKER_REGISTRY-}storage
   #   build:
   #     context: .
   #     dockerfile: Services/Storage/Dockerfile.develop
 
-  messenger-api:
-    image: ${DOCKER_REGISTRY-}messenger
-    build:
-      context: .
-      dockerfile: Services/Messanger/Dockerfile.develop
+  # messenger-api:
+  #   image: ${DOCKER_REGISTRY-}messenger
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Messanger/Dockerfile.develop
 
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
