@@ -1,4 +1,27 @@
-.project-card {
+.project-container {
+  display: flex;
+  align-items: center;
+
   margin: 10px 5px;
-  filter: brightness(95%);
+}
+
+.project-container p {
+  margin: 0;
+}
+
+.project-container .checkbox {
+  flex-basis: content;
+  margin: 10px;
+}
+
+.project-container .details {
+  flex-basis: 100%;
+}
+
+.project-container .image {
+  flex-basis: content;
+}
+
+.project-container .image > img {
+  width: 100px;
 }

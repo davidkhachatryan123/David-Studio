@@ -42,6 +42,18 @@ export class DashboardComponent implements OnInit {
       ]
     },
     {
+      title: 'Notifications',
+      material_icon: 'notifications',
+      listItems: [
+        {
+          title: 'Messages',
+          description: 'Read and reply for messages',
+          material_icon: 'email',
+          route: `/${AppRoutes.DASHBOARD}/${AppRoutes.DASHBOARD_NOTIFICATIONS}/${AppRoutes.DASHBOARD_NOTIFICATIONS_MESSAGES}`
+        }
+      ]
+    },
+    {
       title: 'Users',
       material_icon: 'account_box',
       listItems: [

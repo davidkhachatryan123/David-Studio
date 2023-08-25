@@ -1,8 +1,8 @@
-<div class="projects-grid"
-     cdkDropList cdkDropListOrientation="horizontal"
-     (cdkDropListDropped)="drop($event)">
-  <div class="dragable-box" cdkDrag
-       *ngFor="let project of projects">
+<div class="drag-list"
+     cdkDropList cdkDropListOrientation="vertical"
+    (cdkDropListDropped)="drop($event)">
+  <div class="dragable-box" cdkDrag cdkDragBoundary=".drag-list"
+      *ngFor="let project of projects">
     <app-dashboard-main-portfolio-top-project [project]="project"
                                               (isChecked)="$event
                                                 ? selectedItems.push(project)

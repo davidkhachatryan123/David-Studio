@@ -10,10 +10,6 @@ const routes: Routes = [
     redirectTo: AppRoutes.DASHBOARD
   },
   {
-    path: AppRoutes.AUTH,
-    loadChildren: () => import('./routing/auth/auth.module').then(module => module.AuthModule)
-  },
-  {
     path: AppRoutes.DASHBOARD,
     loadChildren: () => import('./routing/dashboard/dashboard.module').then(module => module.DashboardModule)
   }

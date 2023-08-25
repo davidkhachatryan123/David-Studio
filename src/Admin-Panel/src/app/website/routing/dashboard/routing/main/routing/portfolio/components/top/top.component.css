@@ -1,15 +1,11 @@
-.projects-grid {
-  display: flex;
-
-  width: 100%;
-}
-
 .dragable-box {
   cursor: move;
-  width: 33%;
+  width: 100%;
 
   position: relative;
   box-sizing: border-box;
+
+  border: 1px solid #333;
 }
 
 .cdk-drag-placeholder {
