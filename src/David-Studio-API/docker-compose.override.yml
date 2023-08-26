@@ -43,15 +43,15 @@ services:
   #   depends_on:
   #     - db
 
-  pricing-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-    ports:
-      - "5040:5000"
-    depends_on:
-      - db
+  # pricing-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://+:5000
+  #     - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+  #   ports:
+  #     - "5040:5000"
+  #   depends_on:
+  #     - db
 
   # storage-api:
   #   environment:
@@ -73,19 +73,19 @@ services:
   #   depends_on:
   #     - db
 
-  # messenger-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__MessagesDb=Server=db;Database=DavidStudio.Service.MessagesDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-  #   ports:
-  #     - "5080:5000"
-  #   volumes:
-  #     - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets
-  #     - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets
-  #   depends_on:
-  #     - db
+  messenger-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__MessagesDb=Server=db;Database=DavidStudio.Service.MessagesDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+    ports:
+      - "5080:5000"
+    volumes:
+      - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets
+      - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets
+    depends_on:
+      - db
 
   db:
     env_file:

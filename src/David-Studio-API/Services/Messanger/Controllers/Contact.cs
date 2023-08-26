@@ -81,6 +81,18 @@ namespace Messanger.Controllers
         }
 
         [MapToApiVersion("1.0")]
+        [HttpGet]
+        [Route(nameof(ReadAnswer))]
+        public async Task<IActionResult> ReadAnswer(int id)
+        {
+            Answer? answer = await _repositoryManager.Messages.ReadAnswerAsync(id);
+
+            return answer is null
+                ? NotFound("This message has no answer")
+                : Ok(_mapper.Map<AnswerReadDto>(answer));
+        }
+
+        [MapToApiVersion("1.0")]
         [HttpPost]
         [Route(nameof(Answer))]
         public async Task<IActionResult> Answer([FromQuery] int id, [FromBody] string message)

@@ -9,6 +9,7 @@ namespace Messanger.Services
         Task<Message> NewMessageAsync(Message message);
         Task<PageData<Message>> GetMessagesListAsync(PageOptions options);
         Task<Message?> ReadMessageAsync(int id);
+        Task<Answer?> ReadAnswerAsync(int messageId);
         Task<Answer> AnswerAsync(int id, string body);
     }
 }

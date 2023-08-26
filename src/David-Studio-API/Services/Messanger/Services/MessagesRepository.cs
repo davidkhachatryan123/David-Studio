@@ -54,6 +54,15 @@ namespace Messanger.Services
             return message;
         }
 
+        public async Task<Answer?> ReadAnswerAsync(int messageId)
+        {
+            Message? message = await ReadMessageAsync(messageId);
+
+            return message is null ?
+                null :
+                message.Answer;
+        }
+
         public async Task<Answer> AnswerAsync(int id, string body)
         {
             Message? message = await ReadMessageAsync(id);
