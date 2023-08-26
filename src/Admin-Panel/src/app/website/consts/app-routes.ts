@@ -11,6 +11,7 @@ export enum AppRoutes {
 
   DASHBOARD_NOTIFICATIONS = 'notifications',
   DASHBOARD_NOTIFICATIONS_MESSAGES = 'messages',
+  DASHBOARD_NOTIFICATIONS_MESSAGES_MESSAGE = 'message',
 
   DASHBOARD_USERS = 'users',
   DASHBOARD_USERS_ADMINS = 'admins',

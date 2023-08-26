@@ -1,0 +1,33 @@
+<mat-card class="message"
+         [style.filter]="data.isReaded ? 'brightness(80%)' : 'brightness(100%)'"
+         (click)="showMessage(data.id)">
+  <mat-card-header>
+    <mat-card-title>{{ data.fullName }}</mat-card-title>
+    <mat-card-subtitle class="user-info">
+      <p>{{ data.email }}</p>
+      <p>{{ data.phoneNumber }}</p>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="message-preview">
+      {{ data.body }}
+    </div>
+
+    <div class="footer">
+      <div class="is-answered">
+        <mat-icon class="icon"
+                 [color]="data.hasAnswer ? 'primary' : 'warn'">
+          question_answer
+        </mat-icon>
+
+        <p *ngIf="data.hasAnswer">Answered</p>
+        <p *ngIf="!data.hasAnswer">No answer</p>
+      </div>
+
+      <span class="spacer"></span>
+
+      <p class="sent-date">Sent date: {{ data.sentDate }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>

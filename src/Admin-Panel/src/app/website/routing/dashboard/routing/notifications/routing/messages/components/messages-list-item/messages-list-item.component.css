@@ -1,0 +1,38 @@
+.message {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.user-info {
+  margin-top: 10px;
+}
+
+.user-info > p {
+  margin: 3px 0;
+  color: gray;
+}
+
+.message-preview {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  margin: 10px 0;
+}
+
+.footer {
+  display: flex;
+}
+
+.is-answered {
+  display: flex;
+  align-items: center;
+}
+
+.is-answered .icon {
+  margin-right: 15px;
+}
+
+.sent-date {
+  color: gray;
+}

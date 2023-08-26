@@ -16,6 +16,11 @@ const routes: Routes = [
     loadChildren: () => import('./routing/main/main.module').then(module => module.MainModule)
   },
   {
+    path: AppRoutes.DASHBOARD_NOTIFICATIONS,
+    component: DashboardComponent,
+    loadChildren: () => import('./routing/notifications/notifications.module').then(module => module.NotificationsModule)
+  },
+  {
     path: AppRoutes.DASHBOARD_USERS,
     component: DashboardComponent,
     loadChildren: () => import('./routing/users/users.module').then(module => module.UsersModule)

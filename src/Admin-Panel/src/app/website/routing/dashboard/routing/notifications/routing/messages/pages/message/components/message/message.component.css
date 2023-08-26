@@ -1,0 +1,16 @@
+.message {
+  margin: 10px 0;
+}
+
+.user-info {
+  margin: 3px 0;
+}
+
+.message-body {
+  margin: 10px 0;
+}
+
+.sent-date {
+  color: gray;
+  margin-right: 20px;
+}

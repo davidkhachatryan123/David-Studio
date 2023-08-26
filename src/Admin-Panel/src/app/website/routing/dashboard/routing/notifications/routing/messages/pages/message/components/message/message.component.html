@@ -1,0 +1,20 @@
+<mat-card class="message">
+  <mat-card-header>
+    <mat-card-title>{{ data.fullName }}</mat-card-title>
+    <mat-card-subtitle class="user-info">
+      <a [href]="'mailto:' + data.email">{{ data.email }}</a>
+      <br>
+      <a [href]="'tel:' + data.phoneNumber">{{ data.phoneNumber }}</a>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="message-body">
+      {{ data.body }}
+    </div>
+  </mat-card-content>
+
+  <mat-card-footer align="end">
+    <p class="sent-date">Sent date: {{ data.sentDate }}</p>
+  </mat-card-footer>
+</mat-card>

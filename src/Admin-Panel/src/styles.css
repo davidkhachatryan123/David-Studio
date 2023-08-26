@@ -73,3 +73,11 @@ mat-form-field {
   margin: 5px 5px;
   color: white;
 }
+
+.back-link {
+  margin: 15px;
+}
+
+.back-link > a {
+  text-decoration: none ;
+}

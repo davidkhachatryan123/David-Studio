@@ -1,0 +1,25 @@
+<div class="back-link">
+  <a [href]="returnUrl">
+    ← Return back
+  </a>
+</div>
+
+
+<app-dashboard-card title="Conversation details">
+
+<p>Message: </p>
+<app-dashboard-message-page-message [data]="message">
+</app-dashboard-message-page-message>
+
+<br>
+
+<p>Answer: </p>
+<app-dashboard-message-page-answer [data]="answer"
+                                   *ngIf="answer != null">
+</app-dashboard-message-page-answer>
+
+<app-dashboard-message-page-answer-field [messageId]="message.id" (onSubmit)="reloadAnswer()"
+                                         *ngIf="answer == null">
+</app-dashboard-message-page-answer-field>
+
+</app-dashboard-card>
