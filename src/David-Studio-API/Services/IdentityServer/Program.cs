@@ -41,7 +41,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseDefaultSwagger();
+    app.UseDefaultSwagger(builder.Configuration);
 }
 
 app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });

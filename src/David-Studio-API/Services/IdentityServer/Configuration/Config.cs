@@ -73,6 +73,66 @@ namespace IdentityServer
                     AllowPlainTextPkce = false,
                     RequireClientSecret = false,
                     AllowOfflineAccess = true
+                },
+                new Client
+                {
+                    ClientId = "usersswaggerui",
+                    ClientName = "Users Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { $"{configuration["UsersApiClient"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{configuration["UsersApiClient"]}/swagger/" },
+
+                    AllowedScopes ={ "users" }
+                },
+                new Client
+                {
+                    ClientId = "portfolioswaggerui",
+                    ClientName = "Portfolio Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { $"{configuration["PortfolioApiClient"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{configuration["PortfolioApiClient"]}/swagger/" },
+
+                    AllowedScopes ={ "portfolio" }
+                },
+                new Client
+                {
+                    ClientId = "pricingswaggerui",
+                    ClientName = "Pricing Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { $"{configuration["PricingApiClient"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{configuration["PricingApiClient"]}/swagger/" },
+
+                    AllowedScopes ={ "pricing" }
+                },
+                new Client
+                {
+                    ClientId = "storageswaggerui",
+                    ClientName = "Storage Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { $"{configuration["StorageApiClient"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{configuration["StorageApiClient"]}/swagger/" },
+
+                    AllowedScopes ={ "storage" }
+                },
+                new Client
+                {
+                    ClientId = "messengerswaggerui",
+                    ClientName = "Messenger Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { $"{configuration["MessengerApiClient"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{configuration["MessengerApiClient"]}/swagger/" },
+
+                    AllowedScopes ={ "messenger" }
                 }
             };
     }

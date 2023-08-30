@@ -28,6 +28,11 @@ services:
       - IdentityServer=https://localhost:5011
       - IdentityWebSpa=https://localhost:44300
       - SpaClient=https://localhost:4200
+      - UsersApiClient=http://localhost:5020
+      - PortfolioApiClient=http://localhost:5030
+      - PricingApiClient=http://localhost:5040
+      - StorageApiClient=http://localhost:5070
+      - MessengerApiClient=http://localhost:5080
     ports:
       - "5010:5000"
       - "5011:5001"
@@ -52,6 +57,7 @@ services:
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
       - Services__IdentityServerGrpcUri=http://identity-server:5005
       - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
     ports:
       - "5020:5000"
     depends_on:
@@ -65,6 +71,7 @@ services:
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
       - Services__StorageUri=http://storage-api:5009
       - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
     ports:
       - "5030:5000"
     depends_on:
@@ -77,6 +84,7 @@ services:
       - ASPNETCORE_URLS=http://+:5000
       - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
     ports:
       - "5040:5000"
     depends_on:
@@ -95,6 +103,7 @@ services:
       - Resources_Url=http://localhost:5070/Resources
       - StorageOptions__StoragePath=/storage
       - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
     volumes:
         - storage:/storage
     ports:
@@ -111,6 +120,7 @@ services:
       - ConnectionStrings__MessagesDb=Server=db;Database=DavidStudio.Service.MessagesDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
       - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
     ports:
       - "5080:5000"
     volumes:

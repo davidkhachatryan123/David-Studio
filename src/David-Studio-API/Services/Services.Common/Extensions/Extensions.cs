@@ -4,6 +4,7 @@ using EventBus.Abstractions;
 using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
@@ -65,7 +66,7 @@ namespace Services.Common.Extensions
             services.ConfigureOptions<ConfigureSwaggerOptions>();
         }
 
-        public static void UseDefaultSwagger(this WebApplication app)
+        public static void UseDefaultSwagger(this WebApplication app, IConfiguration configuration)
         {
             var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
@@ -76,8 +77,18 @@ namespace Services.Common.Extensions
                 {
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
                         description.GroupName.ToUpperInvariant());
+
+                    var authSection = configuration.GetSection("OpenApi").GetSection("Auth");
+
+                    if (authSection.Exists())
+                    {
+                        options.OAuthClientId(authSection.GetValue<string>("ClientId"));
+                        options.OAuthAppName(authSection.GetValue<string>("AppName"));
+                    }
                 }
             });
+
+            app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
         }
 
         public static void AddEventBus(this IServiceCollection services, IConfiguration configuration)
