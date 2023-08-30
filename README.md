@@ -4,10 +4,11 @@
 
 ## To Do
 
-- [x] David Studio in Angular
-- [x] Admin Panel (CMS) UI in Angular using Angular Material
-- [ ] Back-End in ASP.NET Core 7 with using microservices architecture
-- [ ] Connect Back-End to Front-Ends (David Studio website and Admin panel)
+- [x] David Studio web site on Angular
+- [x] Admin Panel (CMS) UI on Angular by using Angular Material
+- [ ] Back-End on ASP.NET Core 7 by using microservices architecture
+- [ ] Connect Back-End to David Studio website
+- [ ] Connect Back-End to Admin panel
 
 ### Back-End microservies
 
@@ -20,3 +21,4 @@
 | SearchEngine             | Back Log    |
 | Storage                  | Done        |
 | Messenger                | Done        |
+| Ocelot Api Gateway       | Done        |
