@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { OidcSecurityService, UserDataResult } from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
 
 import { AppRoutes } from 'src/app/website/consts';
-
-// TODO: Need to create user logic
 
 @Component({
   selector: 'app-dashboard-toolbar-user-account',
@@ -13,13 +13,15 @@ import { AppRoutes } from 'src/app/website/consts';
 export class UserAccountComponent implements OnInit {
   @Input() isDarkTheme = false;
   @Output() isDarkThemeChange = new EventEmitter<boolean>();
-  routers: typeof AppRoutes = AppRoutes;
-  // user = new AppUser('', '');
 
-  constructor(private router: Router) { }
+  userData: UserDataResult;
+
+  constructor(private router: Router, private oidc: OidcSecurityService) { }
 
   ngOnInit() {
-    // this.user = this.storageService.getUser();
+    this.oidc.userData$.subscribe(data => {this.userData = data
+            console.log(data); 
+            });
   }
 
   toggleTheme() {
@@ -28,7 +30,6 @@ export class UserAccountComponent implements OnInit {
   }
 
   signOut() {
-    // this.storageService.clean();
-    this.router.navigate([this.routers.AUTH]);
+    this.oidc.logoff().subscribe();
   }
 }

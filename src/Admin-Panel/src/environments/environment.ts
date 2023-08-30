@@ -1,12 +1,11 @@
 export const environment = {
   production: false,
-  server: {
-    protocol: 'http',
-    domain: 'localhost:5000',
-    api_uri: '/api',
+  identity: {
+    authority: 'https://localhost:5011',
+    scopes: [
+      'openid', 'profile', 'offline_access', 'email',
+      'users', 'portfolio', 'pricing', 'storage', 'messenger'
+    ]
   },
-  authConfig: {
-    USER_KEY: 'auth-user',
-    TOKEN_KEY: 'token'
-  }
+  api: 'http://localhost:8080'
 };

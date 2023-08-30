@@ -1,7 +1,4 @@
 export enum AppRoutes {
-  AUTH = 'auth',
-  AUTH_LOGIN = 'login',
-
   DASHBOARD = 'dashboard',
 
   DASHBOARD_MAIN = 'main',

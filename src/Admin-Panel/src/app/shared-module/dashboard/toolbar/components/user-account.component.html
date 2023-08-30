@@ -1,5 +1,5 @@
 <div class="user-wrapper">
-  <p>Hi, <!-- {{user?.userName}} --></p>
+  <p>Hi, {{ userData.userData.name }}</p>
 
   <button class="user-button" mat-mini-fab [matMenuTriggerFor]="userMenu">
     <mat-icon class="user-button__icon">person</mat-icon>
@@ -9,16 +9,21 @@
 <mat-menu #userMenu="matMenu" xPosition="before">
   <div (click)="$event.stopPropagation()">
     <div class="user-menu-title">
-      <h4 class="user-menu-title__name">Username: <!-- {{user?.userName}} --></h4>
+      <h4 class="user-menu-title__name">Email: {{ userData.userData.email }}</h4>
     </div>
   
     <div mat-menu-item>
-      <mat-slide-toggle class="dark-theme-slider"
-                        color="primary"
-                       [checked]="isDarkTheme"
-                       (change)="toggleTheme()">
-        Dark Theme
-      </mat-slide-toggle>
+      <div class="theme-toggler">
+        <p>Dark Theme</p>
+
+        <span class="spacer"></span>
+
+        <mat-slide-toggle class="dark-theme-slider"
+                          color="primary"
+                         [checked]="isDarkTheme"
+                         (change)="toggleTheme()">
+        </mat-slide-toggle>
+      </div>
     </div>
   
   

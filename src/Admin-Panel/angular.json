@@ -70,6 +70,10 @@
             },
             "development": {
               "browserTarget": "Admin-Panel:build:development"
+            },
+            "options": {
+              "sslKey": "../certs/certificate.key",
+              "sslCert": "../certs/certificate.crt"
             }
           },
           "defaultConfiguration": "development"

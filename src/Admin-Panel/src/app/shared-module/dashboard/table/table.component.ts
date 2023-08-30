@@ -5,7 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { TableButton, TableCellConfiguration, TableColor, TableImage, TableOptions, TableText } from './models';
-import { ServerConfigService } from 'src/app/website/services';
 
 @Component({
   selector: 'app-dashboard-table',
@@ -28,8 +27,6 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   selection = new SelectionModel(true, []);
-
-  constructor(public serverConfig: ServerConfigService) {}
 
   ngAfterViewInit() {
     this.onTableOptionsChange();

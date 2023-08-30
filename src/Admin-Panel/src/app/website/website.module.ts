@@ -4,7 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { WebsiteRoutingModule } from './website-routing.module';
 
-import { ServerConfigService, ThemeService } from './services';
+import { ThemeService } from './services';
+import { AuthGuard } from './guards';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { ServerConfigService, ThemeService } from './services';
   ],
   providers: [
     ThemeService,
-    ServerConfigService
+    AuthGuard
   ],
 })
 export class WebSiteModule { }
