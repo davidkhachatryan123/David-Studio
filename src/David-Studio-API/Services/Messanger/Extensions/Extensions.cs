@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using AutoMapper;
 using EventBus.Abstractions;
 using Messanger.Database;
@@ -6,7 +7,12 @@ using Messanger.IntegrationEvents.Events;
 using Messanger.IntegrationEvents.Handlers;
 using Messanger.Mappings;
 using Messanger.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Messanger.Extensions
 {

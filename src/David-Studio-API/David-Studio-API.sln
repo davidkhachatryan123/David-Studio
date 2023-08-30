@@ -27,6 +27,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users", "Services\Users\Use
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pricing", "Services\Pricing\Pricing.csproj", "{61CBA288-0BAE-4471-A3D3-6F8C45EEB9F5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{2B7B0619-D123-4ABC-9E6A-CDEEEF58E3D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotApiGateway", "ApiGateways\OcelotApiGateway\OcelotApiGateway.csproj", "{5A0876DE-FEB6-4226-8ED7-4B49464459D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web.Bff", "Web.Bff", "{98B3B514-E4B3-47B1-8F7D-B58C037C1C97}"
+	ProjectSection(SolutionItems) = preProject
+		ApiGateways\Web.Bff\configuration.json = ApiGateways\Web.Bff\configuration.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +90,10 @@ Global
 		{61CBA288-0BAE-4471-A3D3-6F8C45EEB9F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61CBA288-0BAE-4471-A3D3-6F8C45EEB9F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61CBA288-0BAE-4471-A3D3-6F8C45EEB9F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A0876DE-FEB6-4226-8ED7-4B49464459D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A0876DE-FEB6-4226-8ED7-4B49464459D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A0876DE-FEB6-4226-8ED7-4B49464459D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A0876DE-FEB6-4226-8ED7-4B49464459D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,5 +120,7 @@ Global
 		{7CF8FE5F-0D41-4657-8B09-F830F26AF2BF} = {4C66DF02-88B6-4349-841C-72D6EE42F232}
 		{9335A44B-E742-499A-8E47-13C1758447E7} = {4C66DF02-88B6-4349-841C-72D6EE42F232}
 		{61CBA288-0BAE-4471-A3D3-6F8C45EEB9F5} = {4C66DF02-88B6-4349-841C-72D6EE42F232}
+		{5A0876DE-FEB6-4226-8ED7-4B49464459D4} = {2B7B0619-D123-4ABC-9E6A-CDEEEF58E3D1}
+		{98B3B514-E4B3-47B1-8F7D-B58C037C1C97} = {2B7B0619-D123-4ABC-9E6A-CDEEEF58E3D1}
 	EndGlobalSection
 EndGlobal

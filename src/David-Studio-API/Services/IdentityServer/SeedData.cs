@@ -104,8 +104,8 @@ namespace IdentityServer
 
             if (!context.ApiScopes.Any())
             {
-                foreach (var apiScope in Config.ApiScopes)
-                    await context.ApiScopes.AddAsync(apiScope.ToEntity());
+                foreach (var apiScopes in Config.ApiScopes)
+                    await context.ApiScopes.AddAsync(apiScopes.ToEntity());
                 await context.SaveChangesAsync();
             }
         }

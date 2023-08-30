@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Database;

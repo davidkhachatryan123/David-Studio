@@ -17,12 +17,35 @@ namespace IdentityServer
             new ApiResource[]
             {
                 new ApiResource("users", "Users Service")
+                {
+                    Scopes = { "users" }
+                },
+                new ApiResource("portfolio", "Portfolio Service")
+                {
+                    Scopes = { "portfolio" }
+                },
+                new ApiResource("pricing", "Pricing Service")
+                {
+                    Scopes = { "pricing" }
+                },
+                new ApiResource("storage", "Storage Service")
+                {
+                    Scopes = { "storage" }
+                },
+                new ApiResource("messenger", "Messenger Service")
+                {
+                    Scopes = { "messenger" }
+                }
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope(name: "users", displayName: "Users Service")
+                new ApiScope("users"),
+                new ApiScope("portfolio"),
+                new ApiScope("pricing"),
+                new ApiScope("storage"),
+                new ApiScope("messenger")
             };
 
         public static IEnumerable<Client> Clients(IConfiguration configuration) =>
@@ -38,7 +61,7 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "users"
+                        "users", "portfolio", "pricing", "storage", "messenger"
                     },
                     AllowAccessTokensViaBrowser = true,
 

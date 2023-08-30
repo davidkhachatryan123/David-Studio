@@ -1,35 +1,47 @@
 version: '3.4'
 
 services:
-  # identity-server:
-  #   image: ${DOCKER_REGISTRY-}identityserver
-  #   build:
-  #     context: .
-  #     dockerfile: Services/IdentityServer/Dockerfile.develop
+  web-api-gw:
+    image: ocelotapigw:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
 
-  # users-api:
-  #   image: ${DOCKER_REGISTRY-}users
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Users/Dockerfile.develop
+  identity-server:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: Services/IdentityServer/Dockerfile.develop
 
-  # portfolio-api:
-  #   image: ${DOCKER_REGISTRY-}portfolio
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Portfolio/Dockerfile.develop
+  identity-server-client:
+    image: ${DOCKER_REGISTRY-}identityserverclient
+    build:
+      context: .
+      dockerfile: Services/IdentityServer/ClientApp/Dockerfile.develop
 
-  # pricing-api:
-  #   image: ${DOCKER_REGISTRY-}pricing
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Pricing/Dockerfile.develop
+  users-api:
+    image: ${DOCKER_REGISTRY-}users
+    build:
+      context: .
+      dockerfile: Services/Users/Dockerfile.develop
 
-  # storage-api:
-  #   image: ${DOCKER_REGISTRY-}storage
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Storage/Dockerfile.develop
+  portfolio-api:
+    image: ${DOCKER_REGISTRY-}portfolio
+    build:
+      context: .
+      dockerfile: Services/Portfolio/Dockerfile.develop
+
+  pricing-api:
+    image: ${DOCKER_REGISTRY-}pricing
+    build:
+      context: .
+      dockerfile: Services/Pricing/Dockerfile.develop
+
+  storage-api:
+    image: ${DOCKER_REGISTRY-}storage
+    build:
+      context: .
+      dockerfile: Services/Storage/Dockerfile.develop
 
   messenger-api:
     image: ${DOCKER_REGISTRY-}messenger

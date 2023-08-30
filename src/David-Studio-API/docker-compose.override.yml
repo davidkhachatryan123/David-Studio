@@ -1,77 +1,108 @@
 version: '3.4'
 
 services:
-  # identity-server:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000;https://+:5001
-  #     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-  #     - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASS}
-  #     - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5005
-  #     - Kestrel__Endpoints__GRPC__Protocols=Http2
-  #     - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-  #     - IdentityServer=https://localhost:5011
-  #     - IdentityWebSpa=https://localhost:44300
-  #     - SpaClient=https://localhost:4200
-  #   ports:
-  #     - "5010:5000"
-  #     - "5011:5001"
-  #   volumes:
-  #     - ../certs:/https:ro
-  #   depends_on:
-  #     - db
+  web-api-gw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - IdentityUrl=http://identity-server:5000
+    ports:
+      - "8080:5000"
+    volumes:
+      - ./ApiGateways/Web.Bff:/app/configuration
 
-  # users-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-  #     - Services__IdentityServerGrpcUri=http://identity-server:5005
-  #   ports:
-  #     - "5020:5000"
+  identity-server:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000;https://+:5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASS}
+      - Kestrel__Endpoints__Https__Url=https://0.0.0.0:5001
+      - Kestrel__Endpoints__Https__Protocols=Http1AndHttp2
+      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5000
+      - Kestrel__Endpoints__Http__Protocols=Http1AndHttp2
+      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5005
+      - Kestrel__Endpoints__GRPC__Protocols=Http2
+      - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - IdentityServer=https://localhost:5011
+      - IdentityWebSpa=https://localhost:44300
+      - SpaClient=https://localhost:4200
+    ports:
+      - "5010:5000"
+      - "5011:5001"
+    volumes:
+      - ../certs:/https:ro
+    depends_on:
+      - db
+      - rabbitmq
 
-  # portfolio-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__PortfolioDb=Server=db;Database=DavidStudio.Service.Portfolio;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-  #     - Services__StorageUri=http://storage-api:5009
-  #   ports:
-  #     - "5030:5000"
-  #   depends_on:
-  #     - db
+  identity-server-client:
+    ports:
+      - "44300:443"
+    volumes:
+      - ../certs:/https:ro
+    depends_on:
+      - identity-server
 
-  # pricing-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-  #   ports:
-  #     - "5040:5000"
-  #   depends_on:
-  #     - db
+  users-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - Services__IdentityServerGrpcUri=http://identity-server:5005
+      - Identity__Url=http://identity-server:5000
+    ports:
+      - "5020:5000"
+    depends_on:
+      - rabbitmq
 
-  # storage-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__StorageDb=Server=db;Database=DavidStudio.Service.Storage;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-  #     - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5000
-  #     - Kestrel__Endpoints__Http__Protocols=Http1AndHttp2
-  #     - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5009
-  #     - Kestrel__Endpoints__GRPC__Protocols=Http2
-  #     - Resources_Url=http://localhost:5070/Resources
-  #     - StorageOptions__StoragePath=/storage
-  #   volumes:
-  #       - storage:/storage
-  #   ports:
-  #     - "5070:5000"
-  #     - "5079:5009"
-  #   depends_on:
-  #     - db
+  portfolio-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__PortfolioDb=Server=db;Database=DavidStudio.Service.Portfolio;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - Services__StorageUri=http://storage-api:5009
+      - Identity__Url=http://identity-server:5000
+    ports:
+      - "5030:5000"
+    depends_on:
+      - db
+      - rabbitmq
+
+  pricing-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - Identity__Url=http://identity-server:5000
+    ports:
+      - "5040:5000"
+    depends_on:
+      - db
+
+  storage-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__StorageDb=Server=db;Database=DavidStudio.Service.Storage;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5000
+      - Kestrel__Endpoints__Http__Protocols=Http1AndHttp2
+      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:5009
+      - Kestrel__Endpoints__GRPC__Protocols=Http2
+      - Resources_Url=http://localhost:5070/Resources
+      - StorageOptions__StoragePath=/storage
+      - Identity__Url=http://identity-server:5000
+    volumes:
+        - storage:/storage
+    ports:
+      - "5070:5000"
+      - "5079:5009"
+    depends_on:
+      - db
+      - rabbitmq
 
   messenger-api:
     environment:
@@ -79,6 +110,7 @@ services:
       - ASPNETCORE_URLS=http://+:5000
       - ConnectionStrings__MessagesDb=Server=db;Database=DavidStudio.Service.MessagesDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - Identity__Url=http://identity-server:5000
     ports:
       - "5080:5000"
     volumes:
@@ -86,6 +118,7 @@ services:
       - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets
     depends_on:
       - db
+      - rabbitmq
 
   db:
     env_file:

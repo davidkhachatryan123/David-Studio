@@ -17,6 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<StorageOptions>(
     builder.Configuration.GetSection(nameof(StorageOptions)));
 
+builder.Services.AddDefaultAuthentication(builder.Configuration);
+
 builder.Services.AddDefaultApiVersioning();
 
 builder.Services.AddControllers();
@@ -35,8 +37,7 @@ builder.Services.AddTransient<IIntegrationEventHandler<ImagesDeleteIntegrationEv
 builder.Services.AddDefaultSwagger();
 
 builder.Services.AddSerilog();
-builder.Host.UseSerilog((ctx, lc) => lc
-.WriteTo.Console());
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 var app = builder.Build();
 
@@ -45,7 +46,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFilesDefaults();
 
-app.MapControllers();
+app.UseAuthorization();
+
+app.MapControllers().RequireAuthorization();
 
 app.ConfigureEventBus();
 app.MapGrpcService<StorageService>();

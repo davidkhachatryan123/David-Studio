@@ -34,8 +34,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddDefaultSwagger();
 
 builder.Services.AddSerilog();
-builder.Host.UseSerilog((ctx, lc) => lc
-.WriteTo.Console());
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 var app = builder.Build();
 

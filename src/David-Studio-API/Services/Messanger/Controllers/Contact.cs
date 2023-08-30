@@ -2,6 +2,7 @@
 using Messanger.Dtos;
 using Messanger.Models;
 using Messanger.Services.RepositoryManager;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Common.Models;
@@ -29,6 +30,7 @@ namespace Messanger.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> NewMessage([FromBody] ContactFormDto contactFromDto)
         {
             Message message = _mapper.Map<Message>(contactFromDto);

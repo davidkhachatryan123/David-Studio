@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using AutoMapper;
 using EventBus.Abstractions;
 using Messanger.Database;
 using Messanger.Mappings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
 namespace Pricing.Extensions

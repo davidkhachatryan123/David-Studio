@@ -1,19 +1,43 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IdentityModel.Tokens.Jwt;
+using EventBus;
+using EventBus.Abstractions;
+using EventBusRabbitMQ;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Services.Common.Configurations;
-using EventBus.Abstractions;
-using EventBusRabbitMQ;
 using RabbitMQ.Client;
-using EventBus;
+using Services.Common.Configurations;
 
 namespace Services.Common.Extensions
 {
     public static class Extensions
     {
+        public static void AddDefaultAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            var identitySection = configuration.GetSection("Identity");
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                var identityUrl = identitySection.GetValue<string>("Url");
+                var audience = identitySection.GetValue<string>("Audience");
+
+                options.Authority = identityUrl;
+                options.Audience = audience;
+                options.RequireHttpsMetadata = false;
+            });
+        }
+
         public static void AddDefaultApiVersioning(this IServiceCollection services)
         {
             services.AddApiVersioning(opt =>
