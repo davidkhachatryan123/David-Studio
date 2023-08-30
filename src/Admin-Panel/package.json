@@ -20,7 +20,6 @@
     "@angular/platform-browser": "^15.2.9",
     "@angular/platform-browser-dynamic": "^15.2.9",
     "@angular/router": "^15.2.9",
-    "@auth0/angular-jwt": "^5.1.2",
     "ngx-image-cropper": "^7.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

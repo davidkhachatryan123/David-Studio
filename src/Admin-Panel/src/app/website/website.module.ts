@@ -1,29 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
 
 import { WebsiteRoutingModule } from './website-routing.module';
 
-import { AuthStorageService, ServerConfigService, ThemeService } from './services';
-
-import { environment } from 'src/environments/environment';
+import { ServerConfigService, ThemeService } from './services';
 
 @NgModule({
   imports: [
     WebsiteRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: AuthStorageService.getToken,
-        allowedDomains: [environment.server.domain],
-        disallowedRoutes: []
-      }
-    })
+    HttpClientModule
   ],
   providers: [
-    AuthStorageService,
     ThemeService,
     ServerConfigService
   ],
