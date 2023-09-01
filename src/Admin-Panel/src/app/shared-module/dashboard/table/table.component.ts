@@ -16,7 +16,7 @@ export class TableComponent implements AfterViewInit {
   @Input() showSelect = true;
 
   @Input() data: Array<any> = [];
-  @Input() pagesCount = 0;
+  @Input() totalCount = 0;
 
   @Input() tableOptions = new TableOptions('id', 'asc', 1, 1);
   @Output() tableOptionsChange = new EventEmitter<TableOptions>();
@@ -53,6 +53,7 @@ export class TableComponent implements AfterViewInit {
     .map(conf =>
       this.getTableDataElementProperties()[this.tableConfiguration.indexOf(conf)]
     )
+    .filter(cols => cols);
 
     return this.showSelect ? ['select', ...displayedColumns] : displayedColumns;
   }
@@ -80,7 +81,10 @@ export class TableComponent implements AfterViewInit {
   }
 
   getTableDataElementProperties(): string[] {
-    return Object.getOwnPropertyNames(this.data[0]);
+    if(this.data.length != 0)
+      return Object.getOwnPropertyNames(this.data[0]);
+    else
+      return [];
   }
 
   isTypeOf(obj: TableText | TableText | TableButton | TableImage, type: string): boolean {
