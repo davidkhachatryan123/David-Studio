@@ -17,6 +17,22 @@ namespace Services.Common.Extensions
 {
     public static class Extensions
     {
+        public static void AddDefaultCors(this IServiceCollection services, IConfiguration configuration)
+        {
+            string[]? origins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowCredentials();
+
+                    if (origins is not null)
+                        policy.WithOrigins(origins);
+                }));
+        }
+
         public static void AddDefaultAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var identitySection = configuration.GetSection("Identity");

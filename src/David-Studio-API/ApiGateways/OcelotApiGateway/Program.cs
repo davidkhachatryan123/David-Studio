@@ -4,6 +4,14 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.WithOrigins(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()!);
+    }));
+
 var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl");
 var authenticationProviderKey = "IdentityApiKey";
 
@@ -25,6 +33,8 @@ IConfiguration configuration = builder.Configuration
 builder.Services.AddOcelot(configuration);
 
 var app = builder.Build();
+
+app.UseCors();
 
 app.UseOcelot().Wait();
 

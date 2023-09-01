@@ -11,21 +11,6 @@ namespace IdentityServer.Extensions
 {
     public static class Extensions
     {
-        public static void AddDefaultCors(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddCors(opt =>
-            {
-                opt.AddDefaultPolicy(policy =>
-                {
-                    policy.AllowAnyHeader();
-                    policy.AllowAnyMethod();
-                    policy.AllowCredentials();
-                    policy.WithOrigins(configuration["IdentityWebSpa"]!);
-                    policy.WithOrigins(configuration["SpaClient"]!);
-                });
-            });
-        }
-
         public static void AddDefaultIdentity(this IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
