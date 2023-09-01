@@ -99,19 +99,28 @@ namespace Portfolio.Controllers
         [HttpPut("{id}"), DisableRequestSizeLimit]
         public async Task<IActionResult> Update(int id, [FromForm] ProjectCreateDto projectDto)
         {
-            _logger.LogInformation("Saving image in storage by name: {FileName}", projectDto.File.FileName);
-            ImageReadDto image = await _storageData.StoreImageAsync(projectDto.File);
+            ImageReadDto? image = null;
+
+            if (projectDto.File is not null)
+            {
+                _logger.LogInformation("Saving image in storage by name: {FileName}", projectDto.File.FileName);
+                image = await _storageData.StoreImageAsync(projectDto.File);
+            }
 
             Project? project = _mapper.Map<Project>(projectDto);
             project.Id = id;
 
             project = await _repositoryManager.Projects.UpdateAsync(project);
 
-            _logger.LogInformation("Publishing message to event bus for remove old image by url: {ImageUrl}", project.ImageUrl);
-            IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
-            _eventBus.Publish(@event);
+            if (projectDto.File is not null)
+            {
+                _logger.LogInformation("Publishing message to event bus for remove old image by url: {ImageUrl}", project.ImageUrl);
+                IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
+                _eventBus.Publish(@event);
+            }
 
-            project.ImageUrl = image.ImageUrl;
+            if (image is not null)
+                project.ImageUrl = image.ImageUrl;
 
             await _repositoryManager.SaveAsync();
 

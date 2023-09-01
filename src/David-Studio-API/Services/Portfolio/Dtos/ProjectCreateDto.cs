@@ -11,8 +11,7 @@ namespace Portfolio.Dtos
         [Required]
         public Uri Link { get; set; } = null!;
 
-        [Required]
-        public IFormFile File { get; set; } = null!;
+        public IFormFile? File { get; set; }
 
         [Required]
         public List<Tag> Tags { get; set; } = new();
