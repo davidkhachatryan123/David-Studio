@@ -19,6 +19,7 @@ import { AppRoutes } from 'src/app/website/consts';
 import { ImageCropDialogComponent } from './wizards/dialogs/image-crop/image-crop-dialog.component';
 import { ImageCropDialogService } from './wizards/services/image-crop-dialog.service';
 import { SetupProjectWizardService } from './wizards/services/setup-project-wizard.service';
+import { ProjectsService, TagsService, TopProjectsService } from 'src/app/website/services';
 
 const routes: Routes = [
   {
@@ -54,7 +55,10 @@ const routes: Routes = [
   providers: [
     TagDialogService,
     ImageCropDialogService,
-    SetupProjectWizardService
+    SetupProjectWizardService,
+    ProjectsService,
+    TagsService,
+    TopProjectsService
   ]
 })
 export class PortfolioModule { }

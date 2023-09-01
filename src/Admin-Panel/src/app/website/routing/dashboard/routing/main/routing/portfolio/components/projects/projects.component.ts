@@ -1,49 +1,53 @@
-import { Component } from '@angular/core';
-import { Project, Tag } from '../../../../models';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
 import { SetupProjectWizardService } from '../../wizards/services/setup-project-wizard.service';
+import { ProjectReadDto } from 'src/app/website/dto';
+import { ProjectsService, TopProjectsService } from 'src/app/website/services';
+import { TableOptions } from 'src/app/shared-module/dashboard/table/models';
+import { MatPaginator } from '@angular/material/paginator';
+import { PageData } from 'src/app/website/models';
 
 @Component({
   selector: 'app-dashboard-main-portfolio-projects',
   templateUrl: 'projects.component.html',
   styleUrls: ['projects.component.css']
 })
-export class ProjectsComponent {
-  projectsCount = 5;
-  projects: Array<Project> = [
-    new Project(1, 'David Studio', 'assets/proj1.jpg', 'https://github.com/davidkhachatryan123/David-Studio', [
-      new Tag(1, 'C#', '#8d3aa3'),
-      new Tag(2, 'ASP.NET Core', '#6c429c'),
-      new Tag(3, 'Angular', '#e23237')
-    ]),
-    new Project(2, 'Study Control Software', 'assets/proj2.jpg', 'https://github.com/davidkhachatryan123/Study-Control-Software', [
-      new Tag(1, 'C#', '#8d3aa3'),
-      new Tag(2, 'ASP.NET Core', '#6c429c'),
-      new Tag(3, 'Angular', '#e23237')
-    ]),
-    new Project(3, 'Customs Clearance Car', 'assets/proj3.jpg', 'https://github.com/davidkhachatryan123/Customs-Clearance-Car', [
-      new Tag(1, 'C#', '#8d3aa3'),
-      new Tag(2, 'ASP.NET Core', '#6c429c'),
-      new Tag(3, 'Angular', '#e23237')
-    ]),
-    new Project(4, 'Smart Bomb', 'assets/proj4.jpg', 'https://github.com/davidkhachatryan123/SmartBomb', [
+export class ProjectsComponent implements AfterViewInit {
+  projectsCount: number;
+  projects: Array<ProjectReadDto>;
+  selectedItems: Array<ProjectReadDto> = [];
+  tableOptions: TableOptions = new TableOptions('name', 'asc', 0, 0);
 
-    ]),
-    new Project(5, 'Test', 'assets/proj3.jpg', 'https://github.com/davidkhachatryan123/Customs-Clearance-Car', [
-      new Tag(1, 'C#', '#8d3aa3'),
-      new Tag(2, 'ASP.NET Core', '#6c429c'),
-      new Tag(3, 'Angular', '#e23237')
-    ])
-  ];
-
-  selectedItems: Array<Project> = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private _snackBar: MatSnackBar,
     private deleteDialogService: DeleteDialogService,
-    private setupProjectWizard: SetupProjectWizardService
+    private setupProjectWizard: SetupProjectWizardService,
+    private projectsService: ProjectsService,
+    private topProjectsService: TopProjectsService
   ) { }
+
+  ngAfterViewInit() {
+    this.onChangeEvent();
+    this.paginator.page.subscribe(() => this.onChangeEvent());
+
+    this.reloadProjects();
+  }
+
+  onChangeEvent() {
+    this.tableOptions.pageIndex = this.paginator.pageIndex;
+    this.tableOptions.pageSize = this.paginator.pageSize;
+  }
+
+  reloadProjects() {
+    this.projectsService.getAll(this.tableOptions)
+    .subscribe((projects: PageData<ProjectReadDto>) => {
+      this.projects = projects.entities;
+      this.projectsCount = projects.totalCount;
+    });
+  }
 
   newProject() {
     this.setupProjectWizard.show();
@@ -55,19 +59,25 @@ export class ProjectsComponent {
 
   deleteProject(id: number = undefined) {
     this.deleteDialogService.show(id
-      ? [this.projects.find(proj => proj.id == id).title]
-      : this.selectedItems.map(proj => proj.title))
+      ? [this.projects.find(proj => proj.id == id).name]
+      : this.selectedItems.map(proj => proj.name))
     ?.afterClosed().subscribe((result: boolean) => {
       if(result) {
-        console.log('Delete project(s): ', id ? id : this.selectedItems);
+        if(id) {
+          this.projectsService.delete(id).subscribe(_ => this.reloadProjects());
+        } else {
+          this.selectedItems.map(
+            project => this.projectsService.delete(project.id)
+            .subscribe(_ => this.reloadProjects()));
+        }
 
-        this.showSnackBar('Project(s) was deleted');
+        this.showSnackBar('Project(s) deleted');
       }
     });
   }
 
   markAsTop() {
-    console.log('Mark as TOP: ', this.selectedItems);
+    this.topProjectsService.mark(this.selectedItems).subscribe();
   }
 
   private showSnackBar(message: string) {

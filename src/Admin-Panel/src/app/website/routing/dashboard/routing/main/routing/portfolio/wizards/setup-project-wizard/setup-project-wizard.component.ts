@@ -1,27 +1,28 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, map, startWith } from 'rxjs';
-
 import { ImageCropDialogService } from '../services/image-crop-dialog.service';
-import { ProjectDto } from '../../models';
-import { Project, Tag } from '../../../../models';
+import { ProjectCreateDto, ProjectReadDto, TagReadDto } from 'src/app/website/dto';
+import { ProjectsService, TagsService } from 'src/app/website/services';
+import { TableOptions } from 'src/app/shared-module/dashboard/table/models';
+import { PageData } from 'src/app/website/models';
 
 @Component({
   selector: 'app-dashboard-main-portfolio-setup-project-wizard',
   templateUrl: 'setup-project-wizard.component.html',
   styleUrls: ['setup-project-wizard.component.css']
 })
-export class SetupProjectWizardComponent implements OnInit {
-  projectDto: ProjectDto;
+export class SetupProjectWizardComponent implements OnInit, AfterViewInit {
+  projectDto: ProjectCreateDto | ProjectReadDto = new ProjectReadDto(null, null, null, null, null);
   projectForm: FormGroup;
 
   img: any = '';
-  imgFileName = '';
+  imgFile: File;
 
-  allTags: Tag[];
-  filteredTags: Observable<string[]>;
+  allTags: Array<TagReadDto>;
+  filteredTags: Observable<Array<string>>;
 
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
 
@@ -29,6 +30,8 @@ export class SetupProjectWizardComponent implements OnInit {
     private imageCropDialogService: ImageCropDialogService,
     private router: Router,
     private route: ActivatedRoute,
+    private projectsService: ProjectsService,
+    private tagsService: TagsService
   ) {
     this.projectForm = new FormGroup({
       "name": new FormControl('', [Validators.required, Validators.maxLength(128)]),
@@ -36,40 +39,41 @@ export class SetupProjectWizardComponent implements OnInit {
       "image": new FormControl(''),
       "tagCtrl": new FormControl('')
     });
-
-    this.projectForm.controls['name'].valueChanges
-      .subscribe(value => this.projectDto.title = value);
-    this.projectForm.controls['link'].valueChanges
-      .subscribe(value => this.projectDto.link = value);
-
-    this.filteredTags = this.projectForm.controls['tagCtrl'].valueChanges.pipe(
-      startWith(null),
-      map((course: string | null) =>
-      (course ? this._filter(course) : this.allTags.map(data => data.name).slice())),
-    );
   }
 
   ngOnInit () {
     this.route.queryParams.subscribe(params => {
-      // get it from server using "params['id']" identifier of project
-      let project: Project = new Project();
+      if (params['id'] != -1) {
+        this.projectsService.getById(params['id'])
+        .subscribe((project: ProjectReadDto) => {
+          this.projectDto = project;
+          this.img = project.imageUrl;
 
-      this.projectDto = new ProjectDto(
-        project.id, project.title,
-        project.demo_link, project.tags
-      );
-      this.img = project.img_uri;
-
-      this.projectForm.controls['name'].setValue(this.projectDto.title);
-      this.projectForm.controls['link'].setValue(this.projectDto.link);
+          this.projectForm.controls['name'].setValue(this.projectDto.name);
+          this.projectForm.controls['link'].setValue(this.projectDto.link);
+        });
+      } else {
+        this.projectDto = new ProjectCreateDto(null, null, null, null);
+      }
     });
 
-    // Get it all from the server
-    this.allTags = [
-      new Tag(1, 'C#', '#8d3aa3'),
-      new Tag(2, 'ASP.NET Core', '#6c429c'),
-      new Tag(3, 'Angular', '#e23237')
-    ];
+    this.tagsService.getAll(new TableOptions('id', 'asc', 0, 1))
+    .subscribe((tags: PageData<TagReadDto>) => {
+      this.allTags = tags.entities
+
+      this.filteredTags = this.projectForm.controls['tagCtrl'].valueChanges.pipe(
+        startWith(null),
+        map((tag: string | null) =>
+        (tag ? this._filterTags(tag) : this.allTags?.map(data => data.name).slice())),
+      );
+    });
+  }
+
+  ngAfterViewInit() {
+    this.projectForm.controls['name'].valueChanges
+      .subscribe(value => this.projectDto.name = value);
+    this.projectForm.controls['link'].valueChanges
+      .subscribe(value => this.projectDto.link = value);
   }
 
   onFileChange(event: Event) {
@@ -77,11 +81,11 @@ export class SetupProjectWizardComponent implements OnInit {
     ?.afterClosed().subscribe((result: any) => {
       if(result)
         this.img = result;
-        this.projectDto.image.append(((event.target as HTMLInputElement).files as FileList)[0].name, result);
+        this.imgFile = ((event.target as HTMLInputElement).files as FileList)[0];
     });
   }
 
-  removeTag(tag: Tag) {
+  removeTag(tag: TagReadDto) {
     this.projectDto.tags.includes(tag)
       ? this.projectDto.tags.splice(this.projectDto.tags.indexOf(tag), 1)
       : null;
@@ -97,11 +101,11 @@ export class SetupProjectWizardComponent implements OnInit {
     console.log(this.projectDto.tags);
   }
 
-  private _filter(value: string): string[] {
+  private _filterTags(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.allTags.map(tag => tag.name)
-    .filter(course => course.toLowerCase().includes(filterValue));
+    .filter(tag => tag.toLowerCase().includes(filterValue));
   }
 
   navigatToReturnUrl() {
@@ -112,12 +116,20 @@ export class SetupProjectWizardComponent implements OnInit {
 
   submit() {
     if(this.projectForm.valid) {
-      if(this.projectDto.id === -1)
-        console.log('Create new Project: ', this.projectDto);
-      else
-        console.log('Edit existing Project: ', this.projectDto);
-
-      this.navigatToReturnUrl();
+      this.route.queryParams.subscribe(params => {
+        if (params['id'] == -1)
+          this.projectsService.create(new ProjectCreateDto(
+            this.projectDto.name, this.projectDto.link,
+            this.imgFile, this.projectDto.tags
+          ))
+          .subscribe(_ => this.navigatToReturnUrl());
+        else
+          this.projectsService.update(params['id'], new ProjectCreateDto(
+            this.projectDto.name, this.projectDto.link,
+            this.imgFile, this.projectDto.tags
+          ))
+          .subscribe(_ => this.navigatToReturnUrl());
+      });
     }
   }
 }

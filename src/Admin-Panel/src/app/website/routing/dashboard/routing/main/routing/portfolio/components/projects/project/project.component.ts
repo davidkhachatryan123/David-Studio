@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Project } from '../../../../../models';
+import { ProjectReadDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'app-dashboard-main-portfolio-projects-project',
@@ -7,7 +7,7 @@ import { Project } from '../../../../../models';
   styleUrls: ['project.component.css']
 })
 export class ProjectComponent {
-  @Input() project: Project = new Project();
+  @Input() project: ProjectReadDto;
 
   @Output() isChecked = new EventEmitter<boolean>();
 
