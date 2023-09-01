@@ -19,9 +19,7 @@ export class UserAccountComponent implements OnInit {
   constructor(private router: Router, private oidc: OidcSecurityService) { }
 
   ngOnInit() {
-    this.oidc.userData$.subscribe(data => {this.userData = data
-            console.log(data); 
-            });
+    this.oidc.userData$.subscribe(data => this.userData = data);
   }
 
   toggleTheme() {
