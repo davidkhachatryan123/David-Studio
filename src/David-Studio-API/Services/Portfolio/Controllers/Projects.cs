@@ -80,7 +80,7 @@ namespace Portfolio.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> Create([FromForm] ProjectCreateDto projectDto)
         {
-            _logger.LogInformation("Saving image in storage by name: {FileName}", projectDto.File.FileName);
+            _logger.LogInformation("Saving image in storage by name: {FileName}", projectDto.File!.FileName);
             ImageReadDto image = await _storageData.StoreImageAsync(projectDto.File);
 
             Project? project = _mapper.Map<Project>(projectDto);

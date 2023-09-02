@@ -10,6 +10,8 @@ namespace Portfolio.Mappings
         {
             CreateMap<Tag, TagReadDto>();
             CreateMap<TagCreateDto, Tag>();
+
+            CreateMap<TagReadDto, Tag>();
         }
     }
 }

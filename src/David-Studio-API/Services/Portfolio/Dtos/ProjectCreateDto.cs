@@ -14,7 +14,7 @@ namespace Portfolio.Dtos
         public IFormFile? File { get; set; }
 
         [Required]
-        public List<Tag> Tags { get; set; } = new();
+        public List<TagReadDto> Tags { get; set; } = new();
     }
 }
 
