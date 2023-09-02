@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angula
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, startWith, tap } from 'rxjs';
 import { ImageCropDialogService } from '../services/image-crop-dialog.service';
 import { ProjectCreateDto, ProjectReadDto, TagReadDto } from 'src/app/website/dto';
 import { ProjectsService, TagsService } from 'src/app/website/services';
@@ -53,18 +53,20 @@ export class SetupProjectWizardComponent implements OnInit, AfterViewInit {
           this.projectForm.controls['link'].setValue(this.projectDto.link);
         });
       } else {
-        this.projectDto = new ProjectCreateDto(null, null, null, null);
+        this.projectDto = new ProjectCreateDto(null, null, null, []);
       }
     });
 
-    this.tagsService.getAll(new TableOptions('id', 'asc', 0, 1))
+    this.tagsService.getAll(new TableOptions('id', 'asc', 0, 100))
     .subscribe((tags: PageData<TagReadDto>) => {
-      this.allTags = tags.entities
+      this.allTags = tags.entities;
 
       this.filteredTags = this.projectForm.controls['tagCtrl'].valueChanges.pipe(
         startWith(null),
         map((tag: string | null) =>
-        (tag ? this._filterTags(tag) : this.allTags?.map(data => data.name).slice())),
+        (tag ? this._filterTags(tag) : this.allTags?.map(data => data.name))),
+        map((tags: Array<string>) =>
+        tags.filter(tag => !this.projectDto.tags?.find(dtoTag => dtoTag.name == tag)))
       );
     });
   }
@@ -87,8 +89,11 @@ export class SetupProjectWizardComponent implements OnInit, AfterViewInit {
 
   removeTag(tag: TagReadDto) {
     this.projectDto.tags.includes(tag)
-      ? this.projectDto.tags.splice(this.projectDto.tags.indexOf(tag), 1)
-      : null;
+    ? this.projectDto.tags.splice(this.projectDto.tags.indexOf(tag), 1)
+    : null;
+
+    this.projectForm.controls['tagCtrl']
+    .setValue(this.projectForm.controls['tagCtrl'].value);
   }
 
   tagSelected(event: MatAutocompleteSelectedEvent) {
@@ -97,8 +102,6 @@ export class SetupProjectWizardComponent implements OnInit, AfterViewInit {
 
     this.tagInput.nativeElement.value = '';
     this.projectForm.controls['tagCtrl'].setValue(null);
-
-    console.log(this.projectDto.tags);
   }
 
   private _filterTags(value: string): string[] {

@@ -49,7 +49,14 @@ export class ProjectsService {
     formData.append('name', project.name);
     formData.append('link', project.link);
     formData.append('file', project.file);
-    formData.append('tags', JSON.stringify(project.tags));
+
+    for (let index = 0; index < project.tags.length; index++) {
+      const tag = project.tags[index];
+
+      formData.append(`tags[${index}][id]`, tag.id.toString());
+      formData.append(`tags[${index}][name]`, tag.name);
+      formData.append(`tags[${index}][color]`, tag.color);
+    }
 
     return formData;
   }
