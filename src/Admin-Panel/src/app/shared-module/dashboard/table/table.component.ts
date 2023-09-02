@@ -20,7 +20,7 @@ export class TableComponent implements AfterViewInit {
 
   @Input() tableOptions = new TableOptions('id', 'asc', 1, 1);
   @Output() tableOptionsChange = new EventEmitter<TableOptions>();
-
+  
   @Output() selectedRowsChange = new EventEmitter();
 
   @ViewChild(MatSort) sort: MatSort;
@@ -55,12 +55,13 @@ export class TableComponent implements AfterViewInit {
     )
     .filter(cols => cols);
 
-    return this.showSelect ? ['select', ...displayedColumns] : displayedColumns;
+    return this.showSelect && this.data.length ? ['select', ...displayedColumns] : displayedColumns;
   }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.data.length;
+
     return numSelected === numRows;
   }
 
@@ -73,21 +74,25 @@ export class TableComponent implements AfterViewInit {
     this.selection.select(...this.data);
   }
 
-  checkboxLabel(row?): string {
+  resetSeletions() {
+    this.selection.clear();
+  }
+
+  protected checkboxLabel(row?): string {
     if (!row)
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
 
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
-  getTableDataElementProperties(): string[] {
+  protected getTableDataElementProperties(): string[] {
     if(this.data.length != 0)
       return Object.getOwnPropertyNames(this.data[0]);
     else
       return [];
   }
 
-  isTypeOf(obj: TableText | TableText | TableButton | TableImage, type: string): boolean {
+  protected isTypeOf(obj: TableText | TableText | TableButton | TableImage, type: string): boolean {
     return type === 'TableText' ? obj instanceof TableText :
            type === 'TableButton' ? obj instanceof TableButton :
            type === 'TableImage' ? obj instanceof TableImage :
@@ -95,7 +100,7 @@ export class TableComponent implements AfterViewInit {
            false;
   }
 
-  getTableButton(obj) {
+  protected getTableButton(obj) {
     return obj as TableButton;
   }
 }
