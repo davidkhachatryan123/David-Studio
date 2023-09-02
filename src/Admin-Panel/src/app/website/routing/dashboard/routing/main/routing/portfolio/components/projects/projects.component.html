@@ -1,17 +1,36 @@
-<div class="projects-grid">
-  <app-dashboard-main-portfolio-projects-project *ngFor="let project of projects"
-                                                 [project]="project"
-                                                 (isChecked)=" $event
-                                                   ? this.selectedItems.push(project)
-                                                   : this.selectedItems.splice(this.selectedItems.indexOf(project), 1)"
-                                                 (onEdit)="editProject(project.id)"
-                                                 (onDelete)="deleteProject(project.id)">
-  </app-dashboard-main-portfolio-projects-project>
-</div>
+<app-dashboard-actions-bar>
+  <button action-bar-item
+          mat-raised-button
+          color="primary"
+          (click)="newProject()">
+    New
+  </button>
 
-<mat-paginator [length]="projectsCount"
-               [pageSize]="12"
-               [pageSizeOptions]="[12, 24, 48]"
-               showFirstLastButtons
-               aria-label="Select page">
-</mat-paginator>
+  <span class="spacer"></span>
+
+  <app-dashboard-action-bar-dropdown action-bar-item>
+    <button mat-menu-item (click)="editProject()">Edit</button>
+    <button mat-menu-item (click)="deleteProject()">Delete</button>
+    <button mat-menu-item (click)="markAsTop()">Mark as TOP</button>
+  </app-dashboard-action-bar-dropdown>
+</app-dashboard-actions-bar>
+
+<app-dashboard-card title="Projects">
+  <div class="projects-grid">
+    <app-dashboard-main-portfolio-projects-project *ngFor="let project of projects"
+                                                   [project]="project"
+                                                   (isChecked)=" $event
+                                                     ? this.selectedItems.push(project)
+                                                     : this.selectedItems.splice(this.selectedItems.indexOf(project), 1)"
+                                                   (onEdit)="editProject(project.id)"
+                                                   (onDelete)="deleteProject(project.id)">
+    </app-dashboard-main-portfolio-projects-project>
+  </div>
+  
+  <mat-paginator [length]="projectsCount"
+                 [pageSize]="12"
+                 [pageSizeOptions]="[12, 24, 48]"
+                 showFirstLastButtons
+                 aria-label="Select page">
+  </mat-paginator>
+</app-dashboard-card>

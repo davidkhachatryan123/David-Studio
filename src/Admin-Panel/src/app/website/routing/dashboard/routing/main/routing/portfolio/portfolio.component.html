@@ -1,89 +1,12 @@
-<app-dashboard-actions-bar *ngIf="tabs.selectedIndex == 0">
-  <button action-bar-item
-          mat-raised-button
-          color="primary"
-          (click)="projectsComponent.newProject()">
-    New
-  </button>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <a mat-tab-link class="tab-link" *ngFor="let tab of tabsConfig"
+     [routerLink]="tab.route"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    <mat-icon>{{ tab.icon }}</mat-icon>
+    {{ tab.title }}
+  </a>
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 
-  <span class="spacer"></span>
-
-  <app-dashboard-action-bar-dropdown action-bar-item>
-    <button mat-menu-item (click)="projectsComponent.editProject()">Edit</button>
-    <button mat-menu-item (click)="projectsComponent.deleteProject()">Delete</button>
-    <button mat-menu-item (click)="projectsComponent.markAsTop()">Mark as TOP</button>
-  </app-dashboard-action-bar-dropdown>
-</app-dashboard-actions-bar>
-
-<app-dashboard-actions-bar *ngIf="tabs.selectedIndex == 1">
-  <button action-bar-item
-          mat-raised-button
-          color="primary"
-          (click)="tagsComponent.newTag()">
-    New
-  </button>
-
-  <span class="spacer"></span>
-
-  <app-dashboard-action-bar-dropdown action-bar-item>
-    <button mat-menu-item (click)="tagsComponent.editTag()">Edit</button>
-    <button mat-menu-item (click)="tagsComponent.deleteTag()">Delete</button>
-  </app-dashboard-action-bar-dropdown>
-</app-dashboard-actions-bar>
-
-<app-dashboard-actions-bar *ngIf="tabs.selectedIndex == 2">
-  <button action-bar-item
-          mat-raised-button
-          color="primary"
-          (click)="topComponent.save()">
-    Save
-  </button>
-
-  <span class="spacer"></span>
-
-  <app-dashboard-action-bar-dropdown action-bar-item>
-    <button mat-menu-item (click)="topComponent.removeFromTop()">Remove from TOP</button>
-  </app-dashboard-action-bar-dropdown>
-</app-dashboard-actions-bar>
-
-<app-dashboard-card title="Portfolio">
-
-  <mat-tab-group #tabs dynamicHeight>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">apps</mat-icon>
-        Projects
-      </ng-template>
-
-      <ng-template matTabContent>
-        <app-dashboard-main-portfolio-projects></app-dashboard-main-portfolio-projects>
-      </ng-template>
-
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">tag</mat-icon>
-        Tags
-      </ng-template>
-
-      <ng-template matTabContent>
-        <app-dashboard-main-portfolio-tags></app-dashboard-main-portfolio-tags>
-      </ng-template>
-
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">call_made</mat-icon>
-        Top
-      </ng-template>
-
-      <ng-template matTabContent>
-        <app-dashboard-main-portfolio-top></app-dashboard-main-portfolio-top>
-      </ng-template>
-
-    </mat-tab>
-  </mat-tab-group>
-
-</app-dashboard-card>
+<router-outlet></router-outlet>

@@ -1,23 +1,31 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { MatTabGroup } from '@angular/material/tabs';
-import { TagsComponent } from './components/tags/tags.component';
-import { TopComponent } from './components/top/top.component';
+import { Component } from '@angular/core';
+import { AppRoutes } from 'src/app/website/consts';
 
 @Component({
   selector: 'app-dashboard-main-portfolio',
-  templateUrl: 'portfolio.component.html'
+  templateUrl: 'portfolio.component.html',
+  styleUrls: [ 'portfolio.component.css' ]
 })
-export class PortfolioComponent implements AfterViewChecked {
-  @ViewChild(ProjectsComponent) projectsComponent: ProjectsComponent;
-  @ViewChild(TagsComponent) tagsComponent: TagsComponent;
-  @ViewChild(TopComponent) topComponent: TopComponent;
-
-  @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
-
-  constructor(private cdRef : ChangeDetectorRef) { }
-
-  ngAfterViewChecked() {
-    this.cdRef.detectChanges();
-  }
+export class PortfolioComponent {
+  tabsConfig: {
+    title: string,
+    icon: string,
+    route: string
+  }[] = [
+    { 
+      title: 'Projects',
+      icon: 'apps',
+      route: AppRoutes.DASHBOARD_MAIN_PORTFOLIO_PROJECTS
+    },
+    {
+      title: 'Tags',
+      icon: 'tags',
+      route: AppRoutes.DASHBOARD_MAIN_PORTFOLIO_TAGS
+    },
+    {
+      title: 'Top Projects',
+      icon: 'call_made',
+      route: AppRoutes.DASHBOARD_MAIN_PORTFOLIO_TOP_PROJECTS
+    }
+  ];
 }

@@ -1,7 +1,25 @@
-<app-dashboard-table [tableConfiguration]="tableConfiguration"
-                     [data]="data"
-                     [tableOptions]="tableOptions"
-                     (tableOptionsChange)="tableOptionsChanged($event)"
-                     [pagesCount]="1"
-                     (selectedRowsChange)="selectedRows = $event">
-</app-dashboard-table>
+<app-dashboard-actions-bar>
+  <button action-bar-item
+          mat-raised-button
+          color="primary"
+          (click)="newTag()">
+    New
+  </button>
+
+  <span class="spacer"></span>
+
+  <app-dashboard-action-bar-dropdown action-bar-item>
+    <button mat-menu-item (click)="editTag()">Edit</button>
+    <button mat-menu-item (click)="deleteTag()">Delete</button>
+  </app-dashboard-action-bar-dropdown>
+</app-dashboard-actions-bar>
+
+<app-dashboard-card title="Tags">
+  <app-dashboard-table [tableConfiguration]="tableConfiguration"
+                       [data]="data.entities"
+                       [tableOptions]="tableOptions"
+                       (tableOptionsChange)="tableOptionsChanged($event)"
+                       [totalCount]="data.totalCount"
+                       (selectedRowsChange)="selectedRows = $event">
+  </app-dashboard-table>
+</app-dashboard-card>

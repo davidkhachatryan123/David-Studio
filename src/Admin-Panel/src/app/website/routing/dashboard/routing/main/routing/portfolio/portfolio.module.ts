@@ -15,28 +15,17 @@ import { TagDialogService } from './services/tag-dialog.service';
 import { TopProjectComponent } from './components/top/top-project/top-project.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SetupProjectWizardComponent } from './wizards/setup-project-wizard/setup-project-wizard.component';
-import { AppRoutes } from 'src/app/website/consts';
 import { ImageCropDialogComponent } from './wizards/dialogs/image-crop/image-crop-dialog.component';
 import { ImageCropDialogService } from './wizards/services/image-crop-dialog.service';
 import { SetupProjectWizardService } from './wizards/services/setup-project-wizard.service';
 import { ProjectsService, TagsService, TopProjectsService } from 'src/app/website/services';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: PortfolioComponent
-  },
-  {
-    path: AppRoutes.DASHBOARD_MAIN_PORTFOLIO_SETUP_PROJECT_WIZARD,
-    component: SetupProjectWizardComponent
-  }
-];
+import { PortfolioRoutingModule } from './portfolio-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes),
+    PortfolioRoutingModule,
     SharedModule,
     DragDropModule,
     ImageCropperModule

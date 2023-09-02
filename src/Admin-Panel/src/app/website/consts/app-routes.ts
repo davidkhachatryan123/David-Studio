@@ -3,6 +3,9 @@ export enum AppRoutes {
 
   DASHBOARD_MAIN = 'main',
   DASHBOARD_MAIN_PORTFOLIO = 'portfolio',
+  DASHBOARD_MAIN_PORTFOLIO_PROJECTS = 'projects',
+  DASHBOARD_MAIN_PORTFOLIO_TAGS = 'tags',
+  DASHBOARD_MAIN_PORTFOLIO_TOP_PROJECTS = 'top-projects',
   DASHBOARD_MAIN_PORTFOLIO_SETUP_PROJECT_WIZARD = 'setup-project-wizard',
   DASHBOARD_MAIN_SERVICES = 'services',
 

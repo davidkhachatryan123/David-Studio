@@ -1,12 +1,29 @@
-<div class="drag-list"
-     cdkDropList cdkDropListOrientation="vertical"
-    (cdkDropListDropped)="drop($event)">
-  <div class="dragable-box" cdkDrag cdkDragBoundary=".drag-list"
-      *ngFor="let project of projects">
-    <app-dashboard-main-portfolio-top-project [project]="project"
-                                              (isChecked)="$event
-                                                ? selectedItems.push(project)
-                                                : selectedItems.splice(selectedItems.indexOf(project), 1)">
-    </app-dashboard-main-portfolio-top-project>
+<app-dashboard-actions-bar>
+  <button action-bar-item
+          mat-raised-button
+          color="primary"
+          (click)="save()">
+    Save
+  </button>
+
+  <span class="spacer"></span>
+
+  <app-dashboard-action-bar-dropdown action-bar-item>
+    <button mat-menu-item (click)="removeFromTop()">Remove from TOP</button>
+  </app-dashboard-action-bar-dropdown>
+</app-dashboard-actions-bar>
+
+<app-dashboard-card title="Top Projects">
+  <div class="drag-list"
+       cdkDropList cdkDropListOrientation="vertical"
+      (cdkDropListDropped)="drop($event)">
+    <div class="dragable-box" cdkDrag cdkDragBoundary=".drag-list"
+        *ngFor="let project of projects">
+      <app-dashboard-main-portfolio-top-project [project]="project"
+                                                (isChecked)="$event
+                                                  ? selectedItems.push(project)
+                                                  : selectedItems.splice(selectedItems.indexOf(project), 1)">
+      </app-dashboard-main-portfolio-top-project>
+    </div>
   </div>
-</div>
+</app-dashboard-card>
