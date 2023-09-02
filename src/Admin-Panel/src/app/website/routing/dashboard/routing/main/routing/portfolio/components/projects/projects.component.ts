@@ -33,15 +33,17 @@ export class ProjectsComponent implements AfterViewInit {
     this.onChangeEvent();
     this.paginator.page.subscribe(() => this.onChangeEvent());
 
-    this.reloadProjects();
+    this.reloadData();
   }
 
   onChangeEvent() {
     this.tableOptions.pageIndex = this.paginator.pageIndex;
     this.tableOptions.pageSize = this.paginator.pageSize;
+
+    this.reloadData();
   }
 
-  reloadProjects() {
+  reloadData() {
     this.projectsService.getAll(this.tableOptions)
     .subscribe((projects: PageData<ProjectReadDto>) => {
       this.projects = projects.entities;
@@ -64,11 +66,11 @@ export class ProjectsComponent implements AfterViewInit {
     ?.afterClosed().subscribe((result: boolean) => {
       if(result) {
         if(id) {
-          this.projectsService.delete(id).subscribe(_ => this.reloadProjects());
+          this.projectsService.delete(id).subscribe(_ => this.reloadData());
         } else {
           this.selectedItems.map(
             project => this.projectsService.delete(project.id)
-            .subscribe(_ => this.reloadProjects()));
+            .subscribe(_ => this.reloadData()));
         }
 
         this.showSnackBar('Project(s) deleted');
