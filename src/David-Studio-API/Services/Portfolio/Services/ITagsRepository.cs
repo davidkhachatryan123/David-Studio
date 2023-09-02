@@ -10,6 +10,8 @@ namespace Portfolio.Services
         Task<Tag?> CreateAsync(Tag tag);
         Task<Tag?> UpdateAsync(Tag tag);
         Task<Tag?> DeleteAsync(int id);
+
+        Task<bool> IsTagExists(string name);
     }
 }
 

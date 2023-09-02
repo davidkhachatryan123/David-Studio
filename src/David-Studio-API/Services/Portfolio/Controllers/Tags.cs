@@ -86,6 +86,9 @@ namespace Portfolio.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] TagCreateDto tagDto)
         {
+            if (await _repositoryManager.Tags.IsTagExists(tagDto.Name))
+                return Conflict();
+
             Tag tag = _mapper.Map<Tag>(tagDto);
             tag.Id = id;
 

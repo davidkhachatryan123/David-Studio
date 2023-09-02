@@ -24,9 +24,8 @@ namespace Portfolio.Services
 
         public async Task<Tag?> CreateAsync(Tag tag)
         {
-            Tag? tagDb = await _context.Tags.FirstOrDefaultAsync(t => t.Name == tag.Name);
-
-            if (tagDb != null) return null;
+            if (await IsTagExists(tag.Name))
+                return null;
 
             await _context.Tags.AddAsync(tag);
             return tag;
@@ -37,7 +36,6 @@ namespace Portfolio.Services
             Tag? tagDb = await _context.Tags
                 .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.Id == tag.Id);
-
             if (tagDb is null) return null;
 
             _context.Tags.Update(tag);
@@ -52,6 +50,14 @@ namespace Portfolio.Services
             _context.Tags.Remove(tag);
 
             return tag;
+        }
+
+        public async Task<bool> IsTagExists(string name)
+        {
+            Tag? tagDb = await _context.Tags.FirstOrDefaultAsync(t => t.Name == name);
+            if (tagDb is null) return false;
+
+            return true;
         }
     }
 }
