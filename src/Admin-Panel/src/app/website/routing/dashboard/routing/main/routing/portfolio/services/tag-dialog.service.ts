@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TagDialogComponent } from '../dialogs/tag/tag-dialog.component';
-import { Tag } from '../../../models';
+import { TagCreateDto, TagReadDto } from 'src/app/website/dto';
 
 @Injectable()
 export class TagDialogService {
@@ -15,7 +15,7 @@ export class TagDialogService {
     const dialogRef = this.dialog.open(TagDialogComponent, {
       width: '500px',
       disableClose: true,
-      data: { tag: new Tag(-1, '', '#00FF00') }
+      data: { tag: new TagCreateDto(null, '#00FF00') }
     });
 
     dialogRef.componentInstance.title = "Create new Tag";
@@ -24,7 +24,7 @@ export class TagDialogService {
     return dialogRef;
   }
 
-  showEdit(tags: Array<Tag>) {
+  showEdit(tags: Array<TagReadDto>) {
     if(tags.length == 1) {
       const dialogRef = this.dialog.open(TagDialogComponent, {
         width: '500px',

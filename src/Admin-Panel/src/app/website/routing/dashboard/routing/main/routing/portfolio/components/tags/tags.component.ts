@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { TableCellConfiguration, TableColor, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
-import { Tag } from '../../../../models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
 import { TagDialogService } from '../../services/tag-dialog.service';
+import { TagReadDto } from 'src/app/website/dto';
+import { TagsService } from 'src/app/website/services';
+import { PageData } from 'src/app/website/models';
+import { TableComponent } from 'src/app/shared-module/dashboard';
 
 @Component({
   selector: 'app-dashboard-main-portfolio-tags',
   templateUrl: 'tags.component.html'
 })
-export class TagsComponent {
+export class TagsComponent implements AfterViewInit {
   tableConfiguration: Array<TableCellConfiguration> = [
     new TableCellConfiguration(
       new TableText(),
@@ -28,31 +31,40 @@ export class TagsComponent {
     )
   ];
 
-  data: Array<Tag> = [
-    new Tag(1, 'C#', '#8d3aa3'),
-    new Tag(2, 'ASP.NET Core', '#6c429c'),
-    new Tag(3, 'Angular', '#e23237')
-  ];
+  data: PageData<TagReadDto> = new PageData<TagReadDto>([], 0);
+  selectedRows: Array<TagReadDto> = [];
+  tableOptions = new TableOptions('name', 'asc', 1, 30);
 
-  tableOptions = new TableOptions('name', 'asc', 1, 1);
-
-  selectedRows: Array<Tag> = [];
+  @ViewChild(TableComponent) table: TableComponent; 
 
   constructor(
     private _snackBar: MatSnackBar,
     private deleteDialogService: DeleteDialogService,
-    private tagDialogService: TagDialogService
+    private tagDialogService: TagDialogService,
+    private tagsService: TagsService
   ) { }
+
+  ngAfterViewInit() {
+    this.reloadData();
+  }
+
+  reloadData() {
+    this.tagsService.getAll(this.tableOptions)
+    .subscribe((tags: PageData<TagReadDto>) => this.data = tags);
+
+    this.table.resetSeletions();
+  }
 
   tableOptionsChanged($event: TableOptions) {
     this.tableOptions = $event;
+    this.reloadData();
   }
 
   newTag() {
     const dialogRef = this.tagDialogService.showNew();
 
-    dialogRef.componentInstance.onSubmit.subscribe((tag: Tag) => {
-      console.log('Create tag: ', tag);
+    dialogRef.componentInstance.onSubmit.subscribe(({ id, tag }) => {
+      this.tagsService.create(tag).subscribe(_ => this.reloadData());
 
       dialogRef.close();
       this.showSnackBar('Tag created successfully!');
@@ -63,8 +75,8 @@ export class TagsComponent {
     const dialogRef = this.tagDialogService.showEdit(this.selectedRows);
 
     if(dialogRef) {
-      dialogRef.componentInstance.onSubmit.subscribe((tag: Tag) => {
-        console.log('Edit tag: ', tag);
+      dialogRef.componentInstance.onSubmit.subscribe(({ id, tag }) => {
+        this.tagsService.update(id, tag).subscribe(_ => this.reloadData());
 
         dialogRef.close();
         this.showSnackBar('Tag edited successfully!');
@@ -76,7 +88,8 @@ export class TagsComponent {
     this.deleteDialogService.show(this.selectedRows.map(row => row.name))
     ?.afterClosed().subscribe((result: boolean) => {
       if(result) {
-        console.log('Delete tag(s): ', this.selectedRows);
+        this.selectedRows.map(tag => this.tagsService.delete(tag.id)
+        .subscribe(_ => this.reloadData()));
 
         this.showSnackBar('Tag(s) deleted');
       }

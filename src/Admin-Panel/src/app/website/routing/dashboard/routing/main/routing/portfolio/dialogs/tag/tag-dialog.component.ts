@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Tag } from '../../../../models';
+import { TagCreateDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'app-dashboard-admin-new',
@@ -14,7 +14,7 @@ export class TagDialogComponent {
   @Input() title = '';
   @Input() submitBtnText = '';
 
-  @Output() onSubmit = new EventEmitter<Tag>();
+  @Output() onSubmit = new EventEmitter<{ id: number | undefined, tag: TagCreateDto }>();
 
   constructor(
     public dialogRef: MatDialogRef<TagDialogComponent>,
@@ -31,11 +31,13 @@ export class TagDialogComponent {
 
   onSubmitEvent() {
     if(this.ngForm.valid) {
-      this.onSubmit.emit(new Tag(
-        this.data.tag.id,
-        this.ngForm.controls['name'].value,
-        this.ngForm.controls['color'].value
-      ));
+      this.onSubmit.emit({
+        id: this.data.tag.id,
+        tag: new TagCreateDto(
+          this.ngForm.controls['name'].value,
+          this.ngForm.controls['color'].value
+        )
+      });
     }
   }
 }
