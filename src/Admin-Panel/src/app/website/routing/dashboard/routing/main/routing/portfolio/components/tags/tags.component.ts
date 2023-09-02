@@ -7,6 +7,7 @@ import { TagReadDto } from 'src/app/website/dto';
 import { TagsService } from 'src/app/website/services';
 import { PageData } from 'src/app/website/models';
 import { TableComponent } from 'src/app/shared-module/dashboard';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard-main-portfolio-tags',
@@ -64,10 +65,20 @@ export class TagsComponent implements AfterViewInit {
     const dialogRef = this.tagDialogService.showNew();
 
     dialogRef.componentInstance.onSubmit.subscribe(({ id, tag }) => {
-      this.tagsService.create(tag).subscribe(_ => this.reloadData());
-
-      dialogRef.close();
-      this.showSnackBar('Tag created successfully!');
+      this.tagsService.create(tag)
+      .subscribe(
+        _ => {
+          this.reloadData();
+          this.showSnackBar('Tag created successfully!');
+          dialogRef.close();
+        },
+        (error: HttpErrorResponse) => {
+          if(error.status == HttpStatusCode.Conflict)
+            this.showSnackBar('You can\'t create tags with the same name!');
+          else
+            this.showSnackBar('Unknown error has occurred!');
+        }
+      );
     });
   }
 
@@ -76,10 +87,19 @@ export class TagsComponent implements AfterViewInit {
 
     if(dialogRef) {
       dialogRef.componentInstance.onSubmit.subscribe(({ id, tag }) => {
-        this.tagsService.update(id, tag).subscribe(_ => this.reloadData());
-
-        dialogRef.close();
-        this.showSnackBar('Tag edited successfully!');
+        this.tagsService.update(id, tag).subscribe(
+          _ => {
+            this.reloadData();
+            this.showSnackBar('Tag edited successfully!');
+            dialogRef.close();
+          },
+          (error: HttpErrorResponse) => {
+            if(error.status == HttpStatusCode.Conflict)
+              this.showSnackBar('You can\'t update tag, change name!');
+            else
+              this.showSnackBar('Unknown error has occurred!');
+          }
+        );
       });
     }
   }
