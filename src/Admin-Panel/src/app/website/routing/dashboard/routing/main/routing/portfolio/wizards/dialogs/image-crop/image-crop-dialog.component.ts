@@ -12,6 +12,7 @@ export class ImageCropDialogComponent {
   @Output() onSubmit = new EventEmitter();
 
   croppedImage: any = '';
+  blobCroppedImage: Blob;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
@@ -20,5 +21,6 @@ export class ImageCropDialogComponent {
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+    this.blobCroppedImage = event.blob;
   }
 }

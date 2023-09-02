@@ -7,11 +7,12 @@
   <image-cropper [imageChangedEvent]="data.image"
                  [maintainAspectRatio]="false"
                  (imageCropped)="imageCropped($event)"
+                 output="blob"
                  class="cropper">
   </image-cropper>
 </div>
 
 <div mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close color="warn">Cancle</button>
-  <button mat-raised-button cdkFocusInitial color="primary" [mat-dialog-close]="croppedImage">Save</button>
+  <button mat-raised-button cdkFocusInitial color="primary" [mat-dialog-close]="{ url: croppedImage, blob: blobCroppedImage }">Save</button>
 </div>

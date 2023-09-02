@@ -79,11 +79,19 @@ export class SetupProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   onFileChange(event: Event) {
+    const srcFile = ((event.target as HTMLInputElement).files as FileList)[0];
+
     this.imageCropDialogService.show(event)
-    ?.afterClosed().subscribe((result: any) => {
-      if(result)
-        this.img = result;
-        this.imgFile = ((event.target as HTMLInputElement).files as FileList)[0];
+    ?.afterClosed().subscribe((result: { url: any, blob: Blob }) => {
+      if(result) {
+        this.img = result.url;
+
+        const croppedFile = new File([result.blob], srcFile.name, {
+          type: result.blob.type,
+        });
+
+        this.imgFile = croppedFile;
+      }
     });
   }
 
