@@ -5,8 +5,8 @@ import { AppRoutes } from 'src/app/website/consts';
 import { SetupProjectWizardComponent } from './wizards/setup-project-wizard/setup-project-wizard.component';
 import { PortfolioComponent } from './portfolio.component';
 import { ProjectsComponent } from './components/projects/projects.component';
-import { TopProjectComponent } from './components/top/top-project/top-project.component';
 import { TagsComponent } from './components/tags/tags.component';
+import { TopComponent } from './components/top/top.component';
 
 const routes: Routes = [
   {
@@ -28,7 +28,7 @@ const routes: Routes = [
       },
       {
         path: AppRoutes.DASHBOARD_MAIN_PORTFOLIO_TOP_PROJECTS,
-        component: TopProjectComponent
+        component: TopComponent
       }
     ]
   },

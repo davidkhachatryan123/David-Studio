@@ -17,12 +17,17 @@
   <div class="drag-list"
        cdkDropList cdkDropListOrientation="vertical"
       (cdkDropListDropped)="drop($event)">
+
     <div class="dragable-box" cdkDrag cdkDragBoundary=".drag-list"
         *ngFor="let project of projects">
       <app-dashboard-main-portfolio-top-project [project]="project"
                                                 (isChecked)="$event
                                                   ? selectedItems.push(project)
                                                   : selectedItems.splice(selectedItems.indexOf(project), 1)">
+                                                  
+        <div class="drag-handle" cdkDragHandle>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </app-dashboard-main-portfolio-top-project>
     </div>
   </div>

@@ -1,18 +1,22 @@
-<div class="project-container">
+<mat-card class="project-container">
+  <ng-content></ng-content>
+
   <div class="checkbox">
     <mat-checkbox color="primary"
                  (change)="isChecked.emit($event.checked)">
     </mat-checkbox>
   </div>
-  <div class="details">
-    <p>{{ project.title }}</p>
 
-    <a [href]="project.demo_link" target="_blank"
-        class="project-link" [matTooltip]="project.demo_link">
+  <div class="details">
+    <p>{{ project.name }}</p>
+
+    <a [href]="project.link" target="_blank"
+        class="project-link" [matTooltip]="project.link">
       Project link
     </a>
   </div>
+
   <div class="image">
-    <img [src]="project.img_uri">
+    <img [src]="project.imageUrl">
   </div>
-</div>
+</mat-card>

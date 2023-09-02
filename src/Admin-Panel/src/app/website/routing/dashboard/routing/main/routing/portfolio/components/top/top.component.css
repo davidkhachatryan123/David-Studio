@@ -1,11 +1,18 @@
+.drag-list {
+  margin-top: 15px;
+}
+
 .dragable-box {
-  cursor: move;
   width: 100%;
 
   position: relative;
   box-sizing: border-box;
 
-  border: 1px solid #333;
+  margin-top: 2px;
+}
+
+.drag-handle {
+  cursor: move;
 }
 
 .cdk-drag-placeholder {

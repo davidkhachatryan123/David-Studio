@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { PortfolioComponent } from './portfolio.component';
-import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared-module/shared.module';
 import { ProjectComponent } from './components/projects/project/project.component';
 import { TagsComponent } from './components/tags/tags.component';

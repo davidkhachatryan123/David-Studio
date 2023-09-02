@@ -15,7 +15,10 @@ export class TopProjectsService {
     let queryParams = new HttpParams()
     .append('limit', limit);
 
-    return this.http.get<Array<ProjectReadDto>>(this.apiUrl, { params: queryParams });
+    return this.http.get<Array<ProjectReadDto>>(
+      this.apiUrl,
+      { params: limit != -1 ? queryParams : undefined }
+    );
   }
 
   mark(projects: Array<ProjectReadDto>) {
@@ -27,6 +30,6 @@ export class TopProjectsService {
   }
 
   reorder(ids: Array<number>) {
-    return this.http.post(this.apiUrl, ids);
+    return this.http.post(`${this.apiUrl}/reorder`, ids);
   }
 }
