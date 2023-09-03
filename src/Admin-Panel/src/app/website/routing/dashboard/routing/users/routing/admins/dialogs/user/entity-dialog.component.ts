@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminCreateDto } from 'src/app/website/dto';
@@ -37,7 +37,16 @@ export class EntityDialogComponent {
         Validators.required, Validators.email
       ]),
       "phoneNumber": new FormControl(data.user.phoneNumber)
+    }, {
+      validators: this.matchPassword
     });
+  }
+
+  matchPassword(c: AbstractControl) {
+    if (c.get('password').value !== c.get('confirmPassword').value)
+      c.get('confirmPassword').setErrors({ mismatch: true });
+    else
+      return null;
   }
 
   onSubmitEvent() {
