@@ -5,7 +5,7 @@
   <form novalidate>
     <mat-form-field appearance="outline">
       <mat-label>Enter price&nbsp;</mat-label>
-      <input type="text" #price matInput placeholder="Name" [formControl]="priceFromControl">
+      <input type="text" #price matInput placeholder="Amount" [formControl]="priceFromControl">
       
       <mat-hint align="end">{{price.value.length}}/8</mat-hint>
       <mat-error>Price value is invalid</mat-error>

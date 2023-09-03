@@ -8,7 +8,7 @@ export class PricingService {
   private apiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.apiUrl = `${environment.api}/servicesPricing`;
+    this.apiUrl = `${environment.api}/pricing/servicesPricing`;
   }
 
   getPrices() {

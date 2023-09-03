@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { EditPriceDialogComponent } from './dialogs/edit/edit-price-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditPriceDialogService } from './services/edit-price-dialog.service';
+import { PricingService } from 'src/app/website/services';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     EditPriceDialogComponent
   ],
   providers: [
-    EditPriceDialogService
+    EditPriceDialogService,
+    PricingService
   ]
 })
 export class ServicesModule { }

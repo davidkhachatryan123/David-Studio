@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicesPrice } from './models';
 import { ServicePriceCard } from './models/service-price-card';
 import { EditPriceDialogService } from './services/edit-price-dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ServicesPricingCreateDto, ServicesPricingReadDto } from 'src/app/website/dto';
+import { PricingService } from 'src/app/website/services';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard-main-services',
@@ -10,26 +12,37 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['services.component.css']
 })
 export class ServicesComponent implements OnInit {
-  prices: ServicesPrice;
+  prices: ServicesPricingReadDto = new ServicesPricingReadDto(-1, 0, 0, 0, '');
   servicePriceCards: Array<ServicePriceCard>;
 
   constructor(
     private editPriceDialog: EditPriceDialogService,
-    private snackBar: MatSnackBar
-  ) { }
-
-  ngOnInit() {
-    // get it from api
-    this.prices = new ServicesPrice(1, 500, 1000, 2000);
-
+    private snackBar: MatSnackBar,
+    private pricingService: PricingService
+  ) {
     this.servicePriceCards = [
       new ServicePriceCard('ECONOM', 'You can specify pricing', 'money',
-                           'econom', property => this.edit(property)),
+                           'economPrice', property => this.edit(property)),
       new ServicePriceCard('STANDART', 'You can specify pricing', 'monetization_on',
-                           'standart', property => this.edit(property)),
+                           'standartPrice', property => this.edit(property)),
       new ServicePriceCard('PREMIUM+', 'You can specify pricing', 'diamond',
-                           'premiumPlus', property => this.edit(property))
+                           'premiumPlusPrice', property => this.edit(property))
     ];
+  }
+
+  ngOnInit() {
+    this.reloadData();
+  }
+
+  reloadData() {
+    this.pricingService.getPrices()
+    .subscribe(
+      (prices: ServicesPricingReadDto) => this.prices = prices,
+      (error : HttpErrorResponse) => {
+        if(error.status == HttpStatusCode.NotFound)
+          this.snackBar.open('Not found any pricing plans', 'Ok', { duration: 5000 });
+      }
+    );
   }
 
   edit(propertyName: string) {
@@ -37,9 +50,15 @@ export class ServicesComponent implements OnInit {
     ?.afterClosed().subscribe((result: string) => {
       if(result) {
         this.prices[propertyName] = parseInt(result);
-        this.snackBar.open('Project price was updated', 'Ok', { duration: 5000 });
 
-        console.log('Prices after change: ', this.prices);
+        this.pricingService.setPrices(new ServicesPricingCreateDto(
+          this.prices.economPrice,
+          this.prices.standartPrice,
+          this.prices.premiumPlusPrice
+        )).subscribe(_ => {
+          this.reloadData();
+          this.snackBar.open('Pricing plan updated', 'Ok', { duration: 5000 });
+        });
       }
     });
   }
