@@ -53,7 +53,7 @@ export class TableComponent implements AfterViewInit {
     .map(conf =>
       this.getTableDataElementProperties()[this.tableConfiguration.indexOf(conf)]
     )
-    .filter(cols => cols);
+    .filter(col => col);
 
     return this.showSelect && this.data.length ? ['select', ...displayedColumns] : displayedColumns;
   }

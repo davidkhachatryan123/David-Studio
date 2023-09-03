@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
-
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 import { TableButton, TableCellConfiguration, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
-import { Admin } from '../../models';
-import { AdminDto } from 'src/app/website/dto/admin-dto';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
 import { EntityDialogService } from './services/entity-dialog.service';
+import { PageData } from 'src/app/website/models';
+import { AdminReadDto } from 'src/app/website/dto';
+import { AdminsService } from 'src/app/website/services';
+import { TableComponent } from 'src/app/shared-module/dashboard';
 
 @Component({
   selector: 'app-dashboard-main-admins',
   templateUrl: 'admins.component.html'
 })
-export class AdminsComponent {
+export class AdminsComponent implements AfterViewInit {
   tableConfiguration: Array<TableCellConfiguration> = [
     new TableCellConfiguration(
       new TableText(),
@@ -30,7 +32,11 @@ export class AdminsComponent {
       true
     ),
     new TableCellConfiguration(
-      new TableButton('Send Confirmation Email', value => !value, id => this.onSendConfirmationEmailClick(id)),
+      new TableButton(
+        'Send Confirmation Email',
+        value => !value,
+        id => this.onSendConfirmationEmailClick(id.toString())
+      ),
       'Email Confirmed',
       true
     ),
@@ -41,39 +47,66 @@ export class AdminsComponent {
     )
   ];
 
-  data: Array<Admin> = [
-    new Admin('1', 'david', 'xdavit7@gmail.com', true, '+374 41 21-48-03'),
-    new Admin('2', 'hayk', 'xhayk7@gmail.com', false, null)
-  ];
+  admins: PageData<AdminReadDto> = new PageData<AdminReadDto>([], 0);
+  tableOptions = new TableOptions('username', 'asc', 1, 30);
+  selectedRows: Array<AdminReadDto> = [];
 
-  tableOptions = new TableOptions('username', 'asc', 1, 1);
-
-  selectedRows: Array<Admin> = [];
+  @ViewChild(TableComponent) table: TableComponent;
 
   constructor(
     private _snackBar: MatSnackBar,
     private deleteDialogService: DeleteDialogService,
-    private entityDialogService: EntityDialogService
+    private entityDialogService: EntityDialogService,
+    private adminsService: AdminsService
   ) { }
+
+  ngAfterViewInit() {
+    this.reloadData();
+  }
+
+  reloadData() {
+    this.adminsService.getAll(this.tableOptions)
+    .subscribe((admins: PageData<AdminReadDto>) => this.admins = admins);
+
+    this.table.resetSeletions();
+  }
 
   tableOptionsChanged($event: TableOptions) {
     this.tableOptions = $event;
+    this.reloadData();
   }
 
-  onSendConfirmationEmailClick(id: number | string) {
-    console.log(`SendConfirmationEmail: ${id}`);
+  onSendConfirmationEmailClick(id: string) {
+    // this.usersService.sendConfirmationEmail(new ConfirmationEmailRequestDto(id))
+    // .subscribe(_ => {
+    //   this.showSnackBar('Email confirmation requested!');
+    //   this.reloadData();
+    // },
+    // (error: HttpErrorResponse) => {
+    //   if(error.status == HttpStatusCode.NotFound)
+    //     this.showSnackBar('User not found!');
+    //   else
+    //     this.showSnackBar('Unknown error has occurred!');
+    // });
 
-    this.showSnackBar('Email confirmation requested!');
+    this.showSnackBar('This functionality don\'t work now!');g
   }
 
   newAdmin() {
     const dialogRef = this.entityDialogService.showNew();
 
-    dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
-      console.log('Create admin: ', admin);
-
-      dialogRef.close();
-      this.showSnackBar('Admin created successfully!');
+    dialogRef.componentInstance.onSubmit.subscribe(({ id, user }) => {
+      this.adminsService.create(user)
+        .subscribe(
+          _ => {
+            this.reloadData();
+            this.showSnackBar('Admin created successfully!');
+            dialogRef.close();
+          },
+          (error: HttpErrorResponse) => {
+            this.showSnackBar('Unknown error has occurred!');
+          }
+        );
     });
   }
 
@@ -81,11 +114,17 @@ export class AdminsComponent {
     const dialogRef = this.entityDialogService.showEdit(this.selectedRows);
 
     if(dialogRef) {
-      dialogRef.componentInstance.onSubmit.subscribe((admin: AdminDto) => {
-        console.log('Edit admin: ', admin);
-
-        dialogRef.close();
-        this.showSnackBar('Admin edited successfully!');
+      dialogRef.componentInstance.onSubmit.subscribe(({ id, user }) => {
+        this.adminsService.update(id, user).subscribe(
+          _ => {
+            this.reloadData();
+            this.showSnackBar('Admin edited successfully!');
+            dialogRef.close();
+          },
+          (error: HttpErrorResponse) => {
+            this.showSnackBar('Unknown error has occurred!');
+          }
+        );
       });
     }
   }
@@ -94,16 +133,17 @@ export class AdminsComponent {
     this.deleteDialogService.show(this.selectedRows.map(row => row.username))
     ?.afterClosed().subscribe((result: boolean) => {
       if(result) {
-        console.log('Delete admin(s): ', this.selectedRows);
+        this.selectedRows.map(user => this.adminsService.delete(user.id)
+        .subscribe(_ => this.reloadData()));
 
-        this.showSnackBar('Admin(s) deleted');
+        this.showSnackBar('User(s) deleted');
       }
     });
   }
 
-  private showSnackBar(message: string) {
+  private showSnackBar(message: string, duration: number = 5000) {
     this._snackBar.open(message, 'Ok', {
-      duration: 5000,
+      duration: duration,
     });
   }
 }

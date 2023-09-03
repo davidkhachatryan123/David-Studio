@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { AdminsComponent } from './admins.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared-module/shared.module';
-import { EntityDialogComponent } from './components/entity-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EntityDialogService } from './services/entity-dialog.service';
+import { AdminsService } from 'src/app/website/services';
+import { EntityDialogComponent } from './dialogs/user/entity-dialog.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,8 @@ const routes: Routes = [
     EntityDialogComponent
   ],
   providers: [
-    EntityDialogService
+    EntityDialogService,
+    AdminsService
   ]
 })
 export class AdminsModule { }

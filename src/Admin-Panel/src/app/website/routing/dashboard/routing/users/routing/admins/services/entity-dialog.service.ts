@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { EntityDialogComponent } from '../components/entity-dialog.component';
-import { AdminDto } from 'src/app/website/dto/admin-dto';
-import { Admin } from '../../../models';
+import { AdminCreateDto, AdminReadDto } from 'src/app/website/dto';
+import { EntityDialogComponent } from '../dialogs/user/entity-dialog.component';
 
 @Injectable()
 export class EntityDialogService {
@@ -16,7 +15,7 @@ export class EntityDialogService {
     const dialogRef = this.dialog.open(EntityDialogComponent, {
       width: '500px',
       disableClose: true,
-      data: { user: new AdminDto() }
+      data: { user: new AdminCreateDto(null, null, null, null) }
     });
 
     dialogRef.componentInstance.title = "Create new Admin";
@@ -25,7 +24,7 @@ export class EntityDialogService {
     return dialogRef;
   }
 
-  showEdit(admins: Array<Admin>) {
+  showEdit(admins: Array<AdminReadDto>) {
     if(admins.length == 1) {
       const dialogRef = this.dialog.open(EntityDialogComponent, {
         width: '500px',

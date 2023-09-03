@@ -10,7 +10,7 @@ export class AdminsService {
   private apiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.apiUrl = `${environment.api}/projects`;
+    this.apiUrl = `${environment.api}/users/admins`;
   }
 
   getAll(tableOptions: TableOptions) {

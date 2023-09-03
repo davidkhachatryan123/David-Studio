@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AdminDto } from 'src/app/website/dto/admin-dto';
+import { AdminCreateDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'app-dashboard-admin-new',
@@ -14,7 +14,7 @@ export class EntityDialogComponent {
   @Input() title = '';
   @Input() submitBtnText = '';
 
-  @Output() onSubmit = new EventEmitter<AdminDto>();
+  @Output() onSubmit = new EventEmitter<{ id: number | undefined, user: AdminCreateDto }>();
 
   constructor(
     public dialogRef: MatDialogRef<EntityDialogComponent>,
@@ -27,11 +27,11 @@ export class EntityDialogComponent {
       ]),
       "password": new FormControl('', [
         Validators.required, Validators.minLength(8), Validators.maxLength(64),
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[;@$!%*?&=#])[A-Za-z0-9@$!%*?&=#]+$')
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[;@$!%*?&=#])[A-Za-z0-9;@$!%*?&=#]+$')
       ]),
       "confirmPassword": new FormControl('', [
         Validators.required, Validators.minLength(8), Validators.maxLength(64),
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[;@$!%*?&=#])[A-Za-z0-9@$!%*?&=#]+$')
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[;@$!%*?&=#])[A-Za-z0-9;@$!%*?&=#]+$')
       ]),
       "email": new FormControl(data.user.email, [
         Validators.required, Validators.email
@@ -42,14 +42,16 @@ export class EntityDialogComponent {
 
   onSubmitEvent() {
     if(this.ngForm.valid) {
-      this.onSubmit.emit(new AdminDto(
-        this.data.user.id,
-        this.ngForm.controls['username'].value,
-        this.ngForm.controls['password'].value,
-        this.ngForm.controls['confirmPassword'].value,
-        this.ngForm.controls['email'].value,
-        this.ngForm.controls['phoneNumber'].value
-      ));
+      this.onSubmit.emit({
+        id: this.data.user.id,
+        user: new AdminCreateDto(
+          this.ngForm.controls['username'].value,
+          this.ngForm.controls['password'].value,
+          this.ngForm.controls['confirmPassword'].value,
+          this.ngForm.controls['email'].value,
+          this.ngForm.controls['phoneNumber'].value
+        )
+      });
     }
   }
 }
