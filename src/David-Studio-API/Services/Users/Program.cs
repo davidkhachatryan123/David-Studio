@@ -17,6 +17,7 @@ builder.Services.ConfigureMapping();
 
 builder.Services.AddEventBus(builder.Configuration);
 
+builder.Services.AddScoped<IManageUsersClient, ManageUsersClient>();
 builder.Services.AddScoped<IAdminsDataClient, AdminsDataClient>();
 
 builder.Services.AddDefaultSwagger();

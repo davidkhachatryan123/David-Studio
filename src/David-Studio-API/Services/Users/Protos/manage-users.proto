@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Users";
+
+package manageUsers;
+
+service ManageUsers {
+  rpc GetEmailConfirmationToken (User) returns (TokenResponse);
+}
+
+message User {
+  string id = 1;
+}
+
+message TokenResponse {
+  string email = 1;
+  string token = 2;
+}

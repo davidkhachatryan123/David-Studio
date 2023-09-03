@@ -8,6 +8,7 @@ using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Storage.IntegrationEvents.Handlers;
 
 namespace IdentityServer.Extensions
 {
@@ -98,6 +99,15 @@ namespace IdentityServer.Extensions
             });
 
             services.AddSingleton(mapperConfig.CreateMapper());
+        }
+
+        public static void ConfigureEventBus(this WebApplication app)
+        {
+            var eventBus = app.Services.GetRequiredService<IEventBus>();
+
+            eventBus.Subscribe<
+                EmailConfirmationRequestIntegrationEvent,
+                IIntegrationEventHandler<EmailConfirmationRequestIntegrationEvent>>();
         }
     }
 }

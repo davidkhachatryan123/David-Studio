@@ -18,7 +18,7 @@ namespace Users.Grpc.Clients
             _mapper = mapper;
 
             uri = configuration.GetValue<string>("Services:IdentityServerGrpcUri");
-            if (uri is null) throw new Exception("Storage service uri is null");
+            if (uri is null) throw new Exception("Services:IdentityServerGrpcUri variable is null");
 
             _channel = GrpcChannel.ForAddress(uri!);
             _client = new Admins.AdminsClient(_channel);

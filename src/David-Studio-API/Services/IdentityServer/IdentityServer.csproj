@@ -23,6 +23,7 @@
 		<None Remove="Mappings\" />
 		<None Remove="IntegrationEvents\Handlers\" />
 		<None Remove="Services\" />
+		<None Remove="Protos\manage-users.proto" />
 	</ItemGroup>
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
@@ -76,5 +77,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Protobuf Include="Protos\admins.proto" GrpcServices="Server" />
+		<Protobuf Include="Protos\manage-users.proto" GrpcServices="Server" />
 	</ItemGroup>
 </Project>

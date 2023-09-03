@@ -8,6 +8,7 @@ using IdentityServer.RepositoryManager.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Services.Common.Extensions;
+using Storage.IntegrationEvents.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 builder.Services.AddEventBus(builder.Configuration);
+builder.Services.AddTransient<IIntegrationEventHandler<EmailConfirmationRequestIntegrationEvent>, EmailConfirmationRequestIntegrationEventHandler>();
 
 builder.Services.AddGrpc();
 
@@ -61,6 +63,9 @@ app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
 
+app.ConfigureEventBus();
+
+app.MapGrpcService<ManageUsersService>();
 app.MapGrpcService<AdminsService>();
 
 app.UseSerilogRequestLogging();

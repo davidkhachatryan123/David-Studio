@@ -7,7 +7,6 @@ using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Services.Common.Extensions;
 using Services.Common.Models;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace IdentityServer.Grpc.Services
 {
