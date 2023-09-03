@@ -6,9 +6,10 @@
 
 - [x] David Studio web site on Angular
 - [x] Admin Panel (CMS) UI on Angular by using Angular Material
-- [ ] Back-End on ASP.NET Core 7 by using microservices architecture
+- [x] Back-End on ASP.NET Core 7 by using microservices architecture
 - [ ] Connect Back-End to David Studio website
-- [ ] Connect Back-End to Admin panel
+- [x] Connect Back-End to Admin panel
+- [ ] Create search engine
 
 ### Back-End microservies
 
