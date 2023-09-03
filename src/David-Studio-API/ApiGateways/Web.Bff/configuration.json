@@ -37,7 +37,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": " pricing-api",
+                    "Host": "pricing-api",
                     "Port": 5000
                 }
             ],
