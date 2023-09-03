@@ -6,8 +6,8 @@ import { TableButton, TableCellConfiguration, TableOptions, TableText } from 'sr
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
 import { EntityDialogService } from './services/entity-dialog.service';
 import { PageData } from 'src/app/website/models';
-import { AdminReadDto } from 'src/app/website/dto';
-import { AdminsService } from 'src/app/website/services';
+import { AdminReadDto, ConfirmEmailRequestDto } from 'src/app/website/dto';
+import { AdminsService, ManageUsersService } from 'src/app/website/services';
 import { TableComponent } from 'src/app/shared-module/dashboard';
 
 @Component({
@@ -57,7 +57,8 @@ export class AdminsComponent implements AfterViewInit {
     private _snackBar: MatSnackBar,
     private deleteDialogService: DeleteDialogService,
     private entityDialogService: EntityDialogService,
-    private adminsService: AdminsService
+    private adminsService: AdminsService,
+    private manageUsersService: ManageUsersService
   ) { }
 
   ngAfterViewInit() {
@@ -77,19 +78,17 @@ export class AdminsComponent implements AfterViewInit {
   }
 
   onSendConfirmationEmailClick(id: string) {
-    // this.usersService.sendConfirmationEmail(new ConfirmationEmailRequestDto(id))
-    // .subscribe(_ => {
-    //   this.showSnackBar('Email confirmation requested!');
-    //   this.reloadData();
-    // },
-    // (error: HttpErrorResponse) => {
-    //   if(error.status == HttpStatusCode.NotFound)
-    //     this.showSnackBar('User not found!');
-    //   else
-    //     this.showSnackBar('Unknown error has occurred!');
-    // });
-
-    this.showSnackBar('This functionality don\'t work now!');
+    this.manageUsersService.sendConfirmationEmail(
+      new ConfirmEmailRequestDto(id, window.location.origin)
+    ).subscribe(
+      _ => {
+        this.showSnackBar('Email confirmation requested!');
+        this.reloadData();
+      },
+      (error: HttpErrorResponse) => {
+        this.showSnackBar('Error has occurred!');
+      }
+    );
   }
 
   newAdmin() {
