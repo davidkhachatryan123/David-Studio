@@ -89,7 +89,7 @@ export class AdminsComponent implements AfterViewInit {
     //     this.showSnackBar('Unknown error has occurred!');
     // });
 
-    this.showSnackBar('This functionality don\'t work now!');g
+    this.showSnackBar('This functionality don\'t work now!');
   }
 
   newAdmin() {
