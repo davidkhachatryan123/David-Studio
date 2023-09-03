@@ -14,4 +14,3 @@ namespace IdentityServer.IntegrationEvents.Events
         }
     }
 }
-

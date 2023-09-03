@@ -6,12 +6,15 @@ using EventBus.Events;
 using IdentityServer.Dtos;
 using IdentityServer.IntegrationEvents.Events;
 using IdentityServer.Models;
+using IdentityServer.RepositoryManager.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
+using static Duende.IdentityServer.Models.IdentityResources;
 
 namespace IdentityServer.Controllers
 {
@@ -20,39 +23,44 @@ namespace IdentityServer.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class Account : ControllerBase
     {
-        private readonly IIdentityServerInteractionService _interactionService;
-        private readonly IServerUrls _serverUrls;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IIdentityServerInteractionService _interactionService;
         private readonly IEventService _events;
-        private readonly IEventBus _eventBus;
+        private readonly IServerUrls _serverUrls;
         private readonly IConfiguration _configuration;
         private readonly ILogger<Account> _logger;
 
+        private readonly IRepositoryManager _repositoryManager;
+        private readonly IEventBus _eventBus;
+
         public Account(
-            IIdentityServerInteractionService interactionService,
-            IServerUrls serverUrls,
-            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManger,
+            UserManager<ApplicationUser> userManager,
+            IIdentityServerInteractionService interactionService,
             IEventService events,
-            IEventBus eventBus,
+            IServerUrls serverUrls,
             IConfiguration configuration,
-            ILogger<Account> logger)
+            ILogger<Account> logger,
+            IRepositoryManager repositoryManager,
+            IEventBus eventBus)
         {
             _interactionService = interactionService;
-            _serverUrls = serverUrls;
-            _userManager = userManager;
-            _signInManager = signInManger;
             _events = events;
-            _eventBus = eventBus;
+            _signInManager = signInManger;
+            _userManager = userManager;
             _configuration = configuration;
             _logger = logger;
+            _serverUrls = serverUrls;
+
+            _repositoryManager = repositoryManager;
+            _eventBus = eventBus;
         }
 
         [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpPost]
-        [Route("/api/login")]
+        [Route(nameof(Login))]
         public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
             string? returnUrl = userLoginDto.ReturnUrl is not null
@@ -65,7 +73,11 @@ namespace IdentityServer.Controllers
                 return BadRequest();
             else if (!await _userManager.IsEmailConfirmedAsync(user))
             {
-                await SendConfirmationEmail(user.Email!, returnUrl);
+                await _repositoryManager.ManageUsers.SendConfirmationEmailAsync(new ConfirmEmailRequestDto()
+                {
+                    UserId = user.Id,
+                    ReturnUrl = returnUrl
+                });
 
                 return Unauthorized("Email doesn't confirmed! Confirmation email sended to your Email");
             }
@@ -79,7 +91,7 @@ namespace IdentityServer.Controllers
             }
             else if (result.RequiresTwoFactor)
             {
-                await SendMfaCode(user.Email!);
+                await _repositoryManager.ManageUsers.SendMfaCodeAsync(user.Email!);
                 return Ok(new { mfa = true, returnUrl, userLoginDto.RememberMe });
             }
             else
@@ -92,7 +104,7 @@ namespace IdentityServer.Controllers
         [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpPost]
-        [Route("/api/login/mfa")]
+        [Route(nameof(LoginMfa))]
         public async Task<IActionResult> LoginMfa([FromBody] UserTwoFactorLoginDto userTwoFactorLoginDto)
         {
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
@@ -122,52 +134,10 @@ namespace IdentityServer.Controllers
         [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpGet]
-        [Route("/api/sendMfaCode")]
-        public async Task<IActionResult> SendMfaCode([FromQuery] string email)
-        {
-            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
-            if (user is null) return NotFound("User not found!");
-
-            string code = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultEmailProvider);
-
-            _logger.LogInformation("Publishing message to event bus for send email to: {EmailAddress}", user.Email);
-
-            IntegrationEvent @event = new SendTwoFactorCodeEmailIntegrationEvent(user.Email!, code);
-            _eventBus.Publish(@event);
-
-            return Ok();
-        }
-
-        [MapToApiVersion("1.0")]
-        [HttpGet]
-        [Route("/api/sendConfirmationEmail")]
-        public async Task<IActionResult> SendConfirmationEmail([FromQuery] string email, [FromQuery] string? returnUrl = null)
-        {
-            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
-            if (user is null) return NotFound("User not found!");
-
-            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            string? confirmUrl = Url.Action(nameof(ConfirmEmail), nameof(Account),
-                new ConfirmEmailDto { Email = email, Token = token, ReturnUrl = returnUrl },
-                Request.Scheme);
-            if (confirmUrl is null) return BadRequest();
-
-            _logger.LogInformation("Publishing message to event bus for user email confirmation: {EmailAddress}", user.Email);
-
-            IntegrationEvent @event = new SendConfirmationEmailIntegrationEvent(user.Email!, confirmUrl);
-            _eventBus.Publish(@event);
-
-            return Ok();
-        }
-
-        [AllowAnonymous]
-        [MapToApiVersion("1.0")]
-        [HttpGet]
-        [Route("/api/confirmEmail")]
+        [Route(nameof(ConfirmEmail))]
         public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailDto confirmEmailDto)
         {
-            ApplicationUser? user = await _userManager.FindByEmailAsync(confirmEmailDto.Email);
+            ApplicationUser? user = await _userManager.FindByIdAsync(confirmEmailDto.UserId);
             if (user is null) return NotFound("User not found!");
 
             var result = await _userManager.ConfirmEmailAsync(user, confirmEmailDto.Token);
@@ -181,7 +151,7 @@ namespace IdentityServer.Controllers
         [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpGet]
-        [Route("/api/logout")]
+        [Route(nameof(Logout))]
         public async Task<IActionResult> Logout([FromQuery] string logoutId)
         {
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
@@ -200,7 +170,7 @@ namespace IdentityServer.Controllers
         [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpPost]
-        [Route("/api/logout")]
+        [Route(nameof(Logout))]
         public async Task<IActionResult> PostLogout([FromQuery] string logoutId)
         {
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);

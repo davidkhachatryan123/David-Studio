@@ -21,6 +21,8 @@
 		<None Remove="Protos\" />
 		<None Remove="Enums\" />
 		<None Remove="Mappings\" />
+		<None Remove="IntegrationEvents\Handlers\" />
+		<None Remove="Services\" />
 	</ItemGroup>
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
@@ -63,6 +65,8 @@
 		<Folder Include="Protos\" />
 		<Folder Include="Enums\" />
 		<Folder Include="Mappings\" />
+		<Folder Include="IntegrationEvents\Handlers\" />
+		<Folder Include="Services\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Services.Common\Services.Common.csproj">

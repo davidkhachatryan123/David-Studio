@@ -1,7 +1,10 @@
-﻿using IdentityServer;
+﻿using EventBus.Abstractions;
+using IdentityServer;
 using IdentityServer.Database;
 using IdentityServer.Extensions;
 using IdentityServer.Grpc.Services;
+using IdentityServer.IntegrationEvents.Events;
+using IdentityServer.RepositoryManager.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Services.Common.Extensions;
@@ -13,6 +16,8 @@ builder.Services.AddDefaultCors(builder.Configuration);
 builder.Services.AddDefaultApiVersioning();
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 builder.Services.AddEventBus(builder.Configuration);
 

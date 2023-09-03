@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Duende.IdentityServer.Configuration;
+using EventBus.Abstractions;
 using IdentityServer.Database;
+using IdentityServer.IntegrationEvents.Events;
 using IdentityServer.Mappings;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;

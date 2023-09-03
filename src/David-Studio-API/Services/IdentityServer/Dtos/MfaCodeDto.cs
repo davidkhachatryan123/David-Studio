@@ -1,5 +1,4 @@
-﻿using System;
-namespace IdentityServer.Dtos
+﻿namespace IdentityServer.Dtos
 {
     public class MfaCodeDto
     {
@@ -7,4 +6,3 @@ namespace IdentityServer.Dtos
         public string Email { get; set; } = null!;
     }
 }
-

@@ -12,16 +12,13 @@ namespace Users.Controllers
     public class Admins : ControllerBase
     {
         private readonly IAdminsDataClient _adminsData;
-        private readonly IEventBus _eventBus;
         private readonly ILogger<Admins> _logger;
 
         public Admins(
             IAdminsDataClient adminsData,
-            IEventBus eventBus,
             ILogger<Admins> logger)
         {
             _adminsData = adminsData;
-            _eventBus = eventBus;
             _logger = logger;
         }
 
@@ -62,7 +59,7 @@ namespace Users.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] AdminCreateDto adminCreateDto)
+        public async Task<IActionResult> Create([FromBody] AdminCreateDto adminCreateDto)
         {
             _logger.LogInformation("Create admin by username and email: {Username}, {Email}", adminCreateDto.Username, adminCreateDto.Email);
 
@@ -75,7 +72,7 @@ namespace Users.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromForm] AdminCreateDto adminCreateDto)
+        public async Task<IActionResult> Update(string id, [FromBody] AdminCreateDto adminCreateDto)
         {
             _logger.LogInformation("Updating admin by id: {AdminId}", id);
 
