@@ -97,13 +97,13 @@ namespace Messanger.Controllers
         [MapToApiVersion("1.0")]
         [HttpPost]
         [Route(nameof(Answer))]
-        public async Task<IActionResult> Answer([FromQuery] int id, [FromBody] string message)
+        public async Task<IActionResult> Answer([FromQuery] int id, [FromBody] AnswerCreateDto answerDto)
         {
             Answer? answer = null;
 
             try
             {
-                answer = await _repositoryManager.Messages.AnswerAsync(id, message);
+                answer = await _repositoryManager.Messages.AnswerAsync(id, answerDto.message);
                 await _repositoryManager.SaveAsync();
             }
             catch (Exception ex)
