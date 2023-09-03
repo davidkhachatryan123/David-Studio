@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Message } from '../../../../models';
-import { Answer } from '../../../../models/answer';
+import { AnswerDto, MessageDto } from 'src/app/website/dto';
+import { ContactService } from 'src/app/website/services';
 
 @Component({
   selector: 'app-dashboard-message',
@@ -9,19 +9,25 @@ import { Answer } from '../../../../models/answer';
 })
 export class MessagePageComponent {
   returnUrl: string;
-  message: Message;
-  answer: Answer | null;
+  message: MessageDto;
+  answer: AnswerDto;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private contactService: ContactService
+  ) {
     this.route.queryParams.subscribe(params => {
       this.returnUrl = params['returnUrl'];
-    });
 
-    this.message = new Message(1, 'Ashot Khachatryan', 'xashot7@gmail.com', '+37494204803', 'Hello world! How are you? Do you have a good team for developmen? I want to create one very large project and I needed big team with professionals.', true, true, '18-July-2023');
-    this.answer = null;
+      this.contactService.readMessage(params['id'])
+      .subscribe((message: MessageDto) => this.message = message);
+
+      this.reloadAnswer(params['id']);
+    });
   }
 
-  reloadAnswer() {
-    this.answer = new Answer(1, "Hello! Thank you for contacting with us. Yes we have a large and really good team and I think we can work and develop together.", '19-July-2023');
+  reloadAnswer(messageId: number) {
+    this.contactService.readAnswer(messageId)
+      .subscribe((answer: AnswerDto) => this.answer = answer);
   }
 }

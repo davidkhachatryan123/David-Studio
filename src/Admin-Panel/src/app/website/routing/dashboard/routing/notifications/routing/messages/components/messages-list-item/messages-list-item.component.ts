@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Message } from '../../../../models';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'src/app/website/consts';
+import { MessageListItemDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'app-dashboard-messages-list-item',
@@ -9,7 +9,7 @@ import { AppRoutes } from 'src/app/website/consts';
   styleUrls: [ 'messages-list-item.component.css' ]
 })
 export class MessagesListItemComponent {
-  @Input() data: Message;
+  @Input() data: MessageListItemDto;
 
   constructor(private router: Router) { }
 

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { AnswerCreateDto } from 'src/app/website/dto';
+import { ContactService } from 'src/app/website/services';
 
 @Component({
   selector: 'app-dashboard-message-page-answer-field',
@@ -16,9 +18,15 @@ export class AnswerFieldComponent {
     Validators.maxLength(500)
   ]);
 
+  constructor(private contactService: ContactService) { }
+
   submit() {
     if(this.messageFormControl.valid) {
-      this.onSubmit.emit();
+      this.contactService.answer(
+        this.messageId,
+        new AnswerCreateDto(this.messageFormControl.value)
+      )
+      .subscribe(_ => this.onSubmit.emit());
     }
   }
 }

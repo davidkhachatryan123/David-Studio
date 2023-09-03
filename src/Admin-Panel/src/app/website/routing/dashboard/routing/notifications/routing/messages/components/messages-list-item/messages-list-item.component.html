@@ -27,7 +27,7 @@
 
       <span class="spacer"></span>
 
-      <p class="sent-date">Sent date: {{ data.sentDate }}</p>
+      <p class="sent-date">Sent date: {{ data.sentDate | date:'medium' }}</p>
     </div>
   </mat-card-content>
 </mat-card>

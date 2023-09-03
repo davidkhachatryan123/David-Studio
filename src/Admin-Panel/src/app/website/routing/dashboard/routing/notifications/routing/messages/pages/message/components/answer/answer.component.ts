@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Answer } from '../../../../../../models/answer';
+import { AnswerDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'app-dashboard-message-page-answer',
@@ -7,5 +7,5 @@ import { Answer } from '../../../../../../models/answer';
   styleUrls: [ 'answer.component.css' ]
 })
 export class AnswerComponent {
-  @Input() data: Answer;
+  @Input() data: AnswerDto;
 }

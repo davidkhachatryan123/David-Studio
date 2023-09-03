@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Message } from '../../../../../../models';
+import { MessageDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'app-dashboard-message-page-message',
@@ -7,5 +7,5 @@ import { Message } from '../../../../../../models';
   styleUrls: [ 'message.component.css' ]
 })
 export class MessageComponent {
-  @Input() data: Message;
+  @Input() data: MessageDto;
 }

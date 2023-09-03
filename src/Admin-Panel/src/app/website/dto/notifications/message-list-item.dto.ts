@@ -7,6 +7,6 @@ export class MessageListItemDto {
     public body: string,
     public isReaded: boolean,
     public hasAnswer: boolean,
-    public sentDate: string,
+    public sentDate: Date,
   ) { }
 }

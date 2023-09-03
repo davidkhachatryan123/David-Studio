@@ -7,6 +7,7 @@ import { MessagesComponent } from './messages.component';
 import { MessagesListItemComponent } from './components/messages-list-item/messages-list-item.component';
 import { CommonModule } from '@angular/common';
 import { AppRoutes } from 'src/app/website/consts';
+import { ContactService } from 'src/app/website/services';
 
 const routes: Routes = [
   {
@@ -30,6 +31,9 @@ const routes: Routes = [
   declarations: [
     MessagesComponent,
     MessagesListItemComponent
+  ],
+  providers: [
+    ContactService
   ]
 })
 export class MessagesModule { }
