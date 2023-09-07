@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pricing.Dtos;
@@ -27,6 +28,7 @@ namespace Messanger.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpGet]
         public async Task<IActionResult> GetPrices()

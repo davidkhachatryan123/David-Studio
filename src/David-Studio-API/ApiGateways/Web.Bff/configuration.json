@@ -5,32 +5,12 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "users-api",
-                    "Port": 5000
-                }
-            ],
-            "UpstreamPathTemplate": "/api/{version}/users/{everything}",
-            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "IdentityApiKey",
-                "AllowedScopes": []
-            }
-        },
-        {
-            "DownstreamPathTemplate": "/api/{version}/{everything}",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
                     "Host": "portfolio-api",
                     "Port": 5000
                 }
             ],
             "UpstreamPathTemplate": "/api/{version}/portfolio/{everything}",
-            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "IdentityApiKey",
-                "AllowedScopes": []
-            }
+            "UpstreamHttpMethod": [ "Get" ]
         },
         {
             "DownstreamPathTemplate": "/api/{version}/{everything}",
@@ -42,27 +22,7 @@
                 }
             ],
             "UpstreamPathTemplate": "/api/{version}/pricing/{everything}",
-            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "IdentityApiKey",
-                "AllowedScopes": []
-            }
-        },
-        {
-            "DownstreamPathTemplate": "/api/{version}/{everything}",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "storage-api",
-                    "Port": 5000
-                }
-            ],
-            "UpstreamPathTemplate": "/api/{version}/storage/{everything}",
-            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "IdentityApiKey",
-                "AllowedScopes": []
-            }
+            "UpstreamHttpMethod": [ "Get" ]
         },
         {
             "DownstreamPathTemplate": "/api/{version}/{everything}",
@@ -74,13 +34,8 @@
                 }
             ],
             "UpstreamPathTemplate": "/api/{version}/messenger/{everything}",
-            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "IdentityApiKey",
-                "AllowedScopes": []
-            }
+            "UpstreamHttpMethod": [ "Post" ]
         }
-
     ],
     "GlobalConfiguration": {
         "RequestIdKey": "OcRequestId",

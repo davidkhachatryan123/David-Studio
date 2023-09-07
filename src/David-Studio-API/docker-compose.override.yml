@@ -5,11 +5,20 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
-      - IdentityUrl=http://identity-server:5000
     ports:
-      - "8080:5000"
+      - "8081:5000"
     volumes:
       - ./ApiGateways/Web.Bff:/app/configuration
+
+  crm-api-gw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - IdentityUrl=http://identity-server:5000
+    ports:
+      - "8082:5000"
+    volumes:
+      - ./ApiGateways/Crm.Bff:/app/configuration
 
   identity-server:
     environment:

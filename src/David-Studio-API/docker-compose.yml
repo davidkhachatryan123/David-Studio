@@ -2,49 +2,55 @@ version: '3.4'
 
 services:
   web-api-gw:
-    image: ocelotapigw:${TAG:-latest}
+    image: web.ocelot.apigw:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
+
+  crm-api-gw:
+    image: crm.ocelot.apigw:${TAG:-latest}
     build:
       context: .
       dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
 
   identity-server:
-    image: ${DOCKER_REGISTRY-}identityserver
+    image: identity.server:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/IdentityServer/Dockerfile.develop
 
   identity-server-client:
-    image: ${DOCKER_REGISTRY-}identityserverclient
+    image: identity.server.client:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/IdentityServer/ClientApp/Dockerfile.develop
 
   users-api:
-    image: ${DOCKER_REGISTRY-}users
+    image: users.api:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/Users/Dockerfile.develop
 
   portfolio-api:
-    image: ${DOCKER_REGISTRY-}portfolio
+    image: portfolio.api:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/Portfolio/Dockerfile.develop
 
   pricing-api:
-    image: ${DOCKER_REGISTRY-}pricing
+    image: pricing.api:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/Pricing/Dockerfile.develop
 
   storage-api:
-    image: ${DOCKER_REGISTRY-}storage
+    image: storage.api:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/Storage/Dockerfile.develop
 
   messenger-api:
-    image: ${DOCKER_REGISTRY-}messenger
+    image: messenger.api:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/Messanger/Dockerfile.develop

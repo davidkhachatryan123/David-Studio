@@ -13,18 +13,18 @@ builder.Services.AddCors(options =>
     }));
 
 var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl");
-var authenticationProviderKey = "IdentityApiKey";
 
-builder.Services.AddAuthentication()
-    .AddJwtBearer(authenticationProviderKey, x =>
-    {
-        x.Authority = identityUrl;
-        x.RequireHttpsMetadata = false;
-        x.TokenValidationParameters = new TokenValidationParameters()
+if (identityUrl is not null)
+    builder.Services.AddAuthentication()
+        .AddJwtBearer("IdentityApiKey", x =>
         {
-            ValidAudiences = new[] { "users", "portfolio", "pricing", "storage", "messenger" }
-        };
-    });
+            x.Authority = identityUrl;
+            x.RequireHttpsMetadata = false;
+            x.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidAudiences = new[] { "users", "portfolio", "pricing", "storage", "messenger" }
+            };
+        });
 
 IConfiguration configuration = builder.Configuration
     .AddJsonFile(Path.Combine("configuration", "configuration.json"), false, true)

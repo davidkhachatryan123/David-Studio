@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
 using Portfolio.Models;
@@ -27,6 +28,7 @@ namespace Portfolio.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpGet]
         public async Task<IActionResult> GetAll(int? Limit = null)

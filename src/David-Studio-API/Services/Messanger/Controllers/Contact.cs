@@ -28,9 +28,9 @@ namespace Messanger.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [MapToApiVersion("1.0")]
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> NewMessage([FromBody] ContactFormDto contactFromDto)
         {
             Message message = _mapper.Map<Message>(contactFromDto);
@@ -40,7 +40,7 @@ namespace Messanger.Controllers
             await _repositoryManager.Messages.NewMessageAsync(message);
             await _repositoryManager.SaveAsync();
 
-            return Ok("You sent message successfully. Please wait for answer");
+            return Ok();
         }
 
         [MapToApiVersion("1.0")]
