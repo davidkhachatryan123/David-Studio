@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, ViewChild, Renderer2, Input, Output, EventEmitter } from '@angular/core';
 import { Subject, Subscription, debounceTime } from 'rxjs';
 import { AppColors, AppTags } from 'src/app/website/consts';
-import { Tag } from 'src/app/website/routing/portfolio/models';
+import { TagReadDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'app-search',
@@ -9,7 +9,7 @@ import { Tag } from 'src/app/website/routing/portfolio/models';
   styleUrls: [ 'search.component.css' ]
 })
 export class SearchComponent implements OnDestroy {
-  @Input() set addedTags(val: Array<Tag>) {
+  @Input() set addedTags(val: Array<TagReadDto>) {
     this._addedTags = val;
     this.resetAddedTagsArray();
   }
@@ -17,11 +17,11 @@ export class SearchComponent implements OnDestroy {
     return this._addedTags;
   }
 
-  @Output() addedTagsUpdate = new EventEmitter<Array<Tag>>;
+  @Output() addedTagsUpdate = new EventEmitter<Array<TagReadDto>>;
   @Output() searchSubmit = new EventEmitter<string>;
 
 
-  _addedTags: Array<Tag> = [];
+  _addedTags: Array<TagReadDto> = [];
 
   // If it's true then showing search box
   isShow = false;
@@ -35,10 +35,10 @@ export class SearchComponent implements OnDestroy {
     'David Studio',
     'Study-Control-Software'
   ];
-  tag_result: {tag: Tag, selected: boolean}[] = [
-    { tag: new Tag(AppTags.aspnet, AppColors.aspnet), selected: false },
-    { tag: new Tag(AppTags.cs, AppColors.cs), selected: false },
-    { tag: new Tag(AppTags.angular, AppColors.angular), selected: false }
+  tag_result: {tag: TagReadDto, selected: boolean}[] = [
+    { tag: new TagReadDto(3, AppTags.aspnet, AppColors.aspnet), selected: false },
+    { tag: new TagReadDto(2, AppTags.cs, AppColors.cs), selected: false },
+    { tag: new TagReadDto(1, AppTags.angular, AppColors.angular), selected: false }
   ];
 
   focusedIndex = -1;

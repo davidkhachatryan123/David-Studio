@@ -6,35 +6,16 @@
 
         <div class="row">
 
-            <div class="col-md-4 col-12" data-aos="zoom-in-up">
-                <a [routerLink]="['/', appRoutes.PORTFOLIO]">
+            <div class="col-md-4 col-12" data-aos="zoom-in-up"
+                 *ngFor="let project of topProjects">
+                <a [href]="project.link" target="_blank">
                     <div class="block">
                         <div class="title">
-                            <h4>Smart Home</h4>
+                            <h4>{{ project.name }}</h4>
                         </div>
-                        <img src="assets/img/Projects/proj1.jpg" class="img-fluid">
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-4 col-12" data-aos="zoom-in-up">
-                <a [routerLink]="['/', appRoutes.PORTFOLIO]">
-                    <div class="block">
-                        <div class="title">
-                            <h4>Steadicube</h4>
+                        <div [style.background-image]="'url(' + project.imageUrl + ')'"
+                              class="project-image">
                         </div>
-                        <img src="assets/img/Projects/proj2.jpg" class="img-fluid">
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-4 col-12" data-aos="zoom-in-up">
-                <a [routerLink]="['/', appRoutes.PORTFOLIO]">
-                    <div class="block">
-                        <div class="title">
-                            <h4>Text Analyzer UBA</h4>
-                        </div>
-                        <img src="assets/img/Projects/proj3.jpg" class="img-fluid">
                     </div>
                 </a>
             </div>

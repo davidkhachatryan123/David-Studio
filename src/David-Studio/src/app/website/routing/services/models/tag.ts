@@ -1,6 +1,6 @@
 export class Tag {
-  public constructor(
-    public text: string,
+  constructor(
+    public name: string,
     public color: string
   ) { }
 }

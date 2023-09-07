@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Tag } from 'src/app/website/routing/portfolio/models';
+import { TagReadDto } from 'src/app/website/dto';
+import { Tag } from '../../models';
 
 @Component({
   selector: 'services-circles',

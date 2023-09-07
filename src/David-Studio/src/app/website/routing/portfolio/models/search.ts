@@ -1,9 +1,9 @@
-import { Tag } from "./tag";
+import { TagReadDto } from "src/app/website/dto";
 
 export class Search {
   public constructor(
     public text: string,
-    public tags: Array<Tag>,
+    public tags: Array<TagReadDto>,
     public page: number
   ) { }
 }

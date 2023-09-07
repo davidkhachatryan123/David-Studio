@@ -1,22 +1,41 @@
 <section class="content-form">
   <div class="container">
-      <div class="row">
-          <div class="col-lg-8 offset-lg-2">
-                <div class="alert alert-success alert-dismissible fade show" [class.done]="!isShow" role="alert">
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  {{ 'template.contact.form.done_message' | translate }}
-                </div>
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="alert alert-success alert-dismissible fade show" [class.done]="!isShow" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          {{ 'template.contact.form.done_message' | translate }}
+        </div>
 
-                <form id="contactform">
-                    <div class="form">
-                        <input type="text" name="name" placeholder="{{ 'template.contact.form.placeholder.name' | translate }}">
-                        <input type="text" name="email" placeholder="{{ 'template.contact.form.placeholder.email' | translate }}">
-                        <input type="text" name="phone" placeholder="{{ 'template.contact.form.placeholder.phone' | translate }}">
-                        <textarea name="comment" rows="7" placeholder="{{ 'template.contact.form.placeholder.message' | translate }}"></textarea>
-                        <input type="submit" id="submit" class="clearfix btn" value="{{ 'template.contact.form.submit_btn' | translate }}">
-                    </div>
-                </form>
+        <form id="contactform" [formGroup]="contactForm" novalidate>
+          <div class="form">
+            <input type="text" name="fullName"
+                   placeholder="{{ 'template.contact.form.placeholder.name' | translate }}"
+                   formControlName="fullName"
+                   [class.error]="contactForm.controls['fullName'].invalid && contactForm.controls['fullName'].touched">
+
+            <input type="text" name="email"
+                   placeholder="{{ 'template.contact.form.placeholder.email' | translate }}"
+                   formControlName="email"
+                   [class.error]="contactForm.controls['email'].invalid && contactForm.controls['email'].touched">
+            
+            <input type="text" name="phone"
+                   placeholder="{{ 'template.contact.form.placeholder.phone' | translate }}"
+                   formControlName="phone"
+                   [class.error]="contactForm.controls['phone'].invalid && contactForm.controls['phone'].touched">
+
+            <textarea name="body" rows="7"
+                      placeholder="{{ 'template.contact.form.placeholder.message' | translate }}"
+                      formControlName="body"
+                      [class.error]="contactForm.controls['body'].invalid && contactForm.controls['body'].touched">
+            </textarea>
+
+            <input type="submit" id="submit" class="clearfix btn"
+                   value="{{ 'template.contact.form.submit_btn' | translate }}"
+                   (click)="onSubmit()">
           </div>
+        </form>
       </div>
+    </div>
   </div>
 </section>

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { AppColors } from 'src/app/website/consts';
-import { Tag } from 'src/app/website/routing/portfolio/models';
+import { AppColors, AppTags } from 'src/app/website/consts';
+import { Tag } from './models';
 
 @Component({
   selector: 'services-web',
@@ -20,19 +20,19 @@ export class ServicesComponent {
   }
 
   front_circles: Array<Tag> = [
-    new Tag('HTML', AppColors.html),
-    new Tag('CSS', AppColors.css),
-    new Tag('JS', AppColors.js),
-    new Tag('TS', AppColors.ts),
-    new Tag('Bootstrap', AppColors.bootstrap),
-    new Tag('Angular', AppColors.angular)
+    new Tag(AppTags.html, AppColors.html),
+    new Tag(AppTags.css, AppColors.css),
+    new Tag(AppTags.js, AppColors.js),
+    new Tag(AppTags.ts, AppColors.ts),
+    new Tag(AppTags.bootstrap, AppColors.bootstrap),
+    new Tag(AppTags.angular, AppColors.angular)
   ];
 
   back_circles: Array<Tag> = [
-    new Tag('ASP.NET Core', AppColors.aspnet),
-    new Tag('C#', AppColors.cs),
-    new Tag('EF', AppColors.ef),
-    new Tag('MSSQL', AppColors.mssql),
-    new Tag('MySQL', AppColors.mysql)
+    new Tag(AppTags.aspnet, AppColors.aspnet),
+    new Tag(AppTags.cs, AppColors.cs),
+    new Tag(AppTags.ef, AppColors.ef),
+    new Tag(AppTags.mssql, AppColors.mssql),
+    new Tag(AppTags.mysql, AppColors.mysql)
   ];
 }

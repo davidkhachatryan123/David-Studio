@@ -3,7 +3,7 @@
       *ngFor="let tag of tags; let i = index"
       [style.background-color]="tag.color">
       
-      <div class="text">{{tag.text}}</div>
+      <div class="text">{{tag.name}}</div>
       
       <button class="x" (click)="xOnClick(i)">
         x

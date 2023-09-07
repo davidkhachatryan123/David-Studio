@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Project } from '../../models/project';
+import { ProjectReadDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'portfolio-project',
@@ -7,5 +7,5 @@ import { Project } from '../../models/project';
   styleUrls: [ 'project.component.css' ]
 })
 export class PortfolioProjectComponent {
-  @Input() projectModel: Project = new Project('', [], '', '');
+  @Input() projectModel: ProjectReadDto = new ProjectReadDto(-1, '', '', '', []);
 }

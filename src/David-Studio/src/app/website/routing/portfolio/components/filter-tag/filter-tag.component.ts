@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Tag } from '../../models';
+import { TagReadDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'portfolio-filter-tag',
@@ -7,9 +7,9 @@ import { Tag } from '../../models';
   styleUrls: [ 'filter-tag.component.css' ]
 })
 export class FilterTagComponent {
-  @Output() update = new EventEmitter<Array<Tag>>;
+  @Output() update = new EventEmitter<Array<TagReadDto>>;
 
-  tags: Array<Tag> = [];
+  tags: Array<TagReadDto> = [];
 
   xOnClick(indexOfTag: number) {
     this.tags.splice(indexOfTag, 1);

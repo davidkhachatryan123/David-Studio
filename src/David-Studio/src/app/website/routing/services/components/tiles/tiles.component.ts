@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Tile } from './models';
 import { AppRoutes } from 'src/app/website/consts';
+import { PricingService } from 'src/app/website/services';
+import { ServicesPricingReadDto } from 'src/app/website/dto';
 
 @Component({
   selector: 'services-tiles',
@@ -8,15 +10,15 @@ import { AppRoutes } from 'src/app/website/consts';
   styleUrls: [ 'tiles.component.css' ]
 })
 
-export class TilesComponent {
+export class TilesComponent implements OnInit {
   translateSectionName = 'services';
   tilesdescriptionListTranslationPath = 'template.services.shared.tiles.description_list';
 
   appRoutes: typeof AppRoutes = AppRoutes;
 
-  econom =  new Tile(
+  econom = new Tile(
     'Static website',
-    500,
+    0,
     [
       `${this.tilesdescriptionListTranslationPath}.budget`,
       `${this.tilesdescriptionListTranslationPath}.static_website`,
@@ -26,7 +28,7 @@ export class TilesComponent {
 
   standart = new Tile(
     'Full-stack',
-    1000,
+    0,
     [
       `${this.tilesdescriptionListTranslationPath}.with_econom`,
       `${this.tilesdescriptionListTranslationPath}.admin_panel`,
@@ -38,11 +40,22 @@ export class TilesComponent {
 
   premiumPlus = new Tile(
     'Full-stack and LTS',
-    2000,
+    0,
     [
       `${this.tilesdescriptionListTranslationPath}.with_standart`,
       `${this.tilesdescriptionListTranslationPath}.payments`,
       `${this.tilesdescriptionListTranslationPath}.lts_month_support`
     ]
   );
+
+  constructor(private pricingService: PricingService) { }
+
+  ngOnInit() {
+    this.pricingService.getPrices()
+    .subscribe((pricices: ServicesPricingReadDto) => {
+      this.econom.price = pricices.economPrice;
+      this.standart.price = pricices.standartPrice;
+      this.premiumPlus.price = pricices.premiumPlusPrice;
+    });
+  }
 }

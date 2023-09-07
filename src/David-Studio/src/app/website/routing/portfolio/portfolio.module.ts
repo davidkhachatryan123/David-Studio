@@ -15,13 +15,15 @@ import { NotFoundComponent } from './not-found/not-found.component';
   imports: [
     CommonModule,
     PortfolioRoutingModule,
-    SharedModule ],
+    SharedModule
+  ],
   declarations: [
     PortfolioComponent,
     SearchComponent,
     PortfolioProjectComponent,
     FilterTagComponent,
     PaginatorComponent,
-    NotFoundComponent ]
+    NotFoundComponent
+  ]
 })
 export class PortfolioModule { }

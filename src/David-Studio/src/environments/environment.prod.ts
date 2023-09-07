@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
+  api: 'http://localhost:8081/api/v1',
   config: {
-    apiUrl: 'http://localhost:5000',
     languageCookieName: 'lang'
   }
 };

@@ -1,9 +1,10 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Pagintaion, Project, Search, Tag } from './models';
+import { Pagintaion, Search } from './models';
 import { AppColors } from '../../consts';
-import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { ProjectReadDto, TagReadDto } from '../../dto';
+import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
 
 @Component({
   selector: 'portfolio',
@@ -13,29 +14,15 @@ import { TranslateService } from '@ngx-translate/core';
 export class PortfolioComponent implements AfterViewInit {
   translateSectionName = 'portfolio';
 
-  projects: Array<Project> = [
-    new Project('Smart Home', [
-      new Tag('C#', AppColors.cs),
-      new Tag('Arduino', AppColors.arduino),
-      new Tag('IoT', AppColors.iot),
-      new Tag('PCB', AppColors.pcb),
-      new Tag('MySQL', AppColors.mysql)
-    ], 'assets/img/Projects/proj1.jpg', ''),
-    new Project('David Studio', [
-      new Tag('HTML', AppColors.html),
-      new Tag('CSS', AppColors.css),
-      new Tag('Bootstrap', AppColors.bootstrap),
-      new Tag('JS', AppColors.js),
-      new Tag('TS', AppColors.ts),
-      new Tag('Angular', AppColors.angular),
-      new Tag('C#', AppColors.cs),
-      new Tag('ASP.NET Core', AppColors.aspnet),
-      new Tag('MSSQL', AppColors.mssql),
-    ], 'assets/img/Projects/proj2.jpg', ''),
-    new Project('Text Analyzer', [
-      new Tag('C++', AppColors.cpp),
-      new Tag('Bash', AppColors.bash),
-    ], 'assets/img/Projects/proj3.jpg', ''),
+  projects: Array<ProjectReadDto> = [
+    new ProjectReadDto(1, 'Smart Home', '', 'assets/img/Projects/proj1.jpg',
+    [
+      new TagReadDto(1, 'C#', AppColors.cs),
+      new TagReadDto(2, 'Arduino', AppColors.arduino),
+      new TagReadDto(3, 'IoT', AppColors.iot),
+      new TagReadDto(4, 'PCB', AppColors.pcb),
+      new TagReadDto(5, 'MySQL', AppColors.mysql)
+    ])
   ];
   pagination: Pagintaion = new Pagintaion(1, 22);
   latestSearchTextValue = '';
@@ -77,7 +64,7 @@ export class PortfolioComponent implements AfterViewInit {
     this.latestSearchTextValue = searchText;
   }
 
-  submitSearchOnlyTags(tags: Array<Tag>) {
+  submitSearchOnlyTags(tags: Array<TagReadDto>) {
     const searchModel = new Search(this.latestSearchTextValue, tags, this.pagination.activePage);
 
     console.log(searchModel);

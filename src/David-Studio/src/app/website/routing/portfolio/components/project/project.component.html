@@ -1,8 +1,8 @@
 <div class="project">
     <div class="title">
-        <a [href]="projectModel.href">
+        <a [href]="projectModel.link">
             <div class="row">
-                <div class="col-md-11 col-10">{{projectModel.title}}</div>
+                <div class="col-md-11 col-10">{{projectModel.name}}</div>
                 <div class="col-md-1 col-2">
                     <i class="fa fa-angle-double-right"></i>
                 </div>
@@ -11,16 +11,16 @@
     </div>
     
     <div class="img">
-        <img [src]="projectModel.image" class="img-fluid rounded">
+        <img [src]="projectModel.imageUrl" class="img-fluid rounded">
 
         <div class="overlay">
             <div class="body">
-                <h2>{{projectModel.title}}</h2>
+                <h2>{{projectModel.name}}</h2>
 
                 <div class="flex flex-justify-content-center">
                     <div *ngFor="let tag of projectModel.tags"
                           [style.background-color]="tag.color"
-                          class="prog_language pcb">{{tag.text}}</div>
+                          class="prog_language pcb">{{tag.name}}</div>
                 </div>
             </div>
         </div>

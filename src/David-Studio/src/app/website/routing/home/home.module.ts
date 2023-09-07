@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { HomeComponent } from './home.component';
-
+import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from '../../shared-module/shared.module';
 
+import { HomeComponent } from './home.component';
 import { ServicesComponent } from './components/service/service.component';
 import { TopProjectsComponent } from './components/top-projects/top-projects.component';
-import { HomeRoutingModule } from './home-routing.module';
-import { CommonModule } from '@angular/common';
+
+import { TopProjectsService } from '../../services';
 
 @NgModule({
   imports: [
@@ -20,5 +21,8 @@ import { CommonModule } from '@angular/common';
     ServicesComponent,
     TopProjectsComponent
   ],
+  providers: [
+    TopProjectsService
+  ]
 })
 export class HomeModule { }
