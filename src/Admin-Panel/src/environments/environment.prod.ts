@@ -7,5 +7,5 @@ export const environment = {
       'users', 'portfolio', 'pricing', 'storage', 'messenger'
     ]
   },
-  api: 'http://localhost:8080/api/v1'
+  api: 'http://localhost:8082/api/v1'
 };
