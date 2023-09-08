@@ -57,4 +57,9 @@
 		<Folder Include="Database\" />
 		<Folder Include="Services\" />
 	</ItemGroup>
+	<ItemGroup> 
+		<Content Include="EmailTemplates\**"> 
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+		</Content> 
+	</ItemGroup>
 </Project>
