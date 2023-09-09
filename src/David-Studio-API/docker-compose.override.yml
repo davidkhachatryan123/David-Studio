@@ -1,24 +1,24 @@
 version: '3.4'
 
 services:
-  web-api-gw:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-    ports:
-      - "8081:5000"
-    volumes:
-      - ./ApiGateways/Web.Bff:/app/configuration
+  # web-api-gw:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://+:5000
+  #   ports:
+  #     - "8081:5000"
+  #   volumes:
+  #     - ./ApiGateways/Web.Bff:/app/configuration
 
-  crm-api-gw:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-      - IdentityUrl=http://identity-server:5000
-    ports:
-      - "8082:5000"
-    volumes:
-      - ./ApiGateways/Crm.Bff:/app/configuration
+  # crm-api-gw:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://+:5000
+  #     - IdentityUrl=http://identity-server:5000
+  #   ports:
+  #     - "8082:5000"
+  #   volumes:
+  #     - ./ApiGateways/Crm.Bff:/app/configuration
 
   identity-server:
     environment:
@@ -53,18 +53,18 @@ services:
     depends_on:
       - identity-server
 
-  users-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-      - Services__IdentityServerGrpcUri=http://identity-server:5005
-      - Identity__Url=http://identity-server:5000
-      - Identity__ExternalUrl=http://localhost:5010
-    ports:
-      - "5020:5000"
-    depends_on:
-      - rabbitmq
+  # users-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://+:5000
+  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+  #     - Services__IdentityServerGrpcUri=http://identity-server:5005
+  #     - Identity__Url=http://identity-server:5000
+  #     - Identity__ExternalUrl=http://localhost:5010
+  #   ports:
+  #     - "5020:5000"
+  #   depends_on:
+  #     - rabbitmq
 
   portfolio-api:
     environment:
@@ -81,17 +81,17 @@ services:
       - db
       - rabbitmq
 
-  pricing-api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-      - Identity__Url=http://identity-server:5000
-      - Identity__ExternalUrl=http://localhost:5010
-    ports:
-      - "5040:5000"
-    depends_on:
-      - db
+  # pricing-api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=http://+:5000
+  #     - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+  #     - Identity__Url=http://identity-server:5000
+  #     - Identity__ExternalUrl=http://localhost:5010
+  #   ports:
+  #     - "5040:5000"
+  #   depends_on:
+  #     - db
 
   storage-api:
     environment:
@@ -133,24 +133,39 @@ services:
     env_file:
       - .env
     environment:
-        ACCEPT_EULA: "Y"
+      ACCEPT_EULA: "Y"
     ports:
-        - "1433:1433"
+      - "1433:1433"
     volumes:
-        - sqldata:/var/opt/mssql
+      - sqldata:/var/opt/mssql
 
   rabbitmq:
     env_file:
       - .env
     ports:
-        - 5672:5672
-        - 15672:15672
+      - 5672:5672
+      - 15672:15672
     volumes:
-        - mqdata:/var/lib/rabbitmq/
-        - mqlogs:/var/log/rabbitmq
+      - mqdata:/var/lib/rabbitmq
+      - mqlogs:/var/log/rabbitmq
+
+  elastic-search:
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    environment:
+      - node.name=es01
+      - cluster.name=elastic-cluster
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - xpack.license.self_generated.type=basic
 
 volumes:
   storage:
   sqldata:
   mqdata:
   mqlogs:
+  esdata01:

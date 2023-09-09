@@ -1,17 +1,17 @@
 version: '3.4'
 
 services:
-  web-api-gw:
-    image: web.ocelot.apigw:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
+  # web-api-gw:
+  #   image: web.ocelot.apigw:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
 
-  crm-api-gw:
-    image: crm.ocelot.apigw:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
+  # crm-api-gw:
+  #   image: crm.ocelot.apigw:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
 
   identity-server:
     image: identity.server:${TAG:-latest}
@@ -25,11 +25,11 @@ services:
       context: .
       dockerfile: Services/IdentityServer/ClientApp/Dockerfile.develop
 
-  users-api:
-    image: users.api:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: Services/Users/Dockerfile.develop
+  # users-api:
+  #   image: users.api:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Users/Dockerfile.develop
 
   portfolio-api:
     image: portfolio.api:${TAG:-latest}
@@ -37,11 +37,11 @@ services:
       context: .
       dockerfile: Services/Portfolio/Dockerfile.develop
 
-  pricing-api:
-    image: pricing.api:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: Services/Pricing/Dockerfile.develop
+  # pricing-api:
+  #   image: pricing.api:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Pricing/Dockerfile.develop
 
   storage-api:
     image: storage.api:${TAG:-latest}
@@ -60,3 +60,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
+
+  elastic-search:
+   image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
