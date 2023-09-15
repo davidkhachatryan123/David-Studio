@@ -1,0 +1,26 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+
+COPY ["Services/Search/Search.csproj", "Services/Search/"]
+
+RUN dotnet restore "Services/Search/Search.csproj" -nowarn:msb3202,nu1503
+COPY . .
+
+WORKDIR "/src/Services/Search"
+RUN dotnet build "Search.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Search.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["dotnet", "Search.dll"]

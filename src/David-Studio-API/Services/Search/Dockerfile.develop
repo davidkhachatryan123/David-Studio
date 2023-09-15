@@ -1,0 +1,18 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0
+EXPOSE 5000
+EXPOSE 5001
+
+ARG BUILD_CONFIGURATION=Debug
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+WORKDIR /src
+COPY ["Services/Search/Search.csproj", "Services/Search/"]
+
+RUN dotnet restore "Services/Search/Search.csproj"
+
+COPY . .
+WORKDIR "/src/Services/Search"
+RUN dotnet build "Search.csproj" -c $BUILD_CONFIGURATION -o /app
+
+WORKDIR "/app"
+ENTRYPOINT ["dotnet", "Search.dll"]
