@@ -49,16 +49,16 @@ namespace Portfolio.Controllers
         public async Task<IActionResult> Mark([FromBody] IEnumerable<ProjectReadDto> projectDto)
         {
             int[] projectIds = projectDto.Select(p => p.Id).ToArray();
-            int[] addedProjectIds;
+            IEnumerable<TopProject> markedTopProjects;
 
             try
             {
                 _logger.LogInformation("Trying to mark as Top projects by ids: {@Ids}", projectIds);
 
-                addedProjectIds = await _repositoryManager.TopProjects.MarkAsync(projectIds);
+                markedTopProjects = await _repositoryManager.TopProjects.MarkAsync(projectIds);
                 await _repositoryManager.SaveAsync();
 
-                _logger.LogInformation("Marked as Top projects by ids: {@Ids}", addedProjectIds);
+                _logger.LogInformation("Marked as Top projects by ids: {@Ids}", markedTopProjects.Select(p => p.Id));
             }
             catch (Exception ex)
             {
@@ -67,9 +67,9 @@ namespace Portfolio.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return addedProjectIds.Length == 0
+            return !markedTopProjects.Any()
                 ? NotFound()
-                : Ok(addedProjectIds);
+                : Ok(markedTopProjects);
         }
 
         [MapToApiVersion("1.0")]

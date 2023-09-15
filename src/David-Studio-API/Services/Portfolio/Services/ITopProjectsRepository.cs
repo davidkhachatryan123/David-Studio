@@ -6,7 +6,7 @@ namespace Portfolio.Services
     {
         Task<IEnumerable<Project>> GetAllAsync(int? limit = null);
 
-        Task<int[]> MarkAsync(int[] ids);
+        Task<IEnumerable<TopProject>> MarkAsync(int[] ids);
         Task<bool> RemoveAsync(int id);
 
         Task Reorder(int[] projectIds);

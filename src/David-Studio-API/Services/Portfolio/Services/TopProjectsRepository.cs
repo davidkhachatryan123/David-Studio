@@ -34,7 +34,7 @@ namespace Portfolio.Services
             return await projects.ToArrayAsync();
         }
 
-        public async Task<int[]> MarkAsync(int[] ids)
+        public async Task<IEnumerable<TopProject>> MarkAsync(int[] ids)
         {
             int CountOfTopProjects = await _context.TopProjects.CountAsync();
             int MaxRankInDb = CountOfTopProjects > 0
@@ -44,7 +44,7 @@ namespace Portfolio.Services
             if (CountOfTopProjects + ids.Length > MaxTopProjectsCount)
                 throw new Exception($@"Max limit of Top projects has achieved, please remove {CountOfTopProjects + ids.Length - MaxTopProjectsCount} projects and try again");
 
-            List<int> res = new List<int>();
+            List<TopProject> res = new List<TopProject>();
 
             foreach (int id in ids)
             {
@@ -52,16 +52,16 @@ namespace Portfolio.Services
 
                 if (project is null || project.TopProject is not null) continue;
 
-                await _context.TopProjects.AddAsync(new TopProject
+                res.Add(new TopProject
                 {
                     ProjectId = id,
                     Rank = ++MaxRankInDb
                 });
 
-                res.Add(id);
+                await _context.TopProjects.AddAsync(res.Last());
             }
 
-            return res.ToArray();
+            return res;
         }
 
         public async Task<bool> RemoveAsync(int id)
