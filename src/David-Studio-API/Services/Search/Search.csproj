@@ -29,6 +29,7 @@
     <None Remove="Services\" />
     <None Remove="IntegrationEvents\" />
     <None Remove="IntegrationEvents\Handlers\" />
+    <None Remove="Dtos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -36,5 +37,6 @@
     <Folder Include="Services\" />
     <Folder Include="IntegrationEvents\" />
     <Folder Include="IntegrationEvents\Handlers\" />
+    <Folder Include="Dtos\" />
   </ItemGroup>
 </Project>

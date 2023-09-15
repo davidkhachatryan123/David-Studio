@@ -12,5 +12,8 @@ namespace Search.Models
 
         [Keyword]
         public string ImageUrl { get; set; } = null!;
+
+        [Number]
+        public int Rank { get; set; }
     }
 }
