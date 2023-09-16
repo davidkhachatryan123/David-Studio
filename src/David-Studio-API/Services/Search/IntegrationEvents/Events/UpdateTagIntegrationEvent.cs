@@ -1,7 +1,7 @@
 ﻿using EventBus.Events;
 using Search.Models;
 
-namespace Portfolio.IntegrationEvents.Events
+namespace Search.IntegrationEvents.Events
 {
     public record UpdateTagIntegrationEvent : IntegrationEvent
     {

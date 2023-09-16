@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddElasticSearch(builder.Configuration);
 
 builder.Services.AddEventBus(builder.Configuration);
-//builder.Services.AddEventBusHandlers();
+builder.Services.AddEventBusHandlers();
 
 builder.Services.AddDefaultSwagger();
 
@@ -24,7 +24,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.UseDefaultSwagger(builder.Configuration);
 
-//app.ConfigureEventBus();
+app.AddEventBusSubscriptions();
 
 app.MapControllers();
 

@@ -1,6 +1,6 @@
 ﻿using EventBus.Events;
 
-namespace Portfolio.IntegrationEvents.Events
+namespace Search.IntegrationEvents.Events
 {
     public record RemoveProjectFromTopIntegrationEvent : IntegrationEvent
     {

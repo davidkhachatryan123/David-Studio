@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure;
 using EventBus.Abstractions;
 using EventBus.Events;
 using Microsoft.AspNetCore.Mvc;
@@ -92,6 +91,11 @@ namespace Portfolio.Controllers
             _logger.LogInformation("Save project with name: {ProjectName}", project.Name);
 
             ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
+
+            _logger.LogInformation("Publishing message to event bus for index project for search: {ProjectId}", project.Id);
+            CreateProjectIntegrationEvent @event = new CreateProjectIntegrationEvent(projectRes);
+            _eventBus.Publish(@event);
+
             return CreatedAtRoute(nameof(Projects) + nameof(GetById), new { id = projectRes.Id }, projectRes);
         }
 

@@ -7,11 +7,11 @@ services:
   #     context: .
   #     dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
 
-  # crm-api-gw:
-  #   image: crm.ocelot.apigw:${TAG:-latest}
-  #   build:
-  #     context: .
-  #     dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
+  crm-api-gw:
+    image: crm.ocelot.apigw:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
 
   identity-server:
     image: identity.server:${TAG:-latest}

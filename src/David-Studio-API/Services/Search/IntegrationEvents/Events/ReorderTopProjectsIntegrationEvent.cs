@@ -2,7 +2,7 @@
 using Search.Dtos;
 using Search.Models;
 
-namespace Portfolio.IntegrationEvents.Events
+namespace Search.IntegrationEvents.Events
 {
     public record ReorderTopProjectsIntegrationEvent : IntegrationEvent
     {

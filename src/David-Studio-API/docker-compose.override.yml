@@ -10,15 +10,15 @@ services:
   #   volumes:
   #     - ./ApiGateways/Web.Bff:/app/configuration
 
-  # crm-api-gw:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - IdentityUrl=http://identity-server:5000
-  #   ports:
-  #     - "8082:5000"
-  #   volumes:
-  #     - ./ApiGateways/Crm.Bff:/app/configuration
+  crm-api-gw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - IdentityUrl=http://identity-server:5000
+    ports:
+      - "8082:5000"
+    volumes:
+      - ./ApiGateways/Crm.Bff:/app/configuration
 
   identity-server:
     environment:
@@ -133,8 +133,8 @@ services:
     ports:
       - "5080:5000"
     volumes:
-      - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets
-      - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets
+      # - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
     depends_on:
       - db
       - rabbitmq

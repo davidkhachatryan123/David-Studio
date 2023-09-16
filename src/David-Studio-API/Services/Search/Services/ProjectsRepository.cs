@@ -1,5 +1,7 @@
 ﻿using Nest;
 using Search.Models;
+using static System.Net.Mime.MediaTypeNames;
+using static Nest.JoinField;
 
 namespace Search.Services
 {
@@ -12,24 +14,37 @@ namespace Search.Services
             _client = client;
         }
 
-        public Task<Project?> GetIndexByIdAsync(int id)
+        public async Task<Project?> GetIndexByIdAsync(int docId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync<Project>(docId);
+
+            if (response.IsValid)
+                return response.Source;
+            else
+                return null;
         }
 
-        public Task<Project> CreateIndexAsync(Project project)
+        public async Task<IndexResponse> CreateIndexAsync(Project project)
         {
-            throw new NotImplementedException();
+            project.Join = JoinField.Root<Project>();
+
+            var indexParent = await _client.IndexDocumentAsync(project);
+
+            return indexParent;
         }
 
-        public Task<Project> UpdateIndexAsync(Project project)
+        public async Task<UpdateResponse<Project>> UpdateIndexAsync(int docId, Project project)
         {
-            throw new NotImplementedException();
+            var response = await _client.UpdateAsync<Project, Project>(
+                docId,
+                u => u.Doc(project));
+
+            return response;
         }
 
-        public Task<Project> DeleteIndexAsync(int id)
+        public async Task<DeleteResponse> DeleteIndexAsync(int docId)
         {
-            throw new NotImplementedException();
+            return await _client.DeleteAsync<Project>(docId);
         }
     }
 }
