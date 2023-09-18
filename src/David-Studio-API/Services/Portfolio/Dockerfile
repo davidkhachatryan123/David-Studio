@@ -8,10 +8,11 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Services/Portfolio/Portfolio.csproj", "Services/Portfolio/"]
-
+COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
+COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+COPY ["Services/Services.Common/Services.Common.csproj", "Services/Services.Common/"]
 RUN dotnet restore "Services/Portfolio/Portfolio.csproj"
 COPY . .
-
 WORKDIR "/src/Services/Portfolio"
 RUN dotnet build "Portfolio.csproj" -c Release -o /app/build
 

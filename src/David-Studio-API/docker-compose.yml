@@ -1,23 +1,23 @@
 version: '3.4'
 
 services:
-  # web-api-gw:
-  #   image: web.ocelot.apigw:${TAG:-latest}
-  #   build:
-  #     context: .
-  #     dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
+  web-api-gw:
+    image: web.ocelot.apigw:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
 
   crm-api-gw:
     image: crm.ocelot.apigw:${TAG:-latest}
     build:
       context: .
-      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile.develop
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
 
   identity-server:
     image: identity.server:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/IdentityServer/Dockerfile.develop
+      dockerfile: Services/IdentityServer/Dockerfile
 
   identity-server-client:
     image: identity.server.client:${TAG:-latest}
@@ -25,23 +25,23 @@ services:
       context: .
       dockerfile: Services/IdentityServer/ClientApp/Dockerfile.develop
 
-  # users-api:
-  #   image: users.api:${TAG:-latest}
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Users/Dockerfile.develop
+  users-api:
+    image: users.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Services/Users/Dockerfile
 
   portfolio-api:
     image: portfolio.api:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/Portfolio/Dockerfile.develop
+      dockerfile: Services/Portfolio/Dockerfile
 
-  # pricing-api:
-  #   image: pricing.api:${TAG:-latest}
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Pricing/Dockerfile.develop
+  pricing-api:
+    image: pricing.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Services/Pricing/Dockerfile.develop
 
   search-api:
     image: search.api:${TAG:-latest}
@@ -53,13 +53,13 @@ services:
     image: storage.api:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/Storage/Dockerfile.develop
+      dockerfile: Services/Storage/Dockerfile
 
   messenger-api:
     image: messenger.api:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/Messanger/Dockerfile.develop
+      dockerfile: Services/Messanger/Dockerfile
 
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"

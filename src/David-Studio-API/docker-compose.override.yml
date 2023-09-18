@@ -1,14 +1,14 @@
 version: '3.4'
 
 services:
-  # web-api-gw:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #   ports:
-  #     - "8081:5000"
-  #   volumes:
-  #     - ./ApiGateways/Web.Bff:/app/configuration
+  web-api-gw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "8081:5000"
+    volumes:
+      - ./ApiGateways/Web.Bff:/app/configuration
 
   crm-api-gw:
     environment:
@@ -41,28 +41,28 @@ services:
       - "5011:5001"
     volumes:
       - ../certs:/https:ro
-    depends_on:
-      - db
-      - rabbitmq
+  #   depends_on:
+  #     - db
+  #     - rabbitmq
 
   identity-server-client:
     ports:
       - "44300:443"
     volumes:
       - ../certs:/https:ro
-    depends_on:
-      - identity-server
+  #   depends_on:
+  #     - identity-server
 
-  # users-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-  #     - Services__IdentityServerGrpcUri=http://identity-server:5005
-  #     - Identity__Url=http://identity-server:5000
-  #     - Identity__ExternalUrl=http://localhost:5010
-  #   ports:
-  #     - "5020:5000"
+  users-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - Services__IdentityServerGrpcUri=http://identity-server:5005
+      - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
+    ports:
+      - "5020:5000"
   #   depends_on:
   #     - rabbitmq
 
@@ -77,9 +77,9 @@ services:
       - Identity__ExternalUrl=http://localhost:5010
     ports:
       - "5030:5000"
-    depends_on:
-      - db
-      - rabbitmq
+    # depends_on:
+    #   - db
+    #   - rabbitmq
 
   # pricing-api:
   #   environment:
@@ -100,8 +100,8 @@ services:
       - ElasticSearchUrl=http://elastic-search:9200
     ports:
       - "5050:5000"
-    depends_on:
-      - elastic-search
+    # depends_on:
+    #   - elastic-search
 
   storage-api:
     environment:
@@ -118,9 +118,9 @@ services:
     ports:
       - "5070:5000"
       - "5079:5009"
-    depends_on:
-      - db
-      - rabbitmq
+    # depends_on:
+    #   - db
+    #   - rabbitmq
 
   messenger-api:
     environment:
@@ -135,9 +135,9 @@ services:
     volumes:
       # - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
-    depends_on:
-      - db
-      - rabbitmq
+    # depends_on:
+    #   - db
+    #   - rabbitmq
 
   db:
     env_file:

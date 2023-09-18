@@ -3,16 +3,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-
 COPY ["Services/Pricing/Pricing.csproj", "Services/Pricing/"]
-
-RUN dotnet restore "Services/Pricing/Pricing.csproj" -nowarn:msb3202,nu1503
+COPY ["Services/Services.Common/Services.Common.csproj", "Services/Services.Common/"]
+COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
+COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+RUN dotnet restore "Services/Pricing/Pricing.csproj"
 COPY . .
-
 WORKDIR "/src/Services/Pricing"
 RUN dotnet build "Pricing.csproj" -c Release -o /app/build
 
@@ -22,5 +21,4 @@ RUN dotnet publish "Pricing.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
 ENTRYPOINT ["dotnet", "Pricing.dll"]
