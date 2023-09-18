@@ -3,16 +3,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-
 COPY ["Services/Messanger/Messanger.csproj", "Services/Messanger/"]
-
-RUN dotnet restore "Services/Messanger/Messanger.csproj" -nowarn:msb3202,nu1503
+COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
+COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+COPY ["Services/Services.Common/Services.Common.csproj", "Services/Services.Common/"]
+RUN dotnet restore "Services/Messanger/Messanger.csproj"
 COPY . .
-
 WORKDIR "/src/Services/Messanger"
 RUN dotnet build "Messanger.csproj" -c Release -o /app/build
 
@@ -22,5 +21,4 @@ RUN dotnet publish "Messanger.csproj" -c Release -o /app/publish /p:UseAppHost=f
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
 ENTRYPOINT ["dotnet", "Messanger.dll"]
