@@ -23,7 +23,7 @@ services:
     image: identity.server.client:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/IdentityServer/ClientApp/Dockerfile.develop
+      dockerfile: Services/IdentityServer/ClientApp/Dockerfile
 
   users-api:
     image: users.api:${TAG:-latest}
@@ -41,13 +41,13 @@ services:
     image: pricing.api:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/Pricing/Dockerfile.develop
+      dockerfile: Services/Pricing/Dockerfile
 
   search-api:
     image: search.api:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/Search/Dockerfile.develop
+      dockerfile: Services/Search/Dockerfile
 
   storage-api:
     image: storage.api:${TAG:-latest}

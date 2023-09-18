@@ -81,17 +81,17 @@ services:
     #   - db
     #   - rabbitmq
 
-  # pricing-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-  #     - Identity__Url=http://identity-server:5000
-  #     - Identity__ExternalUrl=http://localhost:5010
-  #   ports:
-  #     - "5040:5000"
-  #   depends_on:
-  #     - db
+  pricing-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
+    ports:
+      - "5040:5000"
+    # depends_on:
+    #   - db
 
   search-api:
     environment:
@@ -210,9 +210,9 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
-    depends_on:
-      elastic-search:
-        condition: service_healthy
+    # depends_on:
+    #   elastic-search:
+    #     condition: service_healthy
 
 volumes:
   storage:

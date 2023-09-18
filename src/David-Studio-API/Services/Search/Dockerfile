@@ -3,16 +3,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-
 COPY ["Services/Search/Search.csproj", "Services/Search/"]
-
-RUN dotnet restore "Services/Search/Search.csproj" -nowarn:msb3202,nu1503
+COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
+COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+COPY ["Services/Services.Common/Services.Common.csproj", "Services/Services.Common/"]
+RUN dotnet restore "Services/Search/Search.csproj"
 COPY . .
-
 WORKDIR "/src/Services/Search"
 RUN dotnet build "Search.csproj" -c Release -o /app/build
 
@@ -22,5 +21,4 @@ RUN dotnet publish "Search.csproj" -c Release -o /app/publish /p:UseAppHost=fals
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
 ENTRYPOINT ["dotnet", "Search.dll"]
