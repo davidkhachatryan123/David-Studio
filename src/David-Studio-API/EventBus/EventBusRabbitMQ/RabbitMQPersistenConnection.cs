@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net.Sockets;
-using EventBusRabbitMQ;
-using Microsoft.Extensions.Configuration;
+﻿using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
@@ -82,7 +79,7 @@ namespace EventBusRabbitMQ
                     _connection.CallbackException += OnCallbackException;
                     _connection.ConnectionBlocked += OnConnectionBlocked;
 
-                    _logger.LogInformation("RabbitMQ Client acquired a persistent connection to '{HostName}' and is subscribed to failure events", _connection.Endpoint.HostName);
+                    _logger.LogInformation("RabbitMQ Client acquired a persistent connection to '{HostName}' and is subscribed to events", _connection.Endpoint.HostName);
 
                     return true;
                 }
