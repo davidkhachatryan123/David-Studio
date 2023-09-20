@@ -26,9 +26,16 @@ namespace Search.IntegrationEvents.Handlers
 
         public async Task Handle(IndexProjectIntegrationEvent data)
         {
+            Project projectToIndex = _mapper.Map<Project>(data.Project);
+
+            GetResponse<Project> existingProject =
+                await _repositoryManager.Projects.GetIndexAsync(data.Project.Id);
+
+            if (existingProject.Found)
+                projectToIndex.Rank = existingProject.Source.Rank;
+
             IndexResponse response =
-                await _repositoryManager.Projects.CreateIndexAsync(
-                    _mapper.Map<Project>(data.Project));
+                await _repositoryManager.Projects.IndexAsync(projectToIndex);
 
             if (response.IsValid)
                 _logger.LogInformation("Index Project {ProjectId}: succeeded", data.Project.Id);

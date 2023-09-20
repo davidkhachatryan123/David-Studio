@@ -39,10 +39,8 @@ namespace Search.Extensions
             services.AddTransient<IIntegrationEventHandler<RemoveTagIntegrationEvent>,
                RemoveTagIntegrationEventHandler>();
 
-            //services.AddTransient<IIntegrationEventHandler<ReorderTopProjectsIntegrationEvent>,
-            //    ReorderTopProjectsIntegrationEventHandler>();
-            //services.AddTransient<IIntegrationEventHandler<RemoveProjectFromTopIntegrationEvent>,
-            //   RemoveProjectFromTopIntegrationEventHandler>();
+            services.AddTransient<IIntegrationEventHandler<IndexTopProjectsIntegrationEvent>,
+                IndexTopProjectsIntegrationEventHandler>();
         }
 
         public static void AddEventBusSubscriptions(this WebApplication app)
@@ -59,10 +57,8 @@ namespace Search.Extensions
             eventBus.Subscribe<RemoveTagIntegrationEvent,
                 IIntegrationEventHandler<RemoveTagIntegrationEvent>>();
 
-            eventBus.Subscribe<ReorderTopProjectsIntegrationEvent,
-                IIntegrationEventHandler<ReorderTopProjectsIntegrationEvent>>();
-            eventBus.Subscribe<RemoveProjectFromTopIntegrationEvent,
-                IIntegrationEventHandler<RemoveProjectFromTopIntegrationEvent>>();
+            eventBus.Subscribe<IndexTopProjectsIntegrationEvent,
+                IIntegrationEventHandler<IndexTopProjectsIntegrationEvent>>();
         }
 
         public static void AddMappings(this IServiceCollection services)

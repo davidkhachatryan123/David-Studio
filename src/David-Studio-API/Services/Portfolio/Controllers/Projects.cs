@@ -143,6 +143,8 @@ namespace Portfolio.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            bool isDeletedFromTop = await _repositoryManager.TopProjects.RemoveAsync(id);
+
             Project? project = await _repositoryManager.Projects.DeleteAsync(id);
             await _repositoryManager.SaveAsync();
 
@@ -157,6 +159,21 @@ namespace Portfolio.Controllers
             _logger.LogInformation("Publishing message to event bus -> To remove index of project: {ProjectId}", project.Id);
             IntegrationEvent @eventDelProj = new RemoveProjectIntegrationEvent(project.Id);
             _eventBus.Publish(@eventDelProj);
+
+            if (isDeletedFromTop)
+            {
+                IEnumerable<Project> projects = await _repositoryManager.TopProjects.GetAllAsync();
+
+                _logger.LogInformation("Publishing message to event bus -> To reorder projects ranks for search engine");
+
+                IntegrationEvent @eventReorder = new IndexTopProjectsIntegrationEvent(
+                    _mapper.Map<IEnumerable<TopProjectDto>>(
+                        projects.Select(p => p.TopProject)
+                    )
+                );
+
+                _eventBus.Publish(@eventReorder);
+            }
 
             return Ok();
         }

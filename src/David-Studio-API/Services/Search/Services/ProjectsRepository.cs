@@ -12,7 +12,12 @@ namespace Search.Services
             _client = client;
         }
 
-        public async Task<IndexResponse> CreateIndexAsync(Project project)
+        public async Task<GetResponse<Project>> GetIndexAsync(int projectId)
+            => await _client.GetAsync<Project>($"p-{projectId}", s => s
+                .Routing(projectId)
+            );
+
+        public async Task<IndexResponse> IndexAsync(Project project)
         {
             project.Join = JoinField.Root<Project>();
 

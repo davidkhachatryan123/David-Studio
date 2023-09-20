@@ -10,7 +10,8 @@ namespace Portfolio.Mappings
         {
             CreateMap<Project, ProjectReadDto>();
             CreateMap<ProjectCreateDto, Project>();
+
+            CreateMap<TopProject, TopProjectDto>();
         }
     }
 }
-

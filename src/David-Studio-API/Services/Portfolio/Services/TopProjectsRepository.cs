@@ -26,7 +26,7 @@ namespace Portfolio.Services
                         .Include(p => p.Tags)
                         .Include(p => p.TopProject)
                         .Where(p => p.TopProject != null)
-                        .OrderBy(p => p.TopProject!.Rank);
+                        .OrderByDescending(p => p.TopProject!.Rank);
 
             if (limit is not null)
                 projects = projects.Take(Convert.ToInt32(limit));
@@ -44,11 +44,11 @@ namespace Portfolio.Services
             if (CountOfTopProjects + ids.Length > MaxTopProjectsCount)
                 throw new Exception($@"Max limit of Top projects has achieved, please remove {CountOfTopProjects + ids.Length - MaxTopProjectsCount} projects and try again");
 
-            List<TopProject> res = new List<TopProject>();
+            List<TopProject> res = new();
 
             foreach (int id in ids)
             {
-                Project? project = await GetProjectByIdIncludeingTopProject(id);
+                Project? project = await GetProjectIncludingTopProject(id);
 
                 if (project is null || project.TopProject is not null) continue;
 
@@ -64,9 +64,35 @@ namespace Portfolio.Services
             return res;
         }
 
+        public async Task<IEnumerable<TopProject>> Reorder(int[] projectIds)
+        {
+            if (projectIds.Length != await _context.TopProjects.CountAsync())
+                throw new Exception("Provided project ids length has not equivalent with db top projects count");
+            if (projectIds.Length != projectIds.Distinct().Count())
+                throw new Exception("Array of projects is must have contains unique indexes");
+
+            List<TopProject> res = new();
+
+            for (int i = 0; i < projectIds.Length; i++)
+            {
+                TopProject? topProject =
+                    await _context.TopProjects.FirstOrDefaultAsync(
+                        t => t.ProjectId == projectIds[i])
+                    ?? throw new Exception("Provided project ids has invalid items");
+
+                topProject.Rank = projectIds.Length - i;
+
+                _context.TopProjects.Update(topProject);
+
+                res.Add(topProject);
+            }
+
+            return res;
+        }
+
         public async Task<bool> RemoveAsync(int id)
         {
-            Project? project = await GetProjectByIdIncludeingTopProject(id);
+            Project? project = await GetProjectIncludingTopProject(id);
 
             if (project is null || project.TopProject is null)
                 return false;
@@ -84,32 +110,9 @@ namespace Portfolio.Services
             return true;
         }
 
-        public async Task Reorder(int[] projectIds)
-        {
-            if (projectIds.Length != await _context.TopProjects.CountAsync())
-                throw new Exception("Provided project ids length has not equivalent with db top projects count");
-            if (projectIds.Length != projectIds.Distinct().Count())
-                throw new Exception("Array of projects is must have contains unique indexes");
-
-            for (int i = 0; i < projectIds.Length; i++)
-            {
-                TopProject? topProject =
-                    await _context.TopProjects.FirstOrDefaultAsync(
-                        t => t.ProjectId == projectIds[i]);
-
-                if (topProject is null)
-                    throw new Exception("Provided project ids has invalid items");
-
-                topProject.Rank = i + 1;
-
-                _context.TopProjects.Update(topProject);
-            }
-        }
-
-        private async Task<Project?> GetProjectByIdIncludeingTopProject(int id)
+        private async Task<Project?> GetProjectIncludingTopProject(int id)
             => await _context.Projects
                              .Include(p => p.TopProject)
                              .FirstOrDefaultAsync(p => p.Id == id);
     }
 }
-
