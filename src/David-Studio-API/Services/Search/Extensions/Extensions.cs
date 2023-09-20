@@ -34,10 +34,10 @@ namespace Search.Extensions
             services.AddTransient<IIntegrationEventHandler<RemoveProjectIntegrationEvent>,
                RemoveProjectIntegrationEventHandler>();
 
-            //services.AddTransient<IIntegrationEventHandler<UpdateTagIntegrationEvent>,
-            //    UpdateTagIntegrationEventHandler>();
-            //services.AddTransient<IIntegrationEventHandler<RemoveTagIntegrationEvent>,
-            //   RemoveTagIntegrationEventHandler>();
+            services.AddTransient<IIntegrationEventHandler<UpdateTagIntegrationEvent>,
+                UpdateTagIntegrationEventHandler>();
+            services.AddTransient<IIntegrationEventHandler<RemoveTagIntegrationEvent>,
+               RemoveTagIntegrationEventHandler>();
 
             //services.AddTransient<IIntegrationEventHandler<ReorderTopProjectsIntegrationEvent>,
             //    ReorderTopProjectsIntegrationEventHandler>();

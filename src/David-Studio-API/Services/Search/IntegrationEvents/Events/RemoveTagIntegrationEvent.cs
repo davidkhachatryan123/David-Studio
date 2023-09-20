@@ -6,9 +6,9 @@ namespace Search.IntegrationEvents.Events
     {
         public int TagId { get; }
 
-        public RemoveTagIntegrationEvent(int id)
+        public RemoveTagIntegrationEvent(int tagId)
         {
-            TagId = id;
+            TagId = tagId;
         }
     }
 }

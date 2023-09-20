@@ -28,7 +28,6 @@ namespace Search.IntegrationEvents.Handlers
                 _logger.LogInformation("Project {ProjectId} deleted with {TagsCount} tags", data.ProjectId, deleted);
             else
                 _logger.LogError("Error occurred when trying to delete project {ProjectId} with {TagsCount} tags", data.ProjectId, deleted);
-
         }
     }
 }

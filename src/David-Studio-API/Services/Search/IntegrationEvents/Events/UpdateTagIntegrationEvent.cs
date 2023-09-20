@@ -5,7 +5,7 @@ namespace Search.IntegrationEvents.Events
 {
     public record UpdateTagIntegrationEvent : IntegrationEvent
     {
-        public Tag Tag;
+        public Tag Tag { get; }
 
         public UpdateTagIntegrationEvent(Tag tag)
         {
