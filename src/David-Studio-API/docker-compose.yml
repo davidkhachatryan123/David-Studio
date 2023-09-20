@@ -1,11 +1,11 @@
 version: '3.4'
 
 services:
-  web-api-gw:
-    image: web.ocelot.apigw:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
+  # web-api-gw:
+  #   image: web.ocelot.apigw:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
 
   crm-api-gw:
     image: crm.ocelot.apigw:${TAG:-latest}
@@ -25,11 +25,11 @@ services:
       context: .
       dockerfile: Services/IdentityServer/ClientApp/Dockerfile
 
-  users-api:
-    image: users.api:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: Services/Users/Dockerfile
+  # users-api:
+  #   image: users.api:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Users/Dockerfile
 
   portfolio-api:
     image: portfolio.api:${TAG:-latest}
@@ -37,11 +37,11 @@ services:
       context: .
       dockerfile: Services/Portfolio/Dockerfile
 
-  pricing-api:
-    image: pricing.api:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: Services/Pricing/Dockerfile
+  # pricing-api:
+  #   image: pricing.api:${TAG:-latest}
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Pricing/Dockerfile
 
   search-api:
     image: search.api:${TAG:-latest}
