@@ -19,7 +19,7 @@
 | Users                    | Done        |
 | Portfolio                | Done        |
 | Services                 | Done        |
-| SearchEngine             | Back Log    |
+| SearchEngine             | In Progress |
 | Storage                  | Done        |
 | Messenger                | Done        |
 | Ocelot Api Gateway       | Done        |
