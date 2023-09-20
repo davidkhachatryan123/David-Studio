@@ -6,9 +6,9 @@ namespace Search.IntegrationEvents.Events
     {
         public int ProjectId { get; }
 
-        public RemoveProjectIntegrationEvent(int id)
+        public RemoveProjectIntegrationEvent(int projectId)
         {
-            ProjectId = id;
+            ProjectId = projectId;
         }
     }
 }

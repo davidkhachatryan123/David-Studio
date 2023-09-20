@@ -3,11 +3,11 @@ using Portfolio.Dtos;
 
 namespace Portfolio.IntegrationEvents.Events
 {
-    public record CreateProjectIntegrationEvent : IntegrationEvent
+    public record IndexProjectIntegrationEvent : IntegrationEvent
     {
         public ProjectReadDto Project { get; }
 
-        public CreateProjectIntegrationEvent(ProjectReadDto project)
+        public IndexProjectIntegrationEvent(ProjectReadDto project)
         {
             Project = project;
         }

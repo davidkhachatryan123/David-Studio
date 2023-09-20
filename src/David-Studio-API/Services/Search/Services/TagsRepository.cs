@@ -12,24 +12,36 @@ namespace Search.Services
             _client = client;
         }
 
-        public Task<Tag?> GetIndexByIdAsync(int id)
+        public async Task<BulkResponse> IndexRangeAsync(IEnumerable<Tag> tags, int projectId)
         {
-            throw new NotImplementedException();
+            var descriptor = new BulkDescriptor();
+
+            foreach (var tag in tags)
+            {
+                tag.Join = JoinField.Link<Tag>(projectId);
+
+                descriptor.Index<Tag>(op => op
+                    .Document(tag)
+                    .Routing(projectId)
+                    .Id($"p-{projectId}_t-{tag.Id}")
+                );
+            }
+
+            return await _client.BulkAsync(descriptor);
         }
 
-        public Task<Tag> CreateIndexAsync(Tag Tag)
+        public async Task<long> ClearTagsAsync(int projectId)
         {
-            throw new NotImplementedException();
-        }
+            var response = await _client.DeleteByQueryAsync<Tag>(q => q
+                .Query(rq => rq
+                    .ParentId(pq => pq
+                        .Type<Tag>()
+                        .Id(projectId.ToString())
+                    )
+                )
+            );
 
-        public Task<Tag> UpdateIndexAsync(Tag Tag)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tag> DeleteIndexAsync(int id)
-        {
-            throw new NotImplementedException();
+            return response.Deleted;
         }
     }
 }

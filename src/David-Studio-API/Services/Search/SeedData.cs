@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Nest;
+﻿using Nest;
 using Search.Models;
 
 namespace Search
@@ -17,7 +16,7 @@ namespace Search
                 {
                     var createIndexResponse = await client.Indices.CreateAsync("projects", c => c
                         .Index<ProjectBase>()
-                        .Map<ProjectBase>(ms => ms
+                        .Map<ProjectBase>(m => m
                             .RoutingField(r => r.Required())
                             .AutoMap<Project>()
                             .AutoMap<Tag>()

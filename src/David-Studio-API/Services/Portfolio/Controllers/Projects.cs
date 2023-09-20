@@ -92,8 +92,8 @@ namespace Portfolio.Controllers
 
             ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
 
-            _logger.LogInformation("Publishing message to event bus for index project for search: {ProjectId}", project.Id);
-            CreateProjectIntegrationEvent @event = new CreateProjectIntegrationEvent(projectRes);
+            _logger.LogInformation("Publishing message to event bus -> To index project for search engine: {ProjectId}", project.Id);
+            IntegrationEvent @event = new IndexProjectIntegrationEvent(projectRes);
             _eventBus.Publish(@event);
 
             return CreatedAtRoute(nameof(Projects) + nameof(GetById), new { id = projectRes.Id }, projectRes);
@@ -118,9 +118,9 @@ namespace Portfolio.Controllers
 
             if (projectDto.File is not null)
             {
-                _logger.LogInformation("Publishing message to event bus for remove old image by url: {ImageUrl}", project.ImageUrl);
-                IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
-                _eventBus.Publish(@event);
+                _logger.LogInformation("Publishing message to event bus -> To remove image by url: {ImageUrl}", project.ImageUrl);
+                IntegrationEvent @eventDelImg = new ImagesDeleteIntegrationEvent(project.ImageUrl);
+                _eventBus.Publish(@eventDelImg);
             }
 
             if (image is not null)
@@ -131,6 +131,10 @@ namespace Portfolio.Controllers
             _logger.LogInformation("Project was updated by name: {ProjectName}", project.Name);
 
             ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
+
+            _logger.LogInformation("Publishing message to event bus -> To update index of project for search engine: {ProjectId}", project.Id);
+            IntegrationEvent @eventIndexProject = new IndexProjectIntegrationEvent(projectRes);
+            _eventBus.Publish(@eventIndexProject);
 
             return CreatedAtRoute(nameof(GetById), new { id = projectRes.Id }, projectRes);
         }
@@ -146,9 +150,13 @@ namespace Portfolio.Controllers
 
             _logger.LogInformation("Deleted project by id: {ProjectId}", project.Id);
 
-            _logger.LogInformation("Publishing message to event bus for remove image by url: {ImageUrl}", project.ImageUrl);
-            IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
-            _eventBus.Publish(@event);
+            _logger.LogInformation("Publishing message to event bus -> To remove image by url: {ImageUrl}", project.ImageUrl);
+            IntegrationEvent @eventDelImg = new ImagesDeleteIntegrationEvent(project.ImageUrl);
+            _eventBus.Publish(@eventDelImg);
+
+            _logger.LogInformation("Publishing message to event bus -> To remove index of project: {ProjectId}", project.Id);
+            IntegrationEvent @eventDelProj = new RemoveProjectIntegrationEvent(project.Id);
+            _eventBus.Publish(@eventDelProj);
 
             return Ok();
         }

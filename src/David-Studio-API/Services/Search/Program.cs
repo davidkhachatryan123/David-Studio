@@ -1,5 +1,6 @@
 ﻿using Search;
 using Search.Extensions;
+using Search.Services.RepositoryManager;
 using Serilog;
 using Services.Common.Extensions;
 
@@ -9,7 +10,11 @@ builder.Services.AddDefaultApiVersioning();
 
 builder.Services.AddControllers();
 
+builder.Services.AddMappings();
+
 builder.Services.AddElasticSearch(builder.Configuration);
+
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 builder.Services.AddEventBus(builder.Configuration);
 builder.Services.AddEventBusHandlers();

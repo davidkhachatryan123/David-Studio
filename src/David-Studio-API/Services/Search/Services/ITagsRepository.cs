@@ -1,13 +1,11 @@
-﻿using Search.Models;
-using Services.Common.Models;
+﻿using Nest;
+using Search.Models;
 
 namespace Search.Services
 {
     public interface ITagsRepository
     {
-        Task<Tag?> GetIndexByIdAsync(int id);
-        Task<Tag> CreateIndexAsync(Tag Tag);
-        Task<Tag> UpdateIndexAsync(Tag Tag);
-        Task<Tag> DeleteIndexAsync(int id);
+        Task<BulkResponse> IndexRangeAsync(IEnumerable<Tag> tags, int projectId);
+        Task<long> ClearTagsAsync(int projectId);
     }
 }

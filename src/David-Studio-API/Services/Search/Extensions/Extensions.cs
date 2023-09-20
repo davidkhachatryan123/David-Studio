@@ -1,6 +1,8 @@
-﻿using Elasticsearch.Net;
+﻿using AutoMapper;
+using Elasticsearch.Net;
 using EventBus.Abstractions;
 using Nest;
+using Portfolio.Mappings;
 using Search.IntegrationEvents.Events;
 using Search.IntegrationEvents.Handlers;
 using Search.Models;
@@ -16,7 +18,9 @@ namespace Search.Extensions
             var connectionSettings = new ConnectionSettings(connectionPool)
                 .DefaultMappingFor<ProjectBase>(m => m.IndexName("projects"))
                 .DefaultMappingFor<Tag>(m => m.IndexName("projects").RelationName("tag"))
-                .DefaultMappingFor<Project>(m => m.IndexName("projects").RelationName("project"));
+                .DefaultMappingFor<Project>(m => m.IndexName("projects").RelationName("project"))
+                .DefaultIndex("projects")
+                .EnableApiVersioningHeader();
 
             var client = new ElasticClient(connectionSettings);
 
@@ -25,12 +29,10 @@ namespace Search.Extensions
 
         public static void AddEventBusHandlers(this IServiceCollection services)
         {
-            services.AddTransient<IIntegrationEventHandler<CreateProjectIntegrationEvent>,
-                CreateProjectIntegrationEventHandler>();
-            //services.AddTransient<IIntegrationEventHandler<UpdateProjectIntegrationEvent>,
-            //   UpdateProjectIntegrationEventHandler>();
-            //services.AddTransient<IIntegrationEventHandler<RemoveProjectIntegrationEvent>,
-            //   RemoveProjectIntegrationEventHandler>();
+            services.AddTransient<IIntegrationEventHandler<IndexProjectIntegrationEvent>,
+                IndexProjectIntegrationEventHandler>();
+            services.AddTransient<IIntegrationEventHandler<RemoveProjectIntegrationEvent>,
+               RemoveProjectIntegrationEventHandler>();
 
             //services.AddTransient<IIntegrationEventHandler<UpdateTagIntegrationEvent>,
             //    UpdateTagIntegrationEventHandler>();
@@ -47,10 +49,8 @@ namespace Search.Extensions
         {
             var eventBus = app.Services.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe<CreateProjectIntegrationEvent,
-                IIntegrationEventHandler<CreateProjectIntegrationEvent>>();
-            eventBus.Subscribe<UpdateProjectIntegrationEvent,
-                IIntegrationEventHandler<UpdateProjectIntegrationEvent>>();
+            eventBus.Subscribe<IndexProjectIntegrationEvent,
+                IIntegrationEventHandler<IndexProjectIntegrationEvent>>();
             eventBus.Subscribe<RemoveProjectIntegrationEvent,
                 IIntegrationEventHandler<RemoveProjectIntegrationEvent>>();
 
@@ -63,6 +63,16 @@ namespace Search.Extensions
                 IIntegrationEventHandler<ReorderTopProjectsIntegrationEvent>>();
             eventBus.Subscribe<RemoveProjectFromTopIntegrationEvent,
                 IIntegrationEventHandler<RemoveProjectFromTopIntegrationEvent>>();
+        }
+
+        public static void AddMappings(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(map =>
+            {
+                map.AddProfile<ProjectMappingProfile>();
+            });
+
+            services.AddSingleton(mapperConfig.CreateMapper());
         }
     }
 }
