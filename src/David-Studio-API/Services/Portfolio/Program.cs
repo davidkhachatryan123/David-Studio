@@ -1,11 +1,7 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Portfolio.Extensions;
+﻿using Portfolio.Extensions;
 using Portfolio.Grpc;
 using Portfolio.Services;
 using Serilog;
-using Services.Common;
 using Services.Common.Configurations;
 using Services.Common.Extensions;
 

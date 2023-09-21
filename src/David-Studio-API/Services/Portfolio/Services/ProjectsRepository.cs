@@ -25,7 +25,7 @@ namespace Portfolio.Services
                              .Include(p => p.Tags)
                              .FirstOrDefaultAsync(proj => proj.Id == id);
 
-        public async Task<Project?> CreateAsync(Project project)
+        public async Task<Project> CreateAsync(Project project)
         {
             int[] tagIds = project.Tags.Select(p => p.Id).ToArray();
 
@@ -42,7 +42,7 @@ namespace Portfolio.Services
 
         public async Task<Project> UpdateAsync(Project project)
         {
-            // Get and remove all tags releationships assosiated with our project
+            // Get and remove all tags releationships assosiated with project
             IEnumerable<ProjectTag> projectTags = await _context.ProjectTags
                 .Where(p => p.ProjectId == project.Id)
                 .ToArrayAsync();

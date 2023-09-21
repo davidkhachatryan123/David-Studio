@@ -7,17 +7,18 @@
 
     <app-search #search
                 [addedTags]="filterTags.tags"
-                (addedTagsUpdate)="filterTags.tags = $event"
+                (addedTagsUpdate)="filterTags.tags = $event; updateTags($event)"
                 (searchSubmit)="submitSearch($event)">
     </app-search>
 
     <portfolio-filter-tag #filterTags
-                          (update)="search.addedTags = $event; submitSearchOnlyTags(filterTags.tags)">
+                          (update)="search.addedTags = $event; updateTags($event)">
     </portfolio-filter-tag>
 
     <div class="projects">
       <portfolio-project *ngFor="let project of projects"
-                         [projectModel]="project">
+                         [projectModel]="project"
+                         class="project">
       </portfolio-project>
 
       <portfolio-not-found [class.d-none]="projects.length"></portfolio-not-found>

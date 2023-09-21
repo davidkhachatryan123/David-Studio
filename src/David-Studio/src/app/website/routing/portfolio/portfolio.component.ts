@@ -1,72 +1,65 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Pagintaion, Search } from './models';
-import { AppColors } from '../../consts';
+import { Component, ViewChild } from '@angular/core';
+import { Pagintaion } from './models';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { ProjectReadDto, TagReadDto } from '../../dto';
-import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
+import { ProjectReadDto, SearchModelDto, TagReadDto } from '../../dto';
+import { PortfolioService } from '../../services/portfolio.service';
+import { PageData } from '../../models';
+import { PaginatorComponent } from './components/paginator/paginator.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'portfolio',
   templateUrl: 'portfolio.component.html',
   styleUrls: [ 'portfolio.component.css' ]
 })
-export class PortfolioComponent implements AfterViewInit {
+export class PortfolioComponent {
   translateSectionName = 'portfolio';
 
-  projects: Array<ProjectReadDto> = [
-    new ProjectReadDto(1, 'Smart Home', '', 'assets/img/Projects/proj1.jpg',
-    [
-      new TagReadDto(1, 'C#', AppColors.cs),
-      new TagReadDto(2, 'Arduino', AppColors.arduino),
-      new TagReadDto(3, 'IoT', AppColors.iot),
-      new TagReadDto(4, 'PCB', AppColors.pcb),
-      new TagReadDto(5, 'MySQL', AppColors.mysql)
-    ])
-  ];
-  pagination: Pagintaion = new Pagintaion(1, 22);
-  latestSearchTextValue = '';
+  projects: Array<ProjectReadDto> = [];
+  pagination: Pagintaion = new Pagintaion(1, 1);
+  searchModel = new SearchModelDto(1, environment.config.maxProjectsCountInPortfolioPage);
 
-  @ViewChild(FilterTagComponent, {static: false})
-  private filterTagsElement: FilterTagComponent | undefined;
+  @ViewChild(PaginatorComponent, { static: false })
+  paginator: PaginatorComponent | undefined;
 
   constructor(
     private title: Title,
-    private translate: TranslateService) {
-
-    translate.get(`title.${this.translateSectionName}`).subscribe(text => title.setTitle(text));
+    private translate: TranslateService,
+    private portfolioService: PortfolioService
+  ) {
+    this.translate.get(`title.${this.translateSectionName}`)
+    .subscribe(text => this.title.setTitle(text));
   }
 
-  ngAfterViewInit() {
-    this.submitSearch(this.latestSearchTextValue);
+  submitSearch($event: string) {
+    this.searchModel.searchText = $event;
+    this.search();
   }
 
-
-  //####################################################
-  // Page functions
-  //####################################################
+  updateTags($event: Array<TagReadDto>) {
+    this.searchModel.tagIds = $event.map(t => t.id);
+    this.search();
+  }
 
   changePage($event: number) {
-    console.log(`Page are chnaged: ${$event}`);
-
-    if (this.filterTagsElement)
-      this.submitSearch(this.latestSearchTextValue);
+    this.searchModel.page = $event;
+    this.search();
   }
 
 
-  //####################################################
-  // Submit search
-  //####################################################
+  // ###################
+  //  Submit search
+  // ###################
 
-  submitSearch(searchText: string) {
-    console.log(new Search(searchText, this.filterTagsElement.tags, this.pagination.activePage));
+  search() {
+    this.portfolioService.search(this.searchModel)
+    .subscribe((result: PageData<ProjectReadDto>) => {
+      this.projects = result.entities;
+      this.pagination.totalPages =
+        Math.ceil(result.totalCount / this.searchModel.count);
 
-    this.latestSearchTextValue = searchText;
-  }
-
-  submitSearchOnlyTags(tags: Array<TagReadDto>) {
-    const searchModel = new Search(this.latestSearchTextValue, tags, this.pagination.activePage);
-
-    console.log(searchModel);
+      this.paginator.updatePaginator();
+    });
   }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure;
 using EventBus.Abstractions;
 using EventBus.Events;
 using Microsoft.AspNetCore.Mvc;
@@ -92,6 +91,11 @@ namespace Portfolio.Controllers
             _logger.LogInformation("Save project with name: {ProjectName}", project.Name);
 
             ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
+
+            _logger.LogInformation("Publishing message to event bus -> To index project for search engine: {ProjectId}", project.Id);
+            IntegrationEvent @event = new IndexProjectIntegrationEvent(projectRes);
+            _eventBus.Publish(@event);
+
             return CreatedAtRoute(nameof(Projects) + nameof(GetById), new { id = projectRes.Id }, projectRes);
         }
 
@@ -114,9 +118,9 @@ namespace Portfolio.Controllers
 
             if (projectDto.File is not null)
             {
-                _logger.LogInformation("Publishing message to event bus for remove old image by url: {ImageUrl}", project.ImageUrl);
-                IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
-                _eventBus.Publish(@event);
+                _logger.LogInformation("Publishing message to event bus -> To remove image by url: {ImageUrl}", project.ImageUrl);
+                IntegrationEvent @eventDelImg = new ImagesDeleteIntegrationEvent(project.ImageUrl);
+                _eventBus.Publish(@eventDelImg);
             }
 
             if (image is not null)
@@ -128,6 +132,10 @@ namespace Portfolio.Controllers
 
             ProjectReadDto projectRes = _mapper.Map<ProjectReadDto>(project);
 
+            _logger.LogInformation("Publishing message to event bus -> To update index of project for search engine: {ProjectId}", project.Id);
+            IntegrationEvent @eventIndexProject = new IndexProjectIntegrationEvent(projectRes);
+            _eventBus.Publish(@eventIndexProject);
+
             return CreatedAtRoute(nameof(GetById), new { id = projectRes.Id }, projectRes);
         }
 
@@ -135,6 +143,8 @@ namespace Portfolio.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            bool isDeletedFromTop = await _repositoryManager.TopProjects.RemoveAsync(id);
+
             Project? project = await _repositoryManager.Projects.DeleteAsync(id);
             await _repositoryManager.SaveAsync();
 
@@ -142,9 +152,28 @@ namespace Portfolio.Controllers
 
             _logger.LogInformation("Deleted project by id: {ProjectId}", project.Id);
 
-            _logger.LogInformation("Publishing message to event bus for remove image by url: {ImageUrl}", project.ImageUrl);
-            IntegrationEvent @event = new ImagesDeleteIntegrationEvent(project.ImageUrl);
-            _eventBus.Publish(@event);
+            _logger.LogInformation("Publishing message to event bus -> To remove image by url: {ImageUrl}", project.ImageUrl);
+            IntegrationEvent @eventDelImg = new ImagesDeleteIntegrationEvent(project.ImageUrl);
+            _eventBus.Publish(@eventDelImg);
+
+            _logger.LogInformation("Publishing message to event bus -> To remove index of project: {ProjectId}", project.Id);
+            IntegrationEvent @eventDelProj = new RemoveProjectIntegrationEvent(project.Id);
+            _eventBus.Publish(@eventDelProj);
+
+            if (isDeletedFromTop)
+            {
+                IEnumerable<Project> projects = await _repositoryManager.TopProjects.GetAllAsync();
+
+                _logger.LogInformation("Publishing message to event bus -> To reorder projects ranks for search engine");
+
+                IntegrationEvent @eventReorder = new IndexTopProjectsIntegrationEvent(
+                    _mapper.Map<IEnumerable<TopProjectDto>>(
+                        projects.Select(p => p.TopProject)
+                    )
+                );
+
+                _eventBus.Publish(@eventReorder);
+            }
 
             return Ok();
         }

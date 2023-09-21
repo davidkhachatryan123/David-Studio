@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using EventBus.Abstractions;
+using EventBus.Events;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
+using Portfolio.IntegrationEvents.Events;
 using Portfolio.Models;
 using Portfolio.Services;
 using Services.Common.Models;
@@ -13,15 +16,18 @@ namespace Portfolio.Controllers
     public class Tags : ControllerBase
     {
         private readonly IRepositoryManager _repositoryManager;
+        private readonly IEventBus _eventBus;
         private readonly IMapper _mapper;
         private readonly ILogger<Tags> _logger;
 
         public Tags(
             IRepositoryManager repositoryManager,
+            IEventBus eventBus,
             IMapper mapper,
             ILogger<Tags> logger)
         {
             _repositoryManager = repositoryManager;
+            _eventBus = eventBus;
             _mapper = mapper;
             _logger = logger;
         }
@@ -99,6 +105,10 @@ namespace Portfolio.Controllers
 
             TagReadDto tagRes = _mapper.Map<TagReadDto>(updatedTag);
 
+            _logger.LogInformation("Publishing message to event bus -> To update tags indexes for search engine: {TagId}", tagRes.Id);
+            IntegrationEvent @event = new UpdateTagIntegrationEvent(tagRes);
+            _eventBus.Publish(@event);
+
             return updatedTag is null
                 ? NotFound()
                 : CreatedAtRoute(nameof(GetById), new { id = tagRes.Id }, tagRes);
@@ -111,11 +121,16 @@ namespace Portfolio.Controllers
             Tag? tag = await _repositoryManager.Tags.DeleteAsync(id);
             await _repositoryManager.SaveAsync();
 
-            _logger.LogInformation("Delete tag by id: {TagId}", id);
+            if (tag is null)
+                return NotFound();
 
-            return tag is null
-                ? NotFound()
-                : Ok();
+            _logger.LogInformation("Deleted tag by id: {TagId}", id);
+
+            _logger.LogInformation("Publishing message to event bus -> To delete tags indexes for search engine: {TagId}", tag.Id);
+            IntegrationEvent @event = new RemoveTagIntegrationEvent(tag.Id);
+            _eventBus.Publish(@event);
+
+            return Ok();
         }
     }
 }

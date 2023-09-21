@@ -23,7 +23,7 @@ services:
     image: identity.server.client:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/IdentityServer/ClientApp/Dockerfile.develop
+      dockerfile: Services/IdentityServer/ClientApp/Dockerfile
 
   users-api:
     image: users.api:${TAG:-latest}
@@ -43,6 +43,12 @@ services:
       context: .
       dockerfile: Services/Pricing/Dockerfile
 
+  search-api:
+    image: search.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Services/Search/Dockerfile
+
   storage-api:
     image: storage.api:${TAG:-latest}
     build:
@@ -60,3 +66,9 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
+
+  elastic-search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, ViewChild, Renderer2, Input, Output, EventEmitter } from '@angular/core';
 import { Subject, Subscription, debounceTime } from 'rxjs';
-import { AppColors, AppTags } from 'src/app/website/consts';
-import { TagReadDto } from 'src/app/website/dto';
+import { SearchSuggestionsDto, SearchSuggestionsRequestDto, TagReadDto } from 'src/app/website/dto';
+import { PortfolioService } from 'src/app/website/services/portfolio.service';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +23,7 @@ export class SearchComponent implements OnDestroy {
 
   _addedTags: Array<TagReadDto> = [];
 
-  // If it's true then showing search box
+  // If it's true search box is showing
   isShow = false;
 
   // This was created for automatically send search query by timeout
@@ -31,15 +31,8 @@ export class SearchComponent implements OnDestroy {
   private searchSubscription: Subscription;
 
   // The following values are associated with the html search box results
-  text_result: Array<string> = [
-    'David Studio',
-    'Study-Control-Software'
-  ];
-  tag_result: {tag: TagReadDto, selected: boolean}[] = [
-    { tag: new TagReadDto(3, AppTags.aspnet, AppColors.aspnet), selected: false },
-    { tag: new TagReadDto(2, AppTags.cs, AppColors.cs), selected: false },
-    { tag: new TagReadDto(1, AppTags.angular, AppColors.angular), selected: false }
-  ];
+  text_result: Array<string> = [];
+  tag_result: { tag: TagReadDto, selected: boolean }[] = [];
 
   focusedIndex = -1;
   mySearchValue: string | undefined;
@@ -49,7 +42,10 @@ export class SearchComponent implements OnDestroy {
   @ViewChild("searchResults", {static: false})
   searchResults: ElementRef | undefined;
 
-  constructor(private renderer: Renderer2) {
+  constructor(
+    private renderer: Renderer2,
+    private portfolioService: PortfolioService
+  ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (e.target !== this.searchElement.nativeElement && !this.searchResults.nativeElement.contains(e.target))
         this.isShow = false;
@@ -68,12 +64,14 @@ export class SearchComponent implements OnDestroy {
   //####################################################
 
   onSearchFocus() {
+    this.getSearchSuggestions('');
+
     this.isShow = true;
 
     this.searchSubscription = this.searchSubject
     .pipe(debounceTime(500))
     .subscribe((searchText: string) => {
-      this.sendSearchQuery(searchText);
+      this.getSearchSuggestions(searchText);
     });
   }
 
@@ -137,9 +135,17 @@ export class SearchComponent implements OnDestroy {
       this.submitSearch($event.target.innerHTML);
   }
 
-  sendSearchQuery(text: string) {
-    if (text.trim())
-      console.log(text.trim());
+  getSearchSuggestions(text: string) {
+    this.portfolioService.getSuggestions(
+      new SearchSuggestionsRequestDto(
+        text.trim(), 5, 5
+      )
+    ).subscribe((suggestions: SearchSuggestionsDto) => {
+      this.text_result = suggestions.projectNames;
+      this.tag_result = suggestions.tags.map(function(tag: TagReadDto) {
+        return { tag: tag, selected: false };
+      });
+    });
   }
 
   submitSearch(searchText: string) {

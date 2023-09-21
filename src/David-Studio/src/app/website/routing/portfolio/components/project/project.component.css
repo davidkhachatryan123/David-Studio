@@ -1,5 +1,6 @@
 :host {
   --project-title-height: 60px;
+  --project-height: 200px;
 }
 
 .project {
@@ -7,6 +8,8 @@
   padding: 0;
 
   margin: 20px 15px;
+
+  height: var(--project-height);
 }
 
 .project .title {
@@ -42,6 +45,15 @@
   color: var(--color-dark);
 }
 
+.project .image {
+  height: var(--project-height);
+  width: 100%;
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .project .overlay {
   position: absolute;
   bottom: var(--project-title-height);
@@ -63,8 +75,6 @@
 
   will-change: transform;
 }
-
-
 
 .project .body {
   text-align: center;
@@ -107,7 +117,8 @@
 
 @media(min-width:768px) {
   :host {
-      --project-title-height: 80px;
+    --project-title-height: 80px;
+    --project-height: 300px;
   }
 
   .project {
@@ -133,6 +144,6 @@
   }
 
   .project .img:hover .overlay {
-    height: calc(100% - var(--project-title-height));
+    height: calc(var(--project-height) - var(--project-title-height));
   }
 }

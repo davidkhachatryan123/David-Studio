@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using EventBus.Abstractions;
+using EventBus.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Dtos;
+using Portfolio.IntegrationEvents.Events;
 using Portfolio.Models;
 using Portfolio.Services;
-using Services.Common.Models;
 
 namespace Portfolio.Controllers
 {
@@ -15,15 +16,18 @@ namespace Portfolio.Controllers
     public class TopProjects : ControllerBase
     {
         private readonly IRepositoryManager _repositoryManager;
+        private readonly IEventBus _eventBus;
         private readonly IMapper _mapper;
         private readonly ILogger<TopProjects> _logger;
 
         public TopProjects(
             IRepositoryManager repositoryManager,
+            IEventBus eventBus,
             IMapper mapper,
             ILogger<TopProjects> logger)
         {
             _repositoryManager = repositoryManager;
+            _eventBus = eventBus;
             _mapper = mapper;
             _logger = logger;
         }
@@ -39,7 +43,7 @@ namespace Portfolio.Controllers
             IEnumerable<ProjectReadDto> projectsResult =
                 _mapper.Map<IEnumerable<ProjectReadDto>>(projects);
 
-            _logger.LogInformation("Get all projects marked as Top by limit: {Limit}", Limit);
+            _logger.LogInformation("Get all Top projects by limit: {Limit}", Limit);
 
             return Ok(projectsResult);
         }
@@ -49,27 +53,63 @@ namespace Portfolio.Controllers
         public async Task<IActionResult> Mark([FromBody] IEnumerable<ProjectReadDto> projectDto)
         {
             int[] projectIds = projectDto.Select(p => p.Id).ToArray();
-            int[] addedProjectIds;
+            IEnumerable<TopProject> markedTopProjects;
 
             try
             {
-                _logger.LogInformation("Trying to mark as Top projects by ids: {@Ids}", projectIds);
-
-                addedProjectIds = await _repositoryManager.TopProjects.MarkAsync(projectIds);
+                markedTopProjects = await _repositoryManager.TopProjects.MarkAsync(projectIds);
                 await _repositoryManager.SaveAsync();
 
-                _logger.LogInformation("Marked as Top projects by ids: {@Ids}", addedProjectIds);
+                IEnumerable<Project> projects = await _repositoryManager.TopProjects.GetAllAsync();
+
+                _logger.LogInformation("Publishing message to event bus -> To add rank to projects for search engine");
+
+                IntegrationEvent @event = new IndexTopProjectsIntegrationEvent(
+                    _mapper.Map<IEnumerable<TopProjectDto>>(
+                        projects.Select(p => p.TopProject)
+                    )
+                );
+
+                _eventBus.Publish(@event);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation("Error was occurred while trying to mark projects as Top: {ExceptionMessage}", ex.Message);
+                _logger.LogInformation("Error occurred while trying to mark projects as Top: {ExceptionMessage}", ex.Message);
 
                 return BadRequest(ex.Message);
             }
 
-            return addedProjectIds.Length == 0
+            return !markedTopProjects.Any()
                 ? NotFound()
-                : Ok(addedProjectIds);
+                : Ok(markedTopProjects);
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost]
+        [Route("Reorder")]
+        public async Task<IActionResult> Reorder([FromBody] int[] projectIds)
+        {
+            try
+            {
+                IEnumerable<TopProject> topProjects = await _repositoryManager.TopProjects.Reorder(projectIds);
+
+                _logger.LogInformation("Publishing message to event bus -> To reorder projects ranks for search engine");
+
+                IntegrationEvent @event = new IndexTopProjectsIntegrationEvent(
+                    _mapper.Map<IEnumerable<TopProjectDto>>(topProjects));
+
+                _eventBus.Publish(@event);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Error was occurred while trying to reorder projects as Top: {ExceptionMessage}", ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+
+            await _repositoryManager.SaveAsync();
+
+            return Ok();
         }
 
         [MapToApiVersion("1.0")]
@@ -80,30 +120,23 @@ namespace Portfolio.Controllers
             bool res = await _repositoryManager.TopProjects.RemoveAsync(id);
             await _repositoryManager.SaveAsync();
 
-            _logger.LogInformation("Remove project from top by id: {Id}", id);
+            if (!res)
+                return NotFound();
 
-            return !res ? NotFound() : Ok();
-        }
+            _logger.LogInformation("Removed project from top by id: {ProjectId}", id);
 
-        [MapToApiVersion("1.0")]
-        [HttpPost]
-        [Route("Reorder")]
-        public async Task<IActionResult> Reorder([FromBody] int[] projectIds)
-        {
-            try
-            {
-                await _repositoryManager.TopProjects.Reorder(projectIds);
+            IEnumerable<Project> projects = await _repositoryManager.TopProjects.GetAllAsync();
 
-                _logger.LogInformation("Projects reordering with fllowing order: {@Ids}", projectIds);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation("Error was occurred while trying to reorder projects as Top: {ExceptionMessage}", ex.Message);
+            _logger.LogInformation("Publishing message to event bus -> To remove one of project and reorder another projects ranks for search engine");
 
-                return BadRequest(ex.Message);
-            }
+            IntegrationEvent @eventReorder = new IndexTopProjectsIntegrationEvent(
+                id,
+                _mapper.Map<IEnumerable<TopProjectDto>>(
+                    projects.Select(p => p.TopProject)
+                )
+            );
 
-            await _repositoryManager.SaveAsync();
+            _eventBus.Publish(@eventReorder);
 
             return Ok();
         }

@@ -1,6 +1,6 @@
 <div class="project">
     <div class="title">
-        <a [href]="projectModel.link">
+        <a [href]="projectModel.link" target="_blank">
             <div class="row">
                 <div class="col-md-11 col-10">{{projectModel.name}}</div>
                 <div class="col-md-1 col-2">
@@ -11,7 +11,8 @@
     </div>
     
     <div class="img">
-        <img [src]="projectModel.imageUrl" class="img-fluid rounded">
+        <div [style.background-image]="'url(' + projectModel.imageUrl + ')'"
+             class="image rounded">
 
         <div class="overlay">
             <div class="body">
