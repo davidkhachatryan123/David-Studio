@@ -6,7 +6,7 @@
     <ProjectGuid>6e13f372-85bc-4e0d-a667-92fdba06dbdd</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>search</DockerServiceName>
+    <DockerServiceName>davidstudio</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
