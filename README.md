@@ -7,9 +7,9 @@
 - [x] David Studio web site on Angular
 - [x] Admin Panel (CMS) UI on Angular by using Angular Material
 - [x] Back-End on ASP.NET Core 7 by using microservices architecture
-- [ ] Connect Back-End to David Studio website
+- [x] Connect Back-End to David Studio website
 - [x] Connect Back-End to Admin panel
-- [ ] Create search engine
+- [x] Create search engine
 
 ### Back-End microservies
 
@@ -19,7 +19,7 @@
 | Users                    | Done        |
 | Portfolio                | Done        |
 | Services                 | Done        |
-| SearchEngine             | In Progress |
+| SearchEngine             | Done        |
 | Storage                  | Done        |
 | Messenger                | Done        |
 | Ocelot Api Gateway       | Done        |
