@@ -79,7 +79,8 @@
               "browserTarget": "David-Studio:build:production"
             },
             "development": {
-              "browserTarget": "David-Studio:build:development"
+              "browserTarget": "David-Studio:build:development",
+              "port": 4201
             }
           },
           "defaultConfiguration": "development"
