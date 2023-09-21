@@ -29,6 +29,18 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
+                    "Host": "search-api",
+                    "Port": 5000
+                }
+            ],
+            "UpstreamPathTemplate": "/api/{version}/search-engine/{everything}",
+            "UpstreamHttpMethod": [ "Get" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/{version}/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
                     "Host": "messenger-api",
                     "Port": 5000
                 }
