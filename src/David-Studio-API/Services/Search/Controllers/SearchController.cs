@@ -24,7 +24,6 @@ namespace Search.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpGet]
-        [Route(nameof(Search))]
         public async Task<IActionResult> Search([FromQuery] SearchModelDto searchModel)
         {
             PageData<ProjectDto> results = await _searchService.SearchAsync(searchModel);
@@ -48,11 +47,11 @@ namespace Search.Controllers
 
         [MapToApiVersion("1.0")]
         [HttpGet]
-        [Route(nameof(GetSearchSuggestions))]
-        public async Task<IActionResult> GetSearchSuggestions([FromQuery] SearchSuggestionsQueryDto searchSuggestionsQuery)
+        [Route(nameof(GetSuggestions))]
+        public async Task<IActionResult> GetSuggestions([FromQuery] SearchSuggestionsQueryDto searchSuggestionsQuery)
         {
             SearchSuggestionsDto results =
-                await _searchService.GetSearchSuggestionsAsync(searchSuggestionsQuery);
+                await _searchService.GetSuggestionsAsync(searchSuggestionsQuery);
 
             _logger.LogInformation(
                 "Returning search suggestions:" +

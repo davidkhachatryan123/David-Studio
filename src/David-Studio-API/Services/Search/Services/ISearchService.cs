@@ -5,7 +5,7 @@ namespace Search.Services
 {
     public interface ISearchService
     {
-        Task<SearchSuggestionsDto> GetSearchSuggestionsAsync(SearchSuggestionsQueryDto searchSuggestionsQuery);
+        Task<SearchSuggestionsDto> GetSuggestionsAsync(SearchSuggestionsQueryDto searchSuggestionsQuery);
         Task<PageData<ProjectDto>> SearchAsync(SearchModelDto searchModel);
     }
 }

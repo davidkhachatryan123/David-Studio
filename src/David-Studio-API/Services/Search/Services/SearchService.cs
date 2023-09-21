@@ -106,17 +106,23 @@ namespace Search.Services
             };
         }
 
-        public async Task<SearchSuggestionsDto> GetSearchSuggestionsAsync(SearchSuggestionsQueryDto searchSuggestionsQuery)
+        public async Task<SearchSuggestionsDto> GetSuggestionsAsync(SearchSuggestionsQueryDto searchSuggestionsQuery)
         {
+            QueryContainerDescriptor<Project> queryForText = new();
+
+            if (searchSuggestionsQuery.SearchText is null)
+                queryForText.MatchAll();
+            else
+                queryForText.MatchPhrasePrefix(mpp => mpp
+                    .Field(f => f.Name)
+                    .Query(searchSuggestionsQuery.SearchText)
+                    .Slop(3)
+                );
+
             var response = await _client.SearchAsync<Project>(s => s
                 .Size(0)
-                .Query(q => q
-                    .MatchPhrasePrefix(m => m
-                        .Field(f => f.Name)
-                        .Query(searchSuggestionsQuery.SearchText)
-                    )
-                ).
-                Aggregations(a => a
+                .Query(q => queryForText)
+                .Aggregations(a => a
                     .Filter("projects", fp => fp
                         .Filter(f => f
                             .Term(t => t
