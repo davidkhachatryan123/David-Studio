@@ -1,14 +1,14 @@
 version: '3.4'
 
 services:
-  # web-api-gw:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #   ports:
-  #     - "8081:5000"
-  #   volumes:
-  #     - ./ApiGateways/Web.Bff:/app/configuration
+  web-api-gw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "8081:5000"
+    volumes:
+      - ./ApiGateways/Web.Bff:/app/configuration
 
   crm-api-gw:
     environment:
@@ -53,18 +53,18 @@ services:
   #   depends_on:
   #     - identity-server
 
-  # users-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
-  #     - Services__IdentityServerGrpcUri=http://identity-server:5005
-  #     - Identity__Url=http://identity-server:5000
-  #     - Identity__ExternalUrl=http://localhost:5010
-  #   ports:
-  #     - "5020:5000"
-  # #   depends_on:
-  # #     - rabbitmq
+  users-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - Services__IdentityServerGrpcUri=http://identity-server:5005
+      - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
+    ports:
+      - "5020:5000"
+  #   depends_on:
+  #     - rabbitmq
 
   portfolio-api:
     environment:
@@ -81,17 +81,17 @@ services:
     #   - db
     #   - rabbitmq
 
-  # pricing-api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=http://+:5000
-  #     - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
-  #     - Identity__Url=http://identity-server:5000
-  #     - Identity__ExternalUrl=http://localhost:5010
-  #   ports:
-  #     - "5040:5000"
-  #   # depends_on:
-  #   #   - db
+  pricing-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__PricingDb=Server=db;Database=DavidStudio.Service.PricingDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - Identity__Url=http://identity-server:5000
+      - Identity__ExternalUrl=http://localhost:5010
+    ports:
+      - "5040:5000"
+    # depends_on:
+    #   - db
 
   search-api:
     environment:
