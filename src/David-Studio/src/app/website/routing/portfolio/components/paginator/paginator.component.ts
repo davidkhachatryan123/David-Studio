@@ -7,9 +7,7 @@ import { Pagintaion } from '../../models';
   styleUrls: ['paginator.component.css']
 })
 export class PaginatorComponent implements OnInit {
-  @Input() pagination: Pagintaion = new Pagintaion(
-    1, 1
-  );
+  @Input() pagination: Pagintaion = new Pagintaion(1, 1);
 
   @Output() pageChanged = new EventEmitter<number>();
 

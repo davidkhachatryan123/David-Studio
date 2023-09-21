@@ -1,17 +1,16 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Pagintaion, Search } from './models';
 import { AppColors } from '../../consts';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ProjectReadDto, TagReadDto } from '../../dto';
-import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
 
 @Component({
   selector: 'portfolio',
   templateUrl: 'portfolio.component.html',
   styleUrls: [ 'portfolio.component.css' ]
 })
-export class PortfolioComponent implements AfterViewInit {
+export class PortfolioComponent {
   translateSectionName = 'portfolio';
 
   projects: Array<ProjectReadDto> = [
@@ -24,49 +23,40 @@ export class PortfolioComponent implements AfterViewInit {
       new TagReadDto(5, 'MySQL', AppColors.mysql)
     ])
   ];
-  pagination: Pagintaion = new Pagintaion(1, 22);
-  latestSearchTextValue = '';
 
-  @ViewChild(FilterTagComponent, {static: false})
-  private filterTagsElement: FilterTagComponent | undefined;
+  pagination: Pagintaion = new Pagintaion(1, 22);
+
+  searchModel = new Search('', [], this.pagination.activePage);
 
   constructor(
     private title: Title,
-    private translate: TranslateService) {
-
-    translate.get(`title.${this.translateSectionName}`).subscribe(text => title.setTitle(text));
+    private translate: TranslateService
+  ) {
+    this.translate.get(`title.${this.translateSectionName}`)
+    .subscribe(text => this.title.setTitle(text));
   }
-
-  ngAfterViewInit() {
-    this.submitSearch(this.latestSearchTextValue);
-  }
-
-
-  //####################################################
-  // Page functions
-  //####################################################
 
   changePage($event: number) {
-    console.log(`Page are chnaged: ${$event}`);
+    this.searchModel.page = $event;
+    this.search();
+  }
 
-    if (this.filterTagsElement)
-      this.submitSearch(this.latestSearchTextValue);
+  submitSearch($event) {
+    this.searchModel.text = $event;
+    this.search();
+  }
+
+  updateTags($event) {
+    this.searchModel.tags = $event;
+    this.search();
   }
 
 
-  //####################################################
-  // Submit search
-  //####################################################
+  // ###################
+  //  Submit search
+  // ###################
 
-  submitSearch(searchText: string) {
-    console.log(new Search(searchText, this.filterTagsElement.tags, this.pagination.activePage));
-
-    this.latestSearchTextValue = searchText;
-  }
-
-  submitSearchOnlyTags(tags: Array<TagReadDto>) {
-    const searchModel = new Search(this.latestSearchTextValue, tags, this.pagination.activePage);
-
-    console.log(searchModel);
+  search() {
+    console.log(this.searchModel);
   }
 }

@@ -73,7 +73,7 @@ export class SearchComponent implements OnDestroy {
     this.searchSubscription = this.searchSubject
     .pipe(debounceTime(500))
     .subscribe((searchText: string) => {
-      this.sendSearchQuery(searchText);
+      this.getSearchSuggestions(searchText);
     });
   }
 
@@ -137,9 +137,8 @@ export class SearchComponent implements OnDestroy {
       this.submitSearch($event.target.innerHTML);
   }
 
-  sendSearchQuery(text: string) {
-    if (text.trim())
-      console.log(text.trim());
+  getSearchSuggestions(text: string) {
+    console.log(text.trim());
   }
 
   submitSearch(searchText: string) {
