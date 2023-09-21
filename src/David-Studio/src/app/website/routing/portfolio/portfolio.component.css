@@ -9,3 +9,13 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.portfolio .projects .project {
+  width: 100%;
+}
+
+@media(min-width:768px) {
+  .portfolio .projects .project {
+    width: auto;
+  }
+}

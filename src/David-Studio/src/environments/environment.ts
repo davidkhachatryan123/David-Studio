@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   api: 'http://localhost:8081/api/v1',
   config: {
-    languageCookieName: 'lang'
+    languageCookieName: 'lang',
+    maxProjectsCountInPortfolioPage: 30
   }
 };
 

@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
-import { Pagintaion, Search } from './models';
-import { AppColors } from '../../consts';
+import { Component, ViewChild } from '@angular/core';
+import { Pagintaion } from './models';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { ProjectReadDto, TagReadDto } from '../../dto';
+import { ProjectReadDto, SearchModelDto, TagReadDto } from '../../dto';
+import { PortfolioService } from '../../services/portfolio.service';
+import { PageData } from '../../models';
+import { PaginatorComponent } from './components/paginator/paginator.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'portfolio',
@@ -13,41 +16,34 @@ import { ProjectReadDto, TagReadDto } from '../../dto';
 export class PortfolioComponent {
   translateSectionName = 'portfolio';
 
-  projects: Array<ProjectReadDto> = [
-    new ProjectReadDto(1, 'Smart Home', '', 'assets/img/Projects/proj1.jpg',
-    [
-      new TagReadDto(1, 'C#', AppColors.cs),
-      new TagReadDto(2, 'Arduino', AppColors.arduino),
-      new TagReadDto(3, 'IoT', AppColors.iot),
-      new TagReadDto(4, 'PCB', AppColors.pcb),
-      new TagReadDto(5, 'MySQL', AppColors.mysql)
-    ])
-  ];
+  projects: Array<ProjectReadDto> = [];
+  pagination: Pagintaion = new Pagintaion(1, 1);
+  searchModel = new SearchModelDto(1, environment.config.maxProjectsCountInPortfolioPage);
 
-  pagination: Pagintaion = new Pagintaion(1, 22);
-
-  searchModel = new Search('', [], this.pagination.activePage);
+  @ViewChild(PaginatorComponent, { static: false })
+  paginator: PaginatorComponent | undefined;
 
   constructor(
     private title: Title,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private portfolioService: PortfolioService
   ) {
     this.translate.get(`title.${this.translateSectionName}`)
     .subscribe(text => this.title.setTitle(text));
   }
 
+  submitSearch($event: string) {
+    this.searchModel.searchText = $event;
+    this.search();
+  }
+
+  updateTags($event: Array<TagReadDto>) {
+    this.searchModel.tagIds = $event.map(t => t.id);
+    this.search();
+  }
+
   changePage($event: number) {
     this.searchModel.page = $event;
-    this.search();
-  }
-
-  submitSearch($event) {
-    this.searchModel.text = $event;
-    this.search();
-  }
-
-  updateTags($event) {
-    this.searchModel.tags = $event;
     this.search();
   }
 
@@ -57,6 +53,13 @@ export class PortfolioComponent {
   // ###################
 
   search() {
-    console.log(this.searchModel);
+    this.portfolioService.search(this.searchModel)
+    .subscribe((result: PageData<ProjectReadDto>) => {
+      this.projects = result.entities;
+      this.pagination.totalPages =
+        Math.ceil(result.totalCount / this.searchModel.count);
+
+      this.paginator.updatePaginator();
+    });
   }
 }
