@@ -18,7 +18,7 @@ namespace Search.Services
 
             foreach (var tag in tags)
             {
-                tag.Join = JoinField.Link<Tag>(projectId);
+                tag.Join = JoinField.Link<Tag>($"p-{projectId}");
 
                 descriptor.Index<Tag>(op => op
                     .Document(tag)
