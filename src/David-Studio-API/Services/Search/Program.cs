@@ -1,5 +1,6 @@
 ﻿using Search;
 using Search.Extensions;
+using Search.Services;
 using Search.Services.RepositoryManager;
 using Serilog;
 using Services.Common.Extensions;
@@ -15,6 +16,7 @@ builder.Services.AddMappings();
 builder.Services.AddElasticSearch(builder.Configuration);
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 
 builder.Services.AddEventBus(builder.Configuration);
 builder.Services.AddEventBusHandlers();

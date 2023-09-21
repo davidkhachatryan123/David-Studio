@@ -48,7 +48,11 @@ namespace Search.IntegrationEvents.Handlers
 
 
             BulkResponse tagsResponse =
-                await _repositoryManager.Tags.IndexRangeAsync(data.Project.Tags, data.Project.Id);
+                await _repositoryManager.Tags.IndexRangeAsync(
+                    _mapper.Map<IEnumerable<Tag>>(
+                        data.Project.Tags
+                    ),
+                    data.Project.Id);
 
             if (tagsResponse.IsValid)
                 _logger.LogInformation("Index Tags for Project {ProjectId}: succeeded", data.Project.Id);

@@ -1,6 +1,4 @@
-﻿using Search.Models;
-
-namespace Search.Dtos
+﻿namespace Search.Dtos
 {
     public class ProjectDto
     {
@@ -12,6 +10,6 @@ namespace Search.Dtos
 
         public string ImageUrl { get; set; } = null!;
 
-        public List<Tag> Tags { get; set; } = new();
+        public List<TagDto> Tags { get; set; } = new();
     }
 }

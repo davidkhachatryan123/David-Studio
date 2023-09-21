@@ -2,9 +2,9 @@
 using Elasticsearch.Net;
 using EventBus.Abstractions;
 using Nest;
-using Portfolio.Mappings;
 using Search.IntegrationEvents.Events;
 using Search.IntegrationEvents.Handlers;
+using Search.Mappings;
 using Search.Models;
 
 namespace Search.Extensions
@@ -65,7 +65,8 @@ namespace Search.Extensions
         {
             var mapperConfig = new MapperConfiguration(map =>
             {
-                map.AddProfile<ProjectMappingProfile>();
+                map.AddProfile<ProjectsMappingProfile>();
+                map.AddProfile<TagsMappingProfile>();
             });
 
             services.AddSingleton(mapperConfig.CreateMapper());
