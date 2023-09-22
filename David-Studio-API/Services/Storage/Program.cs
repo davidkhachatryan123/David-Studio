@@ -1,18 +1,17 @@
-﻿using Microsoft.Extensions.FileProviders;
-using Portfolio.Extensions;
-using Services.Common;
+﻿using Portfolio.Extensions;
 using Services.Common.Configurations;
 using Storage.Services;
 using Storage.Grpc;
 using Storage.Options;
 using Services.Common.Extensions;
-using Storage.IntegrationEvents;
 using EventBus.Abstractions;
 using Storage.IntegrationEvents.Handlers;
 using Storage.IntegrationEvents.Events;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddStorageCors(builder.Configuration);
 
 builder.Services.Configure<StorageOptions>(
     builder.Configuration.GetSection(nameof(StorageOptions)));
@@ -36,6 +35,8 @@ builder.Services.AddTransient<IIntegrationEventHandler<ImagesDeleteIntegrationEv
 
 builder.Services.AddDefaultSwagger();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddSerilog();
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
@@ -43,6 +44,8 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
     app.UseDefaultSwagger(builder.Configuration);
+
+app.UseCors("Resources");
 
 app.UseStaticFilesDefaults();
 
@@ -52,6 +55,8 @@ app.MapControllers().RequireAuthorization();
 
 app.ConfigureEventBus();
 app.MapGrpcService<StorageService>();
+
+app.MapHealthChecks("/healthz");
 
 app.UseSerilogRequestLogging();
 

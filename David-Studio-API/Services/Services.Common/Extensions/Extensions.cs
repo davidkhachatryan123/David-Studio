@@ -19,7 +19,7 @@ namespace Services.Common.Extensions
     {
         public static void AddDefaultCors(this IServiceCollection services, IConfiguration configuration)
         {
-            string[]? origins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+            string[]? origins = configuration.GetValue<string>("AllowedOrigins")?.Split(';');
 
             services.AddCors(options =>
                 options.AddDefaultPolicy(policy =>

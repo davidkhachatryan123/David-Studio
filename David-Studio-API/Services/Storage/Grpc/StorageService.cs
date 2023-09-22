@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using AutoMapper;
+﻿using AutoMapper;
 using Grpc.Core;
-using Storage;
 using Storage.Models;
 using Storage.Services;
 
@@ -40,4 +38,3 @@ namespace Storage.Grpc
         }
     }
 }
-

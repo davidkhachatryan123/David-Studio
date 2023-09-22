@@ -6,11 +6,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
+
 COPY ["Services/Pricing/Pricing.csproj", "Services/Pricing/"]
 COPY ["Services/Services.Common/Services.Common.csproj", "Services/Services.Common/"]
 COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
 COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+
 RUN dotnet restore "Services/Pricing/Pricing.csproj"
+
 COPY . .
 WORKDIR "/src/Services/Pricing"
 RUN dotnet build "Pricing.csproj" -c Release -o /app/build
@@ -20,5 +23,10 @@ RUN dotnet publish "Pricing.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 
 FROM base AS final
 WORKDIR /app
+
+RUN apt-get -y update
+RUN apt-get -y install curl
+
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "Pricing.dll"]

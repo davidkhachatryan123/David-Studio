@@ -7,11 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
+
 COPY ["Services/Storage/Storage.csproj", "Services/Storage/"]
 COPY ["Services/Services.Common/Services.Common.csproj", "Services/Services.Common/"]
 COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
 COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+
 RUN dotnet restore "Services/Storage/Storage.csproj"
+
 COPY . .
 WORKDIR "/src/Services/Storage"
 RUN dotnet build "Storage.csproj" -c Release -o /app/build
@@ -21,5 +24,10 @@ RUN dotnet publish "Storage.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 
 FROM base AS final
 WORKDIR /app
+
+RUN apt-get -y update
+RUN apt-get -y install curl
+
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "Storage.dll"]

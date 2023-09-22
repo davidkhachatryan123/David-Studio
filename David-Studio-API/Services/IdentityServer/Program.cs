@@ -40,6 +40,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddDefaultSwagger();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddSerilog();
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
@@ -67,6 +69,8 @@ app.ConfigureEventBus();
 
 app.MapGrpcService<ManageUsersService>();
 app.MapGrpcService<AdminsService>();
+
+app.MapHealthChecks("/healthz");
 
 app.UseSerilogRequestLogging();
 

@@ -32,8 +32,6 @@ export class ProjectsComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.onChangeEvent();
     this.paginator.page.subscribe(() => this.onChangeEvent());
-
-    this.reloadData();
   }
 
   onChangeEvent() {

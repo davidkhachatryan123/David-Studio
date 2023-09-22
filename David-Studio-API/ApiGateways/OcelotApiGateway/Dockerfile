@@ -6,8 +6,11 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
+
 COPY ["ApiGateways/OcelotApiGateway/OcelotApiGateway.csproj", "ApiGateways/OcelotApiGateway/"]
+
 RUN dotnet restore "ApiGateways/OcelotApiGateway/OcelotApiGateway.csproj"
+
 COPY . .
 WORKDIR "/src/ApiGateways/OcelotApiGateway"
 RUN dotnet build "OcelotApiGateway.csproj" -c Release -o /app/build
@@ -17,5 +20,10 @@ RUN dotnet publish "OcelotApiGateway.csproj" -c Release -o /app/publish /p:UseAp
 
 FROM base AS final
 WORKDIR /app
+
+RUN apt-get -y update
+RUN apt-get -y install curl
+
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "OcelotApiGateway.dll"]

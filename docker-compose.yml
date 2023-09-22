@@ -1,0 +1,86 @@
+version: '3.4'
+
+services:
+  website:
+    image: davidstudio.website:${TAG:-latest}
+    build:
+      context: ./David-Studio
+      dockerfile: Dockerfile
+
+  admin-panel:
+    image: davidstudio.crm.website:${TAG:-latest}
+    build:
+      context: ./Admin-Panel
+      dockerfile: Dockerfile
+
+  web-api-gw:
+    image: web.ocelot.apigw:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
+
+  crm-api-gw:
+    image: crm.ocelot.apigw:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
+
+  identity-server:
+    image: identity.server:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/IdentityServer/Dockerfile
+
+  identity-server-client:
+    image: identity.server.client:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/IdentityServer/ClientApp/Dockerfile
+
+  users-api:
+    image: users.api:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/Users/Dockerfile
+
+  portfolio-api:
+    image: portfolio.api:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/Portfolio/Dockerfile
+
+  pricing-api:
+    image: pricing.api:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/Pricing/Dockerfile
+
+  search-api:
+    image: search.api:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/Search/Dockerfile
+
+  storage-api:
+    image: storage.api:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/Storage/Dockerfile
+
+  messenger-api:
+    image: messenger.api:${TAG:-latest}
+    build:
+      context: ./David-Studio-API
+      dockerfile: Services/Messanger/Dockerfile
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+
+  elastic-search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
