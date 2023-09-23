@@ -23,8 +23,6 @@ export class PortfolioService {
       queryParams = queryParams.append('tagIds', request.tagIds[index]);
     }
 
-    console.log(queryParams);
-
     return this.http.get<PageData<ProjectReadDto>>(
       `${this.apiUrl}/search`,
       { params: queryParams }
