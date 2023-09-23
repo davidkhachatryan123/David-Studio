@@ -19,6 +19,8 @@ export class PortfolioComponent {
   projects: Array<ProjectReadDto> = [];
   pagination: Pagintaion = new Pagintaion(1, 1);
   searchModel = new SearchModelDto(1, environment.config.maxProjectsCountInPortfolioPage);
+  
+  hideNotFound = true;
 
   @ViewChild(PaginatorComponent, { static: false })
   paginator: PaginatorComponent | undefined;
@@ -60,6 +62,9 @@ export class PortfolioComponent {
         Math.ceil(result.totalCount / this.searchModel.count);
 
       this.paginator.updatePaginator();
+
+      if (!result.entities)
+        this.hideNotFound = false;
     });
   }
 }

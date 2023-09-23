@@ -21,7 +21,9 @@
                          class="project">
       </portfolio-project>
 
-      <portfolio-not-found [class.d-none]="projects.length"></portfolio-not-found>
+      <portfolio-not-found [class.d-none]="projects?.length"
+                           [hide]="hideNotFound">
+      </portfolio-not-found>
     </div>
   
     <portfolio-paginator [pagination]="pagination"

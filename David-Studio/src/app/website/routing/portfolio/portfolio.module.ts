@@ -9,7 +9,7 @@ import { SearchComponent } from './components/search/search.component';
 import { PortfolioProjectComponent } from './components/project/project.component';
 import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { PortfolioService } from '../../services/portfolio.service';
 
