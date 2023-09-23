@@ -18,8 +18,8 @@ export class PortfolioComponent {
 
   projects: Array<ProjectReadDto> = [];
   pagination: Pagintaion = new Pagintaion(1, 1);
-  searchModel = new SearchModelDto(1, environment.config.maxProjectsCountInPortfolioPage);
-  
+  searchModel = new SearchModelDto(1, environment.config.portfolio.maxProjectsCount, environment.config.portfolio.projectTagsLimit);
+
   hideNotFound = true;
   showLoading = true;
 
