@@ -8,7 +8,7 @@ export const environment = {
   config: {
     languageCookieName: 'lang',
     portfolio: {
-      maxProjectsCount: 30,
+      maxProjectsCount: 3,
       projectTagsLimit: 12
     }
   }
