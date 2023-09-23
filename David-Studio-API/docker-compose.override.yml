@@ -28,6 +28,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASS}
       - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - IdentityServer_EmailConfirmation_URL=https://localhost:5011
       - IdentityWebSpa=https://localhost:44300
       - SpaClient=https://localhost:4200
       - IdentityServer=https://localhost:5011
@@ -56,6 +57,7 @@ services:
       - Services__IdentityServerGrpcUri=http://identity-server:5005
       - Identity__Url=http://identity-server:5000
       - Identity__ExternalUrl=http://localhost:5010
+      - IdentityServer_EmailConfirmation_URL=http://localhost:5020
     ports:
       - "5020:5000"
 

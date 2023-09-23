@@ -12,6 +12,7 @@ namespace IdentityServer.Services
     {
         private readonly LinkGenerator _linkGenerator;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,12 +21,14 @@ namespace IdentityServer.Services
         public ManageUsersRepository(
             LinkGenerator linkGenerator,
             IHttpContextAccessor httpContextAccessor,
+            IConfiguration configuration,
             ILogger logger,
             UserManager<ApplicationUser> userManager,
             IEventBus eventBus)
         {
             _linkGenerator = linkGenerator;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
             _logger = logger;
             _userManager = userManager;
             _eventBus = eventBus;
@@ -50,7 +53,7 @@ namespace IdentityServer.Services
 
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            string? confirmUrl = _linkGenerator.GetUriByAction(
+            string? confirmUrl = _linkGenerator.GetPathByAction(
                 _httpContextAccessor.HttpContext!,
                 nameof(Account.ConfirmEmail),
                 nameof(Account),
@@ -60,6 +63,8 @@ namespace IdentityServer.Services
                     Token = token,
                     ReturnUrl = requestDto.ReturnUrl
                 });
+
+            confirmUrl = _configuration["IdentityServer_EmailConfirmation_URL"]! + confirmUrl;
 
             if (confirmUrl is null)
                 return "Error occurred when trying to generate confirmation url";

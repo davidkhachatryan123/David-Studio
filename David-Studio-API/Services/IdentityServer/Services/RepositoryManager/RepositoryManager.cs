@@ -10,6 +10,7 @@ namespace IdentityServer.RepositoryManager.Services
     {
         private readonly LinkGenerator _linkGenerator;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
         private readonly ILogger<RepositoryManager> _logger;
 
         private readonly ApplicationDbContext _context;
@@ -21,6 +22,7 @@ namespace IdentityServer.RepositoryManager.Services
         public RepositoryManager(
             LinkGenerator linkGenerator,
             IHttpContextAccessor httpContextAccessor,
+            IConfiguration configuration,
             ILogger<RepositoryManager> logger,
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
@@ -29,6 +31,7 @@ namespace IdentityServer.RepositoryManager.Services
         {
             _linkGenerator = linkGenerator;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
             _logger = logger;
 
             _context = context;
@@ -40,7 +43,7 @@ namespace IdentityServer.RepositoryManager.Services
         {
             get
             {
-                _manageUsersRespository ??= new ManageUsersRepository(_linkGenerator, _httpContextAccessor, _logger, _userManager, _eventBus);
+                _manageUsersRespository ??= new ManageUsersRepository(_linkGenerator, _httpContextAccessor, _configuration, _logger, _userManager, _eventBus);
 
                 return _manageUsersRespository;
             }
