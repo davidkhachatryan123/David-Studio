@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TableCellConfiguration, TableColor, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
@@ -13,7 +13,7 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
   selector: 'app-dashboard-main-portfolio-tags',
   templateUrl: 'tags.component.html'
 })
-export class TagsComponent implements AfterViewInit {
+export class TagsComponent {
   tableConfiguration: Array<TableCellConfiguration> = [
     new TableCellConfiguration(
       new TableText(),
@@ -36,7 +36,7 @@ export class TagsComponent implements AfterViewInit {
   selectedRows: Array<TagReadDto> = [];
   tableOptions = new TableOptions('name', 'asc', 1, 30);
 
-  @ViewChild(TableComponent) table: TableComponent; 
+  @ViewChild(TableComponent) table: TableComponent;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -44,10 +44,6 @@ export class TagsComponent implements AfterViewInit {
     private tagDialogService: TagDialogService,
     private tagsService: TagsService
   ) { }
-
-  ngAfterViewInit() {
-    this.reloadData();
-  }
 
   reloadData() {
     this.tagsService.getAll(this.tableOptions)
