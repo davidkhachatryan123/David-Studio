@@ -14,13 +14,7 @@ export class PaginatorComponent implements OnInit {
   isShow = true;
 
   ngOnInit() {
-    this.setPage(1);
-  }
-
-  setPage(pageNumber: number) {
-    this.pagination.activePage = pageNumber;
-    this.updatePaginator();
-    this.pageChanged.emit(this.pagination.activePage);
+    this.changePage(1);
   }
 
   updatePaginator() {
@@ -38,6 +32,16 @@ export class PaginatorComponent implements OnInit {
       this.isShow = true;
     else
       this.isShow = false;
+  }
+
+  setPage(pageNumber: number) {
+    this.pagination.activePage = pageNumber;
+    this.updatePaginator();
+  }
+
+  changePage(pageNumber: number) {
+    this.setPage(pageNumber);
+    this.pageChanged.emit(this.pagination.activePage);
   }
 
   private range(from: number, to: number): Array<number> {

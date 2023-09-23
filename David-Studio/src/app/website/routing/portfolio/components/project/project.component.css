@@ -32,7 +32,7 @@
   vertical-align: middle;
 
   color: var(--color-dark);
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
 }
 
@@ -96,8 +96,9 @@
 }
 
 .project .body h2 {
+  display: none;
+
   text-transform: none;
-  font-size: 25px;
 }
 
 .project .overlay .prog_language {
@@ -115,6 +116,10 @@
   color: white;
 }
 
+.project .img:hover .overlay {
+  height: calc(var(--project-height) - var(--project-title-height));
+}
+
 @media(min-width:768px) {
   :host {
     --project-title-height: 80px;
@@ -130,16 +135,18 @@
   }
 
   .project .title a {
-    font-size: 30px;
+    font-size: 25px;
   }
 
   .project .body h2 {
+    display: block;
+
     font-size: 30px;
   }
 
   .project .overlay .prog_language {
-    width: 120px;
-    height: 60px;
+    width: 100px;
+    height: 50px;
     font-size: 20px;
   }
 

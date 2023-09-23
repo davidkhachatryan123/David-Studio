@@ -44,6 +44,9 @@ services:
       - ../certs:/https:ro
 
   identity-server-client:
+    build:
+      args:
+        - host=localhost
     ports:
       - "44300:443"
     volumes:
