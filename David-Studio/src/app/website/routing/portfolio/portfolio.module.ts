@@ -6,10 +6,11 @@ import { SharedModule } from '../../shared-module/shared.module';
 
 import { PortfolioComponent } from './portfolio.component';
 import { SearchComponent } from './components/search/search.component';
-import { PortfolioProjectComponent } from './components/project/project.component';
 import { FilterTagComponent } from './components/filter-tag/filter-tag.component';
+import { PortfolioProjectComponent } from './components/project/project.component';
+import { LoaderComponent } from '../../loader/loader.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 import { PortfolioService } from '../../services/portfolio.service';
 
@@ -22,10 +23,11 @@ import { PortfolioService } from '../../services/portfolio.service';
   declarations: [
     PortfolioComponent,
     SearchComponent,
-    PortfolioProjectComponent,
     FilterTagComponent,
-    PaginatorComponent,
-    NotFoundComponent
+    PortfolioProjectComponent,
+    LoaderComponent,
+    NotFoundComponent,
+    PaginatorComponent
   ],
   providers: [
     PortfolioService

@@ -13,6 +13,18 @@
   background-size: cover;
 }
 
+@media(min-width:768px) {
+  .latest-proj .project-image {
+    height: 200px;
+  }
+}
+
+@media(min-width:1140px) {
+  .latest-proj .project-image {
+    height: 300px;
+  }
+}
+
 .latest-proj .project-image, .latest-proj .title {
   cursor: pointer;
 

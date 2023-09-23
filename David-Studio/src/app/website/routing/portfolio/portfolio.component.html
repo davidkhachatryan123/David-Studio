@@ -21,7 +21,15 @@
                          class="project">
       </portfolio-project>
 
-      <portfolio-not-found [class.d-none]="projects.length"></portfolio-not-found>
+      <app-loader class="loader"
+                  [style.display]="showLoading ? 'block' : 'none'"
+                  [speed]="1"
+                  [thickness]="'5px'">
+      </app-loader>
+
+      <portfolio-not-found [class.d-none]="projects?.length"
+                           [hide]="hideNotFound">
+      </portfolio-not-found>
     </div>
   
     <portfolio-paginator [pagination]="pagination"

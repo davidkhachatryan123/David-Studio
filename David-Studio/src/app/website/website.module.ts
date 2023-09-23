@@ -3,7 +3,9 @@ import { RouterModule } from '@angular/router';
 
 import { WebsiteRoutingModule } from './website-routing.module';
 import { SharedModule } from './shared-module/shared.module';
+
 import { WebSiteComponent } from './website.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   imports: [
@@ -11,7 +13,6 @@ import { WebSiteComponent } from './website.component';
     SharedModule,
     RouterModule
   ],
-  declarations: [WebSiteComponent],
-  providers: [],
+  declarations: [WebSiteComponent]
 })
 export class WebSiteModule { }

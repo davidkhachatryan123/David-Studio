@@ -19,6 +19,9 @@ export class PortfolioComponent {
   projects: Array<ProjectReadDto> = [];
   pagination: Pagintaion = new Pagintaion(1, 1);
   searchModel = new SearchModelDto(1, environment.config.maxProjectsCountInPortfolioPage);
+  
+  hideNotFound = true;
+  showLoading = true;
 
   @ViewChild(PaginatorComponent, { static: false })
   paginator: PaginatorComponent | undefined;
@@ -34,7 +37,7 @@ export class PortfolioComponent {
 
   submitSearch($event: string) {
     this.searchModel.searchText = $event;
-    this.search();
+    this.search(true);
   }
 
   updateTags($event: Array<TagReadDto>) {
@@ -52,14 +55,20 @@ export class PortfolioComponent {
   //  Submit search
   // ###################
 
-  search() {
+  search(resetPage: boolean = false) {
     this.portfolioService.search(this.searchModel)
     .subscribe((result: PageData<ProjectReadDto>) => {
       this.projects = result.entities;
       this.pagination.totalPages =
         Math.ceil(result.totalCount / this.searchModel.count);
 
-      this.paginator.updatePaginator();
+      if(!resetPage)
+        this.paginator.updatePaginator();
+
+      if (!result.entities)
+        this.hideNotFound = false;
+      else
+        this.showLoading = false;
     });
   }
 }

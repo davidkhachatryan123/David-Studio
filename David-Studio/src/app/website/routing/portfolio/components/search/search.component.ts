@@ -25,6 +25,7 @@ export class SearchComponent implements OnDestroy {
 
   // If it's true search box is showing
   isShow = false;
+  showLoading = false;
 
   // This was created for automatically send search query by timeout
   private searchSubject = new Subject<string>();
@@ -71,7 +72,10 @@ export class SearchComponent implements OnDestroy {
     this.searchSubscription = this.searchSubject
     .pipe(debounceTime(500))
     .subscribe((searchText: string) => {
+      this.showLoading = true;
+
       this.getSearchSuggestions(searchText);
+      this.submitSearch(searchText, false);
     });
   }
 
@@ -84,8 +88,8 @@ export class SearchComponent implements OnDestroy {
   }
 
   onSearchKeyDown($event: KeyboardEvent) {
-    if ($event.key === 'Enter') {
-      this.submitSearch(this.searchElement.nativeElement.value);
+    if ($event.key === 'Enter' || $event.key === 'Escape') {
+      this.searchElement.nativeElement.blur();
     }
     else if ($event.key === 'ArrowUp') {
       this.focusedIndex > 0
@@ -98,14 +102,14 @@ export class SearchComponent implements OnDestroy {
     } else this.focusedIndex = -1;
 
     const searchValue = this.text_result[this.focusedIndex];
-    
+
     if (searchValue)
       this.searchElement.nativeElement.value = searchValue;
   }
 
 
   //####################################################
-  // Searchbox block of tags
+  // Part of searchbox tags
   //####################################################
 
   tagOnClick(indexOfTag: number) {
@@ -145,14 +149,19 @@ export class SearchComponent implements OnDestroy {
       this.tag_result = suggestions.tags.map(function(tag: TagReadDto) {
         return { tag: tag, selected: false };
       });
+
+      this.showLoading = false;
     });
   }
 
-  submitSearch(searchText: string) {
-    this.searchSubscription?.unsubscribe();
+  submitSearch(searchText: string, hide: boolean = true) {
     this.searchElement.nativeElement.value = searchText.trim();
-    this.searchElement.nativeElement.blur();
-    this.isShow = false;
+   
+    if (hide) {
+      this.searchSubscription?.unsubscribe();
+      this.searchElement.nativeElement.blur();
+      this.isShow = false;
+    }
 
     this.searchSubmit.emit(searchText.trim());
   }

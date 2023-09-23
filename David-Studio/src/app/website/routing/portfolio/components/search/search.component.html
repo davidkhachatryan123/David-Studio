@@ -12,6 +12,13 @@
              (input)="onSearchChange($event)"
              (keydown)="onSearchKeyDown($event)">
 
+      <app-loader class="loader"
+                  [style.display]="showLoading ? 'block' : 'none'"
+                  [speed]=".7"
+                  [size]="'30px'"
+                  [thickness]="'3px'">
+      </app-loader>
+
       <button type="submit" (click)="submitSearch(search.value)">
         <i class="fas fa-search">&nbsp;</i>
       </button>
