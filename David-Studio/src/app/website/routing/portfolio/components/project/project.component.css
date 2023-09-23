@@ -96,8 +96,9 @@
 }
 
 .project .body h2 {
+  display: none;
+
   text-transform: none;
-  font-size: 25px;
 }
 
 .project .overlay .prog_language {
@@ -113,6 +114,10 @@
   font-size: 15px;
   margin: 5px 5px;
   color: white;
+}
+
+.project .img:hover .overlay {
+  height: calc(var(--project-height) - var(--project-title-height));
 }
 
 @media(min-width:768px) {
@@ -134,6 +139,8 @@
   }
 
   .project .body h2 {
+    display: block;
+
     font-size: 30px;
   }
 
