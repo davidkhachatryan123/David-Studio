@@ -126,21 +126,21 @@
   }
   
   .project .title {
-      padding: 0 50px;
+    padding: 0 50px;
   }
 
   .project .title a {
-      font-size: 30px;
+    font-size: 30px;
   }
 
   .project .body h2 {
-      font-size: 30px;
+    font-size: 30px;
   }
 
   .project .overlay .prog_language {
-      width: 120px;
-      height: 60px;
-      font-size: 20px;
+    width: 120px;
+    height: 60px;
+    font-size: 20px;
   }
 
   .project .img:hover .overlay {
