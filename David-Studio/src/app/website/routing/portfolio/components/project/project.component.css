@@ -32,7 +32,7 @@
   vertical-align: middle;
 
   color: var(--color-dark);
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
 }
 
@@ -130,7 +130,7 @@
   }
 
   .project .title a {
-    font-size: 30px;
+    font-size: 25px;
   }
 
   .project .body h2 {
