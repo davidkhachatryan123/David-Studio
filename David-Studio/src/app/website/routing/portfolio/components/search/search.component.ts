@@ -77,6 +77,8 @@ export class SearchComponent implements OnDestroy {
 
   onSearchBlur() {
     this.searchSubscription?.unsubscribe();
+
+    this.submitSearch(this.searchElement.nativeElement.value);
   }
 
   onSearchChange($event) {
@@ -84,8 +86,8 @@ export class SearchComponent implements OnDestroy {
   }
 
   onSearchKeyDown($event: KeyboardEvent) {
-    if ($event.key === 'Enter') {
-      this.submitSearch(this.searchElement.nativeElement.value);
+    if ($event.key === 'Enter' || $event.key === 'Escape') {
+      this.searchElement.nativeElement.blur();
     }
     else if ($event.key === 'ArrowUp') {
       this.focusedIndex > 0
@@ -98,7 +100,7 @@ export class SearchComponent implements OnDestroy {
     } else this.focusedIndex = -1;
 
     const searchValue = this.text_result[this.focusedIndex];
-    
+
     if (searchValue)
       this.searchElement.nativeElement.value = searchValue;
   }
