@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { TableButton, TableCellConfiguration, TableOptions, TableText } from 'src/app/shared-module/dashboard/table/models';
 import { DeleteDialogService } from 'src/app/shared-module/dashboard/dialogs/delete/services/delete-dialog.service';
@@ -14,7 +14,7 @@ import { TableComponent } from 'src/app/shared-module/dashboard';
   selector: 'app-dashboard-main-admins',
   templateUrl: 'admins.component.html'
 })
-export class AdminsComponent implements AfterViewInit {
+export class AdminsComponent {
   tableConfiguration: Array<TableCellConfiguration> = [
     new TableCellConfiguration(
       new TableText(),
@@ -60,10 +60,6 @@ export class AdminsComponent implements AfterViewInit {
     private adminsService: AdminsService,
     private manageUsersService: ManageUsersService
   ) { }
-
-  ngAfterViewInit() {
-    this.reloadData();
-  }
 
   reloadData() {
     this.adminsService.getAll(this.tableOptions)

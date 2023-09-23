@@ -7,11 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
+
 COPY ["Services/IdentityServer/IdentityServer.csproj", "Services/IdentityServer/"]
 COPY ["Services/Services.Common/Services.Common.csproj", "Services/Services.Common/"]
 COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
 COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
+
 RUN dotnet restore "Services/IdentityServer/IdentityServer.csproj"
+
 COPY . .
 WORKDIR "/src/Services/IdentityServer"
 RUN dotnet build "IdentityServer.csproj" -c Release -o /app/build
@@ -21,5 +24,10 @@ RUN dotnet publish "IdentityServer.csproj" -c Release -o /app/publish /p:UseAppH
 
 FROM base AS final
 WORKDIR /app
+
+RUN apt-get -y update
+RUN apt-get -y install curl
+
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "IdentityServer.dll"]

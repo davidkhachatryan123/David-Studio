@@ -1,11 +1,8 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Portfolio.Database;
 using Storage.Models;
 using Storage.Options;
-using System;
 
 namespace Storage.Services
 {

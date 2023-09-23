@@ -2,19 +2,12 @@
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
 using EventBus.Abstractions;
-using EventBus.Events;
 using IdentityServer.Dtos;
-using IdentityServer.IntegrationEvents.Events;
 using IdentityServer.Models;
 using IdentityServer.RepositoryManager.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
-using static Duende.IdentityServer.Models.IdentityResources;
 
 namespace IdentityServer.Controllers
 {

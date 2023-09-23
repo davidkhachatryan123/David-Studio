@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using Serilog;
+﻿using Serilog;
 using Services.Common.Extensions;
 using Users.Extensions;
 using Users.Grpc.Clients;
@@ -22,6 +20,8 @@ builder.Services.AddScoped<IAdminsDataClient, AdminsDataClient>();
 
 builder.Services.AddDefaultSwagger();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddSerilog();
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
@@ -33,6 +33,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
+
+app.MapHealthChecks("/healthz");
 
 app.UseSerilogRequestLogging();
 

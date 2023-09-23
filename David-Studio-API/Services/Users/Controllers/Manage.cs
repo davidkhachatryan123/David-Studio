@@ -1,9 +1,7 @@
-﻿using Azure;
-using EventBus.Abstractions;
+﻿using EventBus.Abstractions;
 using EventBus.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Users.Dtos;
 using Users.Grpc.Clients;
 using Users.IntegrationEvents.Events;
@@ -17,15 +15,21 @@ namespace Users.Controllers
     {
         private readonly IEventBus _eventBus;
         private readonly IManageUsersClient _manageUsersClient;
+        private readonly LinkGenerator _linkGenerator;
+        private readonly IConfiguration _configuration;
         private readonly ILogger<Manage> _logger;
 
         public Manage(
             IEventBus eventBus,
             IManageUsersClient manageUsersClient,
+            LinkGenerator linkGenerator,
+            IConfiguration configuration,
             ILogger<Manage> logger)
         {
             _eventBus = eventBus;
             _manageUsersClient = manageUsersClient;
+            _linkGenerator = linkGenerator;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -38,7 +42,8 @@ namespace Users.Controllers
 
             TokenResponse response = await _manageUsersClient.GetEmailConfirmationTokenAsync(requestDto.UserId);
 
-            string? confirmUrl = Url.Action(
+            string? confirmUrl = _linkGenerator.GetPathByAction(
+                HttpContext,
                 nameof(ConfirmEmail),
                 nameof(Manage),
                 new ConfirmEmailDto
@@ -46,8 +51,9 @@ namespace Users.Controllers
                     UserId = requestDto.UserId,
                     Token = response.Token,
                     ReturnUrl = requestDto.ReturnUrl
-                },
-                Request.Scheme);
+                });
+
+            confirmUrl = _configuration["IdentityServer_EmailConfirmation_URL"]! + confirmUrl;
 
             if (confirmUrl is null)
                 return BadRequest("Confirm email action url is null");

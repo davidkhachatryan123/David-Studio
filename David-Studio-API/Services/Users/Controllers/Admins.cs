@@ -1,5 +1,4 @@
-﻿using EventBus.Abstractions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Services.Common.Models;
 using Users.Dtos;
 using Users.Grpc.Clients;

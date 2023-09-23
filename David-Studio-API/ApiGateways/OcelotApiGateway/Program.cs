@@ -9,7 +9,7 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
-        policy.WithOrigins(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()!);
+        policy.WithOrigins(builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(';'));
     }));
 
 var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl");
@@ -30,11 +30,19 @@ IConfiguration configuration = builder.Configuration
     .AddJsonFile(Path.Combine("configuration", "configuration.json"), false, true)
     .Build();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddOcelot(configuration);
 
 var app = builder.Build();
 
+app.UseRouting();
+
 app.UseCors();
+
+app.MapHealthChecks("/healthz");
+
+app.UseEndpoints(e => e.MapControllers());
 
 app.UseOcelot().Wait();
 

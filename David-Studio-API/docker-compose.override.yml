@@ -28,6 +28,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASS}
       - ConnectionStrings__IdentityDb=Server=db;Database=DavidStudio.Service.IdentityDb;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
+      - IdentityServer_EmailConfirmation_URL=https://localhost:5011
       - IdentityWebSpa=https://localhost:44300
       - SpaClient=https://localhost:4200
       - IdentityServer=https://localhost:5011
@@ -41,17 +42,12 @@ services:
       - "5011:5001"
     volumes:
       - ../certs:/https:ro
-  #   depends_on:
-  #     - db
-  #     - rabbitmq
 
   identity-server-client:
     ports:
       - "44300:443"
     volumes:
       - ../certs:/https:ro
-  #   depends_on:
-  #     - identity-server
 
   users-api:
     environment:
@@ -61,10 +57,9 @@ services:
       - Services__IdentityServerGrpcUri=http://identity-server:5005
       - Identity__Url=http://identity-server:5000
       - Identity__ExternalUrl=http://localhost:5010
+      - IdentityServer_EmailConfirmation_URL=http://localhost:5020
     ports:
       - "5020:5000"
-  #   depends_on:
-  #     - rabbitmq
 
   portfolio-api:
     environment:
@@ -77,9 +72,6 @@ services:
       - Identity__ExternalUrl=http://localhost:5010
     ports:
       - "5030:5000"
-    # depends_on:
-    #   - db
-    #   - rabbitmq
 
   pricing-api:
     environment:
@@ -90,8 +82,6 @@ services:
       - Identity__ExternalUrl=http://localhost:5010
     ports:
       - "5040:5000"
-    # depends_on:
-    #   - db
 
   search-api:
     environment:
@@ -101,13 +91,13 @@ services:
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
     ports:
       - "5050:5000"
-    # depends_on:
-    #   - elastic-search
 
   storage-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASS}
       - ConnectionStrings__StorageDb=Server=db;Database=DavidStudio.Service.Storage;User=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - ConnectionStrings__EventBus=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${EXTERNAL_HOST}:5672/
       - Resources_Url=http://localhost:5070/Resources
@@ -116,12 +106,11 @@ services:
       - Identity__ExternalUrl=http://localhost:5010
     volumes:
         - storage:/storage
+        - ../certs:/https:ro
     ports:
       - "5070:5000"
+      - "5071:5001"
       - "5079:5009"
-    # depends_on:
-    #   - db
-    #   - rabbitmq
 
   messenger-api:
     environment:
@@ -136,9 +125,6 @@ services:
     volumes:
       # - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
-    # depends_on:
-    #   - db
-    #   - rabbitmq
 
   db:
     env_file:
@@ -180,15 +166,6 @@ services:
       memlock:
         soft: -1
         hard: -1
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl --fail http://localhost:9200 || exit 1",
-        ]
-      interval: 10s
-      timeout: 10s
-      retries: 120
 
   kibana:
     labels:
@@ -202,18 +179,6 @@ services:
       - ELASTICSEARCH_HOSTS=http://elastic-search:9200
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
-        ]
-      interval: 10s
-      timeout: 10s
-      retries: 120
-    # depends_on:
-    #   elastic-search:
-    #     condition: service_healthy
 
 volumes:
   storage:

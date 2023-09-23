@@ -26,6 +26,8 @@ builder.Services.AddEventBusHandlers();
 
 builder.Services.AddDefaultSwagger();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddSerilog();
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
@@ -40,6 +42,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
+
+app.MapHealthChecks("/healthz");
 
 app.UseSerilogRequestLogging();
 

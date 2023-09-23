@@ -26,6 +26,8 @@ builder.Services.AddScoped<IStorageDataClient, StorageDataClient>();
 
 builder.Services.AddDefaultSwagger();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddSerilog();
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
@@ -37,6 +39,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
+
+app.MapHealthChecks("/healthz");
 
 app.UseSerilogRequestLogging();
 

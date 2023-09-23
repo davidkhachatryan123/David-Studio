@@ -23,10 +23,7 @@ export class AdminsService {
   }
 
   getById(id: number) {
-    let queryParams = new HttpParams()
-    .append('id', id);
-
-    return this.http.get<AdminReadDto>(this.apiUrl, { params: queryParams });
+    return this.http.get<AdminReadDto>(`${this.apiUrl}/${id}`);
   }
 
   create(admin: AdminCreateDto) {
@@ -34,16 +31,10 @@ export class AdminsService {
   }
 
   update(id: number, admin: AdminCreateDto) {
-    let queryParams = new HttpParams()
-    .append('id', id);
-
-    return this.http.put<AdminReadDto>(this.apiUrl, admin, { params: queryParams });
+    return this.http.put<AdminReadDto>(`${this.apiUrl}/${id}`, admin);
   }
 
   delete(id: number) {
-    let queryParams = new HttpParams()
-    .append('id', id);
-
-    return this.http.delete<AdminReadDto>(this.apiUrl, { params: queryParams });
+    return this.http.delete<AdminReadDto>(`${this.apiUrl}/${id}`);
   }
 }
