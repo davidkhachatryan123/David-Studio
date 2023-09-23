@@ -117,6 +117,8 @@ services:
     restart: always
 
   identity-server:
+    env_file:
+      - .env
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:5000;https://+:5001
