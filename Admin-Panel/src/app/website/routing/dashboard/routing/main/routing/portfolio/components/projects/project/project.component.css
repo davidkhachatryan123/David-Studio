@@ -1,6 +1,12 @@
 .project-card {
-  height: 100%;
   filter: brightness(95%);
+}
+
+.project-card .image {
+  height: 300px;
+
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .project-card .action-btn {

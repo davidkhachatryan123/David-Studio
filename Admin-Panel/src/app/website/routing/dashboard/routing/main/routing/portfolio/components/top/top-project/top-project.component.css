@@ -22,10 +22,16 @@
   flex-basis: 100%;
 }
 
-.project-container .image {
+.project-container .image-container {
   flex-basis: content;
 }
 
-.project-container .image > img {
+.project-container .image-container > .image {
+  height: 90px;
   width: 100px;
+  max-width: 200px;
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
