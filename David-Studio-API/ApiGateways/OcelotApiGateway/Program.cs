@@ -26,8 +26,10 @@ if (identityUrl is not null)
             };
         });
 
+string? ConfigFileDirectory = builder.Configuration.GetValue<string>("ConfigFileDirectory");
+
 IConfiguration configuration = builder.Configuration
-    .AddJsonFile(Path.Combine("configuration", "configuration.json"), false, true)
+    .AddJsonFile(Path.Combine(ConfigFileDirectory!, "configuration.json"), false, true)
     .Build();
 
 builder.Services.AddHealthChecks();

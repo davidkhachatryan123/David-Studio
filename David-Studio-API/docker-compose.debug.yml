@@ -1,0 +1,65 @@
+version: '3.4'
+
+services:
+  web-api-gw:
+    container_name: web-api-gw
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  crm-api-gw:
+    container_name: crm-api-gw
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  identity-server:
+    container_name: identity-server
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  users-api:
+    container_name: users
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  portfolio-api:
+    container_name: portfolio
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  pricing-api:
+    container_name: pricing
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  search-api:
+    container_name: search
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  storage-api:
+    container_name: storage
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
+
+  messenger-api:
+    container_name: messenger
+    entrypoint: tail -f /dev/null
+    volumes:
+      - ./:/app
+      - ~/.vsdbg:/remote_debugger:rw
