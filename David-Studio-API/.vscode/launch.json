@@ -1,0 +1,206 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (web-api-gw)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/ApiGateways/OcelotApiGateway/bin/Debug/net7.0",
+      "program": "OcelotApiGateway.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "web-api-gw",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (crm-api-gw)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/ApiGateways/OcelotApiGateway/bin/Debug/net7.0",
+      "program": "OcelotApiGateway.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "crm-api-gw",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (identity-server)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/Services/IdentityServer/bin/Debug/net7.0",
+      "program": "IdentityServer.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "identity-server",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (users)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/Services/Users/bin/Debug/net7.0",
+      "program": "Users.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "users",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (portfolio)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/Services/Portfolio/bin/Debug/net7.0",
+      "program": "Portfolio.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "portfolio",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (pricing)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/Services/Pricing/bin/Debug/net7.0",
+      "program": "Pricing.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "pricing",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (search)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/Services/Search/bin/Debug/net7.0",
+      "program": "Search.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "search",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (storage)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/Services/Storage/bin/Debug/net7.0",
+      "program": "Storage.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "storage",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    },
+    {
+      "name": ".NET Core Launch (messenger)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "cwd": "/app/Services/Messanger/bin/Debug/net7.0",
+      "program": "Messanger.dll",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceRoot}",
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "messenger",
+          "/bin/sh",
+          "-c"
+        ],
+        "debuggerPath": "/remote_debugger/vsdbg"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "David Studio API",
+      "configurations": [
+        ".NET Core Launch (web-api-gw)",
+        ".NET Core Launch (crm-api-gw)",
+        ".NET Core Launch (identity-server)",
+        ".NET Core Launch (users)",
+        ".NET Core Launch (portfolio)",
+        ".NET Core Launch (pricing)",
+        ".NET Core Launch (search)",
+        ".NET Core Launch (storage)",
+        ".NET Core Launch (messenger)"
+      ],
+      "preLaunchTask": "docker-compose: up",
+      "stopAll": true
+    }
+  ]
+}

@@ -13,7 +13,6 @@
 		<Content Remove="$(SpaRoot)**" />
 		<None Remove="$(SpaRoot)**" />
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-		<Content Remove="wwwroot\" />
 		<None Remove="IntegrationEvents\" />
 		<None Remove="Grpc\" />
 		<None Remove="Grpc\Services\" />
@@ -59,7 +58,6 @@
 		<Folder Include="Extensions\" />
 		<Folder Include="Controllers\" />
 		<Folder Include="Dtos\" />
-		<Folder Include="wwwroot\" />
 		<Folder Include="IntegrationEvents\" />
 		<Folder Include="Grpc\" />
 		<Folder Include="Grpc\Services\" />

@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+  "tasks": [
+    {
+      "label": "docker-compose: up",
+      "type": "docker-compose",
+      "dockerCompose": {
+        "up": {
+          "detached": true,
+          "build": false
+        },
+        "files": [
+          "${workspaceFolder}/docker-compose.yml",
+          "${workspaceFolder}/docker-compose.override.yml",
+          "${workspaceFolder}/docker-compose.debug.yml"
+        ]
+      }
+    },
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/David-Studio-API.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile"
+		}
+	]
+}
